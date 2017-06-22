@@ -22,7 +22,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         cryptos = cryptoController.getCurrencies()
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TextCell")
-        
+        // This is a test.
         tableView.delegate = self
         tableView.dataSource = self
     }
