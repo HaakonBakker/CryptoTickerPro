@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Blockchain</key>
+	<dict>
+		<key>Exchangename</key>
+		<string></string>
+		<key>Shortcode</key>
+		<string></string>
+		<key>SupportedCryptocurrencies</key>
+		<dict>
+			<key>BTC</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

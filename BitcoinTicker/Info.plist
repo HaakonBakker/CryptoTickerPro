@@ -34,6 +34,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>DaxlinePro-Thin_13132</string>
+		<string>DaxlinePro-Regular_13131</string>
+		<string>DaxlinePro-Medium_13130</string>
+		<string>DaxlinePro-Light_13129</string>
+		<string>DaxlinePro-ExtraBold_13128</string>
+		<string>DaxlinePro-Bold_13127</string>
+		<string>DaxlinePro-Black_13126</string>
+	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
