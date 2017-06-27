@@ -69,7 +69,7 @@ class Cryptocurrency{
         
         // Return
         guard let res = pris else {
-            return "N/A"
+            return "Updating..."
         }
         let rundetPris = String(format: "%.2f", pris!)
         return rundetPris

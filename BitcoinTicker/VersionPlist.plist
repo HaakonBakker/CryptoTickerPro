@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>VersionNumber</key>
-	<real>1</real>
+	<integer>3</integer>
 	<key>Filename</key>
 	<string>CryptoPlist.plist</string>
 </dict>

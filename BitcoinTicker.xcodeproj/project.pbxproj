@@ -17,6 +17,9 @@
 		6B1B7B971EF14BF7005544E7 /* TesterFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B7B961EF14BF7005544E7 /* TesterFile.swift */; };
 		6B1B7B991EF14DEA005544E7 /* Exchanges.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6B1B7B981EF14DEA005544E7 /* Exchanges.plist */; };
 		6B1B7B9B1EF82BB0005544E7 /* TableOfCryptocurrenciesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1B7B9A1EF82BB0005544E7 /* TableOfCryptocurrenciesController.swift */; };
+		6B1F09A01EFD181D004B9A2D /* LocalCurrencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1F099F1EFD181D004B9A2D /* LocalCurrencyController.swift */; };
+		6B1F09A21EFD1B8D004B9A2D /* FavoriteCryptocurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1F09A11EFD1B8C004B9A2D /* FavoriteCryptocurrencies.swift */; };
+		6B1F09A41EFD1D1D004B9A2D /* CurrencyLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1F09A31EFD1D1D004B9A2D /* CurrencyLoader.swift */; };
 		6B26ADED1EEB041600BAF3E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B26ADEC1EEB041600BAF3E1 /* AppDelegate.swift */; };
 		6B26ADEF1EEB041600BAF3E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B26ADEE1EEB041600BAF3E1 /* ViewController.swift */; };
 		6B26ADF21EEB041700BAF3E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B26ADF01EEB041700BAF3E1 /* Main.storyboard */; };
@@ -76,6 +79,10 @@
 		6B1B7B961EF14BF7005544E7 /* TesterFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesterFile.swift; sourceTree = "<group>"; };
 		6B1B7B981EF14DEA005544E7 /* Exchanges.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Exchanges.plist; sourceTree = "<group>"; };
 		6B1B7B9A1EF82BB0005544E7 /* TableOfCryptocurrenciesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableOfCryptocurrenciesController.swift; sourceTree = "<group>"; };
+		6B1F099C1EFBA9D1004B9A2D /* Information.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Information.md; sourceTree = "<group>"; };
+		6B1F099F1EFD181D004B9A2D /* LocalCurrencyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCurrencyController.swift; sourceTree = "<group>"; };
+		6B1F09A11EFD1B8C004B9A2D /* FavoriteCryptocurrencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCryptocurrencies.swift; sourceTree = "<group>"; };
+		6B1F09A31EFD1D1D004B9A2D /* CurrencyLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLoader.swift; sourceTree = "<group>"; };
 		6B26ADE91EEB041600BAF3E1 /* BitcoinTicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BitcoinTicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B26ADEC1EEB041600BAF3E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B26ADEE1EEB041600BAF3E1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -178,11 +185,15 @@
 				6B1B7B961EF14BF7005544E7 /* TesterFile.swift */,
 				6B26ADF01EEB041700BAF3E1 /* Main.storyboard */,
 				6B1B7B9A1EF82BB0005544E7 /* TableOfCryptocurrenciesController.swift */,
+				6B1F099F1EFD181D004B9A2D /* LocalCurrencyController.swift */,
+				6B1F09A11EFD1B8C004B9A2D /* FavoriteCryptocurrencies.swift */,
 				6BF700231EF934D700B5FD5A /* CryptoController.swift */,
+				6B1F09A31EFD1D1D004B9A2D /* CurrencyLoader.swift */,
 				6BF700271EFA445500B5FD5A /* Plists */,
 				6B26AE211EEB076C00BAF3E1 /* Cryptocurrency.swift */,
 				6B26AE231EEB093100BAF3E1 /* Parser.swift */,
 				6B26ADF61EEB041700BAF3E1 /* Assets.xcassets */,
+				6B1F099C1EFBA9D1004B9A2D /* Information.md */,
 				6B26ADF81EEB041700BAF3E1 /* LaunchScreen.storyboard */,
 				6B26ADFB1EEB041700BAF3E1 /* Info.plist */,
 				6B26ADF31EEB041700BAF3E1 /* BitcoinTicker.xcdatamodeld */,
@@ -369,6 +380,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B1F09A01EFD181D004B9A2D /* LocalCurrencyController.swift in Sources */,
+				6B1F09A41EFD1D1D004B9A2D /* CurrencyLoader.swift in Sources */,
 				6B1B7B971EF14BF7005544E7 /* TesterFile.swift in Sources */,
 				6B7ECDCD1EF1318F00E47892 /* ChartColors.swift in Sources */,
 				6B7ECDCC1EF1318F00E47892 /* ChartSeries.swift in Sources */,
@@ -378,6 +391,7 @@
 				6B7ECDCB1EF1318F00E47892 /* Chart.swift in Sources */,
 				6BF700241EF934D700B5FD5A /* CryptoController.swift in Sources */,
 				6B26AE241EEB093100BAF3E1 /* Parser.swift in Sources */,
+				6B1F09A21EFD1B8D004B9A2D /* FavoriteCryptocurrencies.swift in Sources */,
 				6B26ADF51EEB041700BAF3E1 /* BitcoinTicker.xcdatamodeld in Sources */,
 				6B26AE221EEB076C00BAF3E1 /* Cryptocurrency.swift in Sources */,
 			);

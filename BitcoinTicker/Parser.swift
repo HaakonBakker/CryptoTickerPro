@@ -30,7 +30,7 @@ class Parser{
                     print(error as Any)
                 } else {
                     if let usableData = data {
-                        print(usableData[1]) //JSONSerialization
+                        //print(usableData[1]) //JSONSerialization
                         
                         
                         do{

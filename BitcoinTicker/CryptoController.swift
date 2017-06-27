@@ -21,6 +21,8 @@ class CryptoController {
     let context:NSManagedObjectContext
     var currencies:[Cryptocurrency]
     var currencyList:[String:Cryptocurrency]
+    
+    
     init(tableController: TableOfCryptocurrencies) {
         
         devMode = true
@@ -35,7 +37,7 @@ class CryptoController {
         currencyList = [:]
         tableOfCryptocurrencies = tableController
         
-        loadCurrencies()
+        
         
         let start = NSDate(); // <<<<<<<<<< Start time
         
@@ -62,10 +64,17 @@ class CryptoController {
         print("Time to update the currencylist: \(timeInterval) seconds")
         
         
+        // Load all currencies into memory
+        loadCurrencies()
         
         // Update the price
         updatePrice()
         
+        
+        // Redraw cells
+        DispatchQueue.main.async{
+            self.tableOfCryptocurrencies.tableView.reloadData()
+        }
     }
     
     func count() -> Int {
@@ -99,14 +108,14 @@ class CryptoController {
                 for result in results as! [NSManagedObject]{
                     let currency = Cryptocurrency()
                     if let name = result.value(forKey: "name") as? String {
-                        print(name)
+                        //print(name)
                         currency.baseCurrency = name
                     }
                     if let abbr = result.value(forKey: "abbreviation") as? String {
                         currency.baseAbbriviation = abbr
                     }
                     if let price = result.value(forKey: "price") as? Double {
-                        currency.base = price
+                        currency.target = price
                     }
                     currencies.append(currency)
                     currencyList[currency.baseAbbriviation] = currency
@@ -162,7 +171,7 @@ class CryptoController {
         let cryptoList:[String:AnyObject]
         if let path = Bundle.main.path(forResource: "CryptoPlist", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
             cryptoList = dict
-            print(dict)
+            //print(dict)
             // use swift dictionary as normal
         }else{
             return
@@ -172,7 +181,7 @@ class CryptoController {
         var plistVersion = -1
         if let path = Bundle.main.path(forResource: "VersionPlist", ofType: "plist"), let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject] {
             plistVersion = dict["VersionNumber"] as! Int
-            print(dict)
+            //print(dict)
             // use swift dictionary as normal
         }
         
@@ -214,6 +223,8 @@ class CryptoController {
         let defaults = UserDefaults.standard
         defaults.set(versionNumber, forKey: "currentVersionNumber")
         print("New local version number set. Current local version number: \(versionNumber)")
+        //self.loadCurrencies()
+        
     }
     
     func saveCurrency(abbr:String, name:String){
@@ -231,8 +242,33 @@ class CryptoController {
         }
     }
     
+    func createAPICall(dict:[String:Cryptocurrency]) -> String {
+        // Header aka. alt før det viktige
+        let header = "https://min-api.cryptocompare.com/data/pricemulti?"
+        
+        // fsym -> Finne alle from symbols
+        var fsym = "fsyms="
+        
+        for (key, value) in dict {
+            fsym = fsym.appending(key)
+            fsym = fsym.appending(",")
+        }
+        
+        
+        
+        // tsym -> Add alle tosyms
+        
+        let tsym = "tsyms=BTC,USD,EUR,NOK"
+        
+        let APICall = header + fsym + "&" + tsym
+        print(APICall)
+        return APICall
+    }
+    
     func updatePrice() -> Void {
-        let apiCall = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=ETH,BTC&tsyms=BTC,USD,EUR,NOK"
+        
+        
+        let apiCall = createAPICall(dict: currencyList)
         // return Price data
         let parser = Parser()
         // Do any additional setup after loading the view, typically from a nib.
@@ -241,12 +277,12 @@ class CryptoController {
         parser.networkRequest(APICall: apiCall, completion: { (success) -> Void in
             //print(success)
             
-            print("START")
+            print("START update pricing")
             for (key, value) in success {
                 let currency = key
                 let prices = value as! [String:Double]
-                print("Currency: \(currency)")
-                print("Prices: \(prices)")
+                //print("Currency: \(currency)")
+                //print("Prices: \(prices)")
                 
                 
                 // Update price on each crypto
@@ -258,7 +294,7 @@ class CryptoController {
                 }
             }
             
-            print("SLUTT")
+            print("SLUTT update pricing")
         })
         
         
@@ -273,10 +309,10 @@ class CryptoController {
             return
         }
         // Update all prices from prices dict.
-        print("Oppdatert!!!")
+        //print("Oppdatert!!!")
         elementToUpdate!.prices = prices
-        print(elementToUpdate)
-        print(elementToUpdate?.prices)
+        //print(elementToUpdate)
+        //print(elementToUpdate?.prices)
         // Return
     }
     
