@@ -12,17 +12,22 @@ import UIKit
 class LocalCurrencyController: UITableViewController{
     
     
-    var fiats = ["USD", "NOK", "SEK", "EUR"]
+    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY"]
+    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥"]
     var cryptos:[Cryptocurrency]!
     
     var selectedCurrency:String?
     var selectedIndexPath:IndexPath?
+    var selectedRow:Int?
+    var selectedSection:Int?
     
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fiats = fiats.sorted()
+        
+        
         
         // Observer for the view when it becomes active
         NotificationCenter.default.addObserver(self,
@@ -53,8 +58,11 @@ class LocalCurrencyController: UITableViewController{
             tableView.reloadData()
             return
         }
-        if let ip = defaults.object(forKey: "selectedIndexPath") {
-            selectedIndexPath = ip as? IndexPath
+        if let row = defaults.object(forKey: "selectedRow") {
+            if let section = defaults.object(forKey: "selectedSection"){
+                selectedIndexPath = IndexPath(row: row as! Int, section: section as! Int)
+            }
+            
         }else{
             print("No ip present - something went wrong")
             print("Will try to find indexPath")
@@ -82,7 +90,6 @@ class LocalCurrencyController: UITableViewController{
         cell.textLabel?.text = fiats[row]
         
         if fiats[indexPath.row] == selectedCurrency {
-            print("Samme")
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.none
@@ -92,27 +99,8 @@ class LocalCurrencyController: UITableViewController{
         
         // DetailLabel
         //let pris = cryptos[row].getThePrice(currency: "USD")
-        
-        // Checking what info is available on pris
-        /*
-        if pris == "Not available" {
-            cell.detailTextLabel?.text = pris
-        }else{
-            cell.detailTextLabel?.text = String(describing: pris) + "$"
-        }
-         */
-        
-        
-        
-        
-        
-        // Add image to cell view
-        
-        //let imageName = cryptos[row].baseAbbriviation
-        
-        //let image = UIImage(named: imageName)
-        //cell.imageView?.image = image
-        
+        let currencySymbol = symbols[fiats[indexPath.row]]
+        cell.detailTextLabel?.text = currencySymbol
         
         return cell
     }
@@ -152,18 +140,6 @@ class LocalCurrencyController: UITableViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        /*
-        let row = indexPath.row
-        print(fiats[row])
-        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
-            if cell.accessoryType == .checkmark{
-                cell.accessoryType = .none
-            }
-            else{
-                cell.accessoryType = .checkmark
-            }
-        }
-        */
         
         // The selected currency is the same as the one stored.
         if fiats[indexPath.row] == selectedCurrency {
@@ -189,8 +165,10 @@ class LocalCurrencyController: UITableViewController{
         
         print(selectedCurrency!, " - ", selectedIndexPath!)
         // Need to save the indexes and other information
-        defaults.set(selectedIndexPath, forKey: "selectedIndexPath")
+        defaults.set(selectedIndexPath?.row, forKey: "selectedRow")
+        defaults.set(selectedIndexPath?.section, forKey: "selectedSection")
         defaults.set(selectedCurrency, forKey: "selectedCurrency")
+        defaults.set(symbols[selectedCurrency!], forKey: "selectedCurrencySymbol")
     }
     
     @objc func applicationDidBecomeActive() {

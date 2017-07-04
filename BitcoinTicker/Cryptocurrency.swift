@@ -18,6 +18,8 @@ class Cryptocurrency{
     var sellPrice:Double
     var lastUpdated:NSDate
     
+    let defaults = UserDefaults.standard
+    
     
     var base:Double
     var target:Double
@@ -85,8 +87,17 @@ class Cryptocurrency{
         var ferdig = false
         parser.networkRequest(APICall: blockchainURL, completion: { (success) -> Void in
             //print(success)
-            // Get USD
-            let price = success["USD"] as! Dictionary<String,Any>
+            // Get local Currency
+            var localCurrency = ""
+            if let currency = self.defaults.object(forKey: "selectedCurrency") {
+                localCurrency = (currency as? String)!
+            }else{
+                print("No currency selected - something went wrong")
+                // DEFAULT TO USD!
+                localCurrency = "USD"
+            }
+            
+            let price = success[localCurrency] as! Dictionary<String,Any>
             
             self.lastPrice = price["last"]! as! Double
             self.buyPrice = price["buy"]! as! Double
@@ -106,8 +117,17 @@ class Cryptocurrency{
         
         parser.networkRequest(APICall: blockchainURL, completion: { (success) -> Void in
             //print(success)
-            // Get USD
-            let price = success["USD"] as! Dictionary<String,Any>
+            // Get local currency
+            var localCurrency = ""
+            if let currency = self.defaults.object(forKey: "selectedCurrency") {
+                localCurrency = (currency as? String)!
+            }else{
+                print("No currency selected - something went wrong")
+                // DEFAULT TO USD!
+                localCurrency = "USD"
+            }
+            
+            let price = success["EUR"] as! Dictionary<String,Any>
             
             self.lastPrice = price["last"]! as! Double
             self.buyPrice = price["buy"]! as! Double

@@ -258,7 +258,7 @@ class CryptoController {
         
         // tsym -> Add alle tosyms
         
-        let tsym = "tsyms=BTC,USD,EUR,NOK"
+        let tsym = "tsyms=USD,EUR,NOK,SEK,GBP,CNY,JPY"
         
         let APICall = header + fsym + "&" + tsym
         print(APICall)

@@ -19,11 +19,12 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     var cryptoController:CryptoController!
     var refreshControl: UIRefreshControl!
     var data:([String], [Cryptocurrency])!
+    var localCurrency:String = ""
     
     var personalFavorites:[String]!
     let defaults = UserDefaults.standard
     
-    
+    var wantToOnlyShowFavoriteCurrencies:Bool = false
     
     override func viewDidLoad() {
         let start = NSDate(); // <<<<<<<<<< Start time
@@ -44,6 +45,9 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         cryptoController = CryptoController(tableController:self)
         cryptos = cryptoController.getCurrencies()
         
+        // Get favorite only status
+        wantToShowOnlyFavorites()
+        
         // Get favorite coins
         getFavorites()
         
@@ -61,8 +65,11 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    
+    
     @objc override func viewDidAppear(_ animated: Bool) {
         print("Did become active")
+        wantToShowOnlyFavorites()
         getFavorites()
         
         self.tableView.reloadData()
@@ -71,6 +78,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     @objc func applicationDidBecomeActive() {
         // handle event
         print("Table of Currencies became active again! Update the prices!")
+        wantToShowOnlyFavorites()
         cryptoController.updatePrice()
     }
     
@@ -80,10 +88,24 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         refreshControl.endRefreshing()
     }
     
+    
+    
+    
+    // Function to decide whether or not to show favorites only
+    func wantToShowOnlyFavorites(){
+        
+        // Find information about wanting to only show favorite
+        if let favoritesOnly = self.defaults.object(forKey: "wantToShowOnlyFavorites") {
+            wantToOnlyShowFavoriteCurrencies = favoritesOnly as! Bool
+        }else{
+            wantToOnlyShowFavoriteCurrencies = false
+        }
+    }
+    
     // MARK:  UITextFieldDelegate Methods
     func numberOfSections(in tableView: UITableView) -> Int {
         // Need to check if personalFavorites really has any favorites
-        if personalFavorites.count == 0 {
+        if personalFavorites.count == 0 || wantToOnlyShowFavoriteCurrencies{
             return 1
         }else{
             return 2
@@ -94,6 +116,10 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         var headerName = ""
         
+        if wantToOnlyShowFavoriteCurrencies{
+            headerName = "Favorites"
+            return headerName
+        }
         
         if personalFavorites.count == 0 {
             headerName = "Altcoins"
@@ -112,6 +138,12 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return cryptos.count
         var rowCount = 0
+        
+        // If only favorites, show only them
+        if wantToOnlyShowFavoriteCurrencies{
+            rowCount = personalFavorites.count
+            return rowCount
+        }
         
         // If no favorites, only show Altcoins
         if personalFavorites.count == 0 {
@@ -142,6 +174,23 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         //let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
         
+        //var localCurrency = ""
+        var localCurrencySymbol = ""
+        if let currency = self.defaults.object(forKey: "selectedCurrency") {
+            if let currencySymbol = self.defaults.object(forKey: "selectedCurrencySymbol") {
+                // selectedCurrencySymbol
+                localCurrency = (currency as? String)!
+                localCurrencySymbol = currencySymbol as! String
+            }
+        }else{
+            print("No currency selected - something went wrong")
+            // DEFAULT TO USD!
+            localCurrency = "USD"
+            localCurrencySymbol = "$"
+        }
+        
+        
+        
         let section = indexPath.section
         let row = indexPath.row
         
@@ -158,7 +207,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
                     print("Index: \(i)")
                     print(cryptos[i].baseAbbriviation)
                     nameCoin = cryptos[i].baseCurrency
-                    detailCoin = cryptos[i].getThePrice(currency: "USD")
+                    detailCoin = cryptos[i].getThePrice(currency: localCurrency)
                     imageName = cryptos[i].baseAbbriviation
                 }
             }
@@ -170,12 +219,14 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         
         
         // If section 1 show all other altcoins
-        
-        if section == hasFavs {
-            nameCoin = cryptos[row].baseCurrency
-            detailCoin = cryptos[row].getThePrice(currency: "USD")
-            imageName = cryptos[row].baseAbbriviation
+        if !wantToOnlyShowFavoriteCurrencies{
+            if section == hasFavs {
+                nameCoin = cryptos[row].baseCurrency
+                detailCoin = cryptos[row].getThePrice(currency: localCurrency)
+                imageName = cryptos[row].baseAbbriviation
+            }
         }
+        
         
         //print(indexPath)
         //cell.textLabel?.text = data[ip.row].baseCurrency
@@ -188,7 +239,8 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         if pris == "Updating..." {
             cell.detailTextLabel?.text = pris
         }else{
-            cell.detailTextLabel?.text = String(describing: pris) + "$"
+            cell.detailTextLabel?.text = String(describing: pris) + localCurrencySymbol
+            
         }
         
         // Add image to cell view
@@ -200,12 +252,45 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     }
     
     // MARK:  UITableViewDelegate Methods
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt
+        indexPath: IndexPath){
+        
         let section = indexPath.section
         let row = indexPath.row
-        //print(section, cryptos[row])
+        
+        // In altcoin section
+        if section == 1 {
+            print(section, cryptos[row].baseCurrency)
+            self.performSegue(withIdentifier: "showCurrencyInfo", sender: cryptos[row])
+        }
+        
+        // In favorite section
+        if section == 0 {
+            print(section, cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] })!)
+            let theSender = cryptos[cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] })!]
+            self.performSegue(withIdentifier: "showCurrencyInfo", sender: theSender)
+        }
+        
+        
+        
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCurrencyInfo"{
+            print("Stemmer")
+            var touchedRow = sender as! Cryptocurrency
+            print(touchedRow.baseCurrency)
+            let yourNextViewController = (segue.destination as! DetailCryptoViewController)
+            
+            yourNextViewController.coin = touchedRow.baseAbbriviation
+            yourNextViewController.favoriteCurrency = localCurrency
+            let backItem = UIBarButtonItem()
+            backItem.title = "Cryptos"
+            navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
+            yourNextViewController.title = touchedRow.baseCurrency
+        }
+    }
+    
     
     func getFavorites() -> Void {
         if let favoriteCoins = defaults.object(forKey: "favoriteCoins") {
