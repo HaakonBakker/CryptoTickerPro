@@ -16,6 +16,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
     let defaults = UserDefaults.standard
     
     var wantToOnlyShowFavoriteCurrencies:Bool = false
+    var wantToShowCoinAbbr:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,9 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
         
         // Setting the back button on the controller object
         self.navigationController?.navigationBar.tintColor = UIColor.white;
+        
+        // Check naming convention option
+        wantToShowCoinAbbreviation()
         
         // Check favorites option
         wantToShowOnlyFavorites()
@@ -43,9 +47,32 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
     @objc override func viewDidAppear(_ animated: Bool) {
         print("SettingsView did appear")
         wantToShowOnlyFavorites()
+        wantToShowCoinAbbreviation()
         updateSymbol()
         
         self.tableView.reloadData()
+    }
+    
+    func wantToShowCoinAbbreviation(){
+        // Find information about wanting to only show favorite
+        if let abbrOnly = self.defaults.object(forKey: "wantToShowCoinAbbreviation") {
+            wantToShowCoinAbbr = abbrOnly as! Bool
+        }else{
+            wantToShowCoinAbbr = false
+        }
+        print("Status: ", wantToShowCoinAbbr)
+        let ip = IndexPath(row: 3, section: 0)
+        if let cell = tableView.cellForRow(at: ip as IndexPath) {
+            if wantToShowCoinAbbr{
+                cell.accessoryType = .checkmark
+            }else{
+                cell.accessoryType = .none
+            }
+        }
+        
+        
+        
+        tableView.reloadData()
     }
     
     func wantToShowOnlyFavorites(){
@@ -106,6 +133,29 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
                 }
             }
         }
+        
+        
+        // Show coin abbriviation
+        if indexPath.section == 0 && indexPath.row == 3 {
+            
+            if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+                if cell.accessoryType == .checkmark{
+                    cell.accessoryType = .none
+                    wantToOnlyShowFavoriteCurrencies = false
+                    defaults.set(wantToOnlyShowFavoriteCurrencies, forKey: "wantToShowCoinAbbreviation")
+                    // defaults.synchronize()
+                    print("ONLY SHOW abbreviation: False")
+                }
+                else{
+                    cell.accessoryType = .checkmark
+                    wantToOnlyShowFavoriteCurrencies = true
+                    defaults.set(wantToOnlyShowFavoriteCurrencies, forKey: "wantToShowCoinAbbreviation")
+                    //defaults.synchronize()
+                    print("ONLY SHOW abbreviation: True")
+                }
+            }
+        }
+        
         
         // Share Cryptocurrency Pro
         if indexPath.section == 2 && indexPath.row == 0 {

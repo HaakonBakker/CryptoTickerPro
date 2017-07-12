@@ -16,6 +16,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     var favoriteCurrency:String = ""
     
     var price:String = ""
+    var usdPrice:Double = 0.0
     var localCurrencySymbol:String = ""
     
     // Labels and other things in view
@@ -27,6 +28,20 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     @IBOutlet weak var numberOfCoinsLabel: UILabel!
     @IBOutlet weak var conversionPriceLabel: UILabel!
     @IBOutlet weak var changeLast24HourPercent: UILabel!
+    @IBOutlet weak var cryptoLogoImageView: UIImageView!
+    @IBOutlet weak var graphLabel: UILabel!
+    @IBOutlet weak var graphChangePercent: UILabel!
+    @IBOutlet weak var volume24HCoinLabel: UILabel!
+    @IBOutlet weak var volume24HLocalLabel: UILabel!
+    @IBOutlet weak var high24HLabel: UILabel!
+    @IBOutlet weak var low24HLabel: UILabel!
+    @IBOutlet weak var volume24HCoin: UILabel!
+    @IBOutlet weak var volume24HLocal: UILabel!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var chartConversionLabel: UILabel!
+    @IBOutlet weak var chartConversionPriceLabel: UILabel!
+    
+    
     
     var labels:[String:Any] = [:]
     
@@ -39,6 +54,17 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         self.navigationController?.navigationBar.tintColor = UIColor.white;
         print(coin)
         conversionLabel.text = coin + "/" + favoriteCurrency
+        chartConversionLabel.text = coin + "/" + "USD"
+        
+        // Setting Volume labels
+        volume24HCoinLabel.text = "Volume 24H - " + coin
+        volume24HLocalLabel.text = "Volume 24H - " + favoriteCurrency
+        
+        
+        
+        // Add image to Crypto Logo
+        cryptoLogoImageView?.image = UIImage(named: coin)
+        
         
         // Need to get the symbol for favorite coin
         
@@ -48,15 +74,1055 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         }
         
         
-        chart.delegate = self
-        let series = ChartSeries([2324, 2344, 2560, 2450, 2388, 2399, 2395, 2340, 2504])
-        series.color = ChartColors.blueColor()
-        chart.add(series)
         
+        chart.delegate = self
+        
+        updateChart1Week()
         // Need to get the updated prices
         getUpdatedPrices()
         // Need to update the labels.
         
+    }
+    
+    
+    func updateChart1Hour() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"minute", aggregate:1, limit:60)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-hh:mma"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "hh:mma"
+                        print("Time is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        //dateFormatter.dateFormat = "dd"
+                        //print("date is \(dateFormatter.string(from: date))")
+                        //let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m
+                        
+                        if (labelCounter == 15){
+                            //labels.append(Float(i))
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = 0
+                        }else{
+                            labelCounter = labelCounter + 1
+                            if (datesAsString.count == 0){
+                                datesAsString.append(newDate)
+                                //lastDateString = newDate
+                            }
+                        }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.066666666
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    func updateChart1Day() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"minute", aggregate:15, limit:96)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-hh:mma"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "hha"
+                        print("Hour is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        //dateFormatter.dateFormat = "dd"
+                        //print("date is \(dateFormatter.string(from: date))")
+                        //let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m
+                        
+                        if (labelCounter == 24){
+                            //labels.append(Float(i))
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = 0
+                        }else{
+                            labelCounter = labelCounter + 1
+                            if (datesAsString.count == 0){
+                                datesAsString.append(newDate)
+                                //lastDateString = newDate
+                            }
+                        }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.04210
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    func updateChart1Week() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"hour", aggregate:3, limit:56)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Double = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MM"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        dateFormatter.dateFormat = "dd"
+                        print("date is \(dateFormatter.string(from: date))")
+                        let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m + "/" + d
+                        
+                        
+                        if (datesAsString.count == 0 || datesAsString.last != newDate) {
+                            //labels.append(Float(i))
+                            datesAsString.append(newDate)
+                            
+                        }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.125
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3,4,5,6,7]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    
+    func updateChart1Month() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"hour", aggregate:5, limit:160)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MM"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        dateFormatter.dateFormat = "dd"
+                        print("date is \(dateFormatter.string(from: date))")
+                        let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m + "/" + d
+                        
+                        
+                        
+                        
+                        
+                            if (labelCounter == 35){
+                                //labels.append(Float(i))
+                                datesAsString.append(newDate)
+                                lastDateString = newDate
+                                labelCounter = 0
+                            }else{
+                                labelCounter = labelCounter + 1
+                            }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.025
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    func updateChart3Months() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"hour", aggregate:12, limit:200)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MM"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        dateFormatter.dateFormat = "dd"
+                        print("date is \(dateFormatter.string(from: date))")
+                        let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m + "/" + d
+                        
+                        
+                        
+                        if (datesAsString.count == 0) {
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = labelCounter + 1
+                        }
+                        
+                        if (labelCounter == 50){
+                            //labels.append(Float(i))
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = 0
+                        }else{
+                            labelCounter = labelCounter + 1
+                        }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.02
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    func updateChart6Months() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"day", aggregate:1, limit:180)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MMM"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        dateFormatter.dateFormat = "dd"
+                        print("date is \(dateFormatter.string(from: date))")
+                        let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m + "/" + d
+                        print(newDate)
+                        
+                        if (datesAsString.count == 0 || datesAsString.last != m) {
+                            //datesAsString.append(Float(i))
+                            datesAsString.append(m)
+                        }
+                        /*
+                        
+                        if (datesAsString.count == 0) {
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = labelCounter + 1
+                        }
+                        
+                        if (labelCounter == 50){
+                            //labels.append(Float(i))
+                            datesAsString.append(newDate)
+                            lastDateString = newDate
+                            labelCounter = 0
+                        }else{
+                            labelCounter = labelCounter + 1
+                        }
+ */
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.033333
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3,4,5]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    func updateChart12Months() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"day", aggregate:1, limit:360)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MMM"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        dateFormatter.dateFormat = "dd"
+                        print("date is \(dateFormatter.string(from: date))")
+                        let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m + "/" + d
+                        print(newDate)
+                        
+                        if (datesAsString.count == 0 || datesAsString.last != m) {
+                            //datesAsString.append(Float(i))
+                            
+                            if (datesAsString.count == 0){
+                                print("NEW DATESTRING ADDED!!!!!")
+                                datesAsString.append(m)
+                                labelCounter = 0
+                            }
+                            
+                            if (labelCounter == 90){
+                                print("NEW DATESTRING ADDED!!!!!")
+                                datesAsString.append(m)
+                                labelCounter = 0
+                            }else{
+                                labelCounter = labelCounter + 1
+                            }
+                            
+                        }
+                        /*
+                         
+                         if (datesAsString.count == 0) {
+                         datesAsString.append(newDate)
+                         lastDateString = newDate
+                         labelCounter = labelCounter + 1
+                         }
+                         
+                         if (labelCounter == 50){
+                         //labels.append(Float(i))
+                         datesAsString.append(newDate)
+                         lastDateString = newDate
+                         labelCounter = 0
+                         }else{
+                         labelCounter = labelCounter + 1
+                         }
+                         */
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.01111111
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    func updateChartAll() -> Void {
+        // Remove everything at first.
+        
+        
+        
+        
+        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
+        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
+        //let series = ChartSeries(data)
+        // Create a new series specifying x and y values
+        
+        
+        
+        // Need to get a json object
+        let parser = Parser()
+        let url = getChartRequestURL(typeOfRequest:"day", aggregate:20, limit:100)
+        parser.networkRequest(APICall: url, completion: { (success) -> Void in
+            self.chart.removeAllSeries()
+            var raw = success["Data"]
+            //var conversion = raw[self.coin] as! [String:Any]
+            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
+            //var raw = success["Data"] as! [String:Any]
+            //print(success)
+            //print(raw)
+            print(type(of: success["Data"]))
+            
+            var test = raw as! NSArray
+            print(test[1])
+            //self.updateLabels(labels: self.labels)
+            
+            var dates:[Date] = []
+            var datesAsString:[String] = []
+            var dataPoints:[(x:(Float), y:(Float))] = []
+            print(type(of: test[1]))
+            var counter:Float = 0
+            
+            // lastDateString
+            var lastDateString:String = ""
+            
+            var labelCounter:Int = 0
+            
+            for point in test{
+                //print(type(of: point))
+                var dataPoint = point as! Dictionary<String, Any>
+                //print(dataPoint["time"])
+                
+                //let date = Date(timeIntervalSince1970: timeStamp)
+                //print(date)
+                //dates.append(date)
+                
+                if let t = dataPoint["time"] {
+                    let timeStamp = dataPoint["time"] as! Double
+                    let date = Date(timeIntervalSince1970: timeStamp)
+                    //print(date)
+                    dates.append(date)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd-MM-yy"
+                    let dateString = dateFormatter.string(from: date)
+                    
+                    
+                    
+                    if let date = dateFormatter.date(from: dateString) {
+                        
+                        dateFormatter.dateFormat = "MMM-yy"
+                        print("Month is \(dateFormatter.string(from: date))")
+                        let m = dateFormatter.string(from: date)
+                        //dateFormatter.dateFormat = "dd"
+                        //print("date is \(dateFormatter.string(from: date))")
+                        //let d = dateFormatter.string(from: date)
+                        
+                        let newDate = m
+                        print(newDate)
+                        
+                        if (datesAsString.count == 0 || datesAsString.last != m) {
+                            //datesAsString.append(Float(i))
+                            
+                            if (datesAsString.count == 0){
+                                print("NEW DATESTRING ADDED!!!!!")
+                                datesAsString.append(m)
+                                labelCounter = 0
+                            }
+                            
+                            if (labelCounter == 25){
+                                print("NEW DATESTRING ADDED!!!!!")
+                                datesAsString.append(m)
+                                labelCounter = 0
+                            }else{
+                                labelCounter = labelCounter + 1
+                            }
+                            
+                        }
+                        
+                    }
+                }else{
+                    print("Something is not right.")
+                }
+                if let t = dataPoint["close"]{
+                    let k = t as! Double
+                    self.usdPrice = k
+                    dataPoints.append(((x:Float(counter), y: Float(k))))
+                    print(t)
+                }else{
+                    print("Something is not right1.")
+                }
+                
+                counter = counter + 0.04
+                print("Counter: " + String(describing: counter))
+                print("Count of datesAsString: " + String(describing: datesAsString.count))
+            }
+            
+            DispatchQueue.main.async() {
+                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                let series = ChartSeries([Float(0)])
+                //series.data = []
+                series.data = dataPoints
+                
+                print(dataPoints.count)
+                self.chart.xLabels = [0,1,2,3]
+                self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
+                    print(labelIndex)
+                    return datesAsString[labelIndex]
+                }
+                
+                self.chart.add(series)
+            }
+            
+        })
+        
+        
+    }
+    
+    
+    
+    func getChartRequestURL(typeOfRequest:String, aggregate: Int, limit: Int) -> String {
+        // Type can be: Minute, Hour, Day
+        //return "https://min-api.cryptocompare.com/data/histoday?fsym=" + coin + "&tsym=USD&limit=7&aggregate=1&e=CCCAGG"
+        return "https://min-api.cryptocompare.com/data/histo" + typeOfRequest + "?fsym=" + coin + "&tsym=USD&limit=" + String(describing: limit) + "&aggregate=" + String(describing: aggregate) + "&e=CCCAGG"
     }
     
     func getUpdatedPrices() -> Void {
@@ -96,7 +1162,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     }
     
     /*
-     
+     This function is called to update the labels with the current price information.
      */
     func updateLabels(labels:[String:Any]) -> Void {
         // Update the labels based on the parameters
@@ -114,15 +1180,6 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             self.price = String(describing: labels["PRICE"]!)
         }
         
-        
-        /*
-        conversionPriceLabel.text = labels["PRICE"] as! String
-        changeLast24hLabel.text = labels["CHANGE24HOUR"] as! String
-        setColorOn24hChange(change: labels["CHANGE24HOUR"]! as! String)
-        marketcapLabel.text = labels["MKTCAP"] as! String
-        numberOfCoinsLabel.text = labels["SUPPLY"] as! String
- */
-        
         DispatchQueue.main.async() {
             self.conversionPriceLabel.text = self.getTwoDecimals(number: String(describing: labels["PRICE"]!)) + self.localCurrencySymbol
             
@@ -133,6 +1190,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             self.marketcapLabel.text = self.getTwoDecimals(number: String(describing: labels["MKTCAP"]!)) + self.localCurrencySymbol
             self.numberOfCoinsLabel.text = self.getZeroDecimals(number: String(describing: labels["SUPPLY"]!))
             //print(self.price)
+            
+            // Change Volume labels
+            self.volume24HCoin.text = self.getTwoDecimals(number: String(describing: labels["VOLUME24HOUR"]!))
+            self.volume24HLocal.text = self.getTwoDecimals(number: String(describing: labels["VOLUME24HOURTO"]!)) + self.localCurrencySymbol
+            
+            // Change 24H low/high labels
+            self.high24HLabel.text = self.getTwoDecimals(number: String(describing: labels["HIGH24HOUR"]!)) + self.localCurrencySymbol
+            self.low24HLabel.text = self.getTwoDecimals(number: String(describing: labels["LOW24HOUR"]!)) + self.localCurrencySymbol
         }
     }
     
@@ -163,6 +1228,56 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         }
     }
     
+    
+    @IBAction func segmentedControlAction(_ sender: Any) {
+        if(segmentedControl.selectedSegmentIndex == 0)
+        {
+            print("1H")
+            updateChart1Hour()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 1)
+        {
+            print("1D")
+            updateChart1Day()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 2)
+        {
+            print("1W")
+            updateChart1Week()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 3)
+        {
+            print("1M")
+            updateChart1Month()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 4)
+        {
+            print("3M")
+            updateChart3Months()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 5)
+        {
+            print("6M")
+            updateChart6Months()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 6)
+        {
+            print("1Y")
+            updateChart12Months()
+        }
+        else if(segmentedControl.selectedSegmentIndex == 7)
+        {
+            print("All")
+            updateChartAll()
+        }
+    }
+    
+    // Get Historical price information
+    func getHistoricalData(length:Int, aggregate:Int) -> Void {
+        // Create request.
+    }
+    
+    
     // Chart delegate
     func didTouchChart(_ chart: Chart, indexes: Array<Int?>, x: Float, left: CGFloat) {
         // Do something on touch
@@ -171,9 +1286,20 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 // The series at serieIndex has been touched
                 let value = chart.valueForSeries(serieIndex, atIndex: dataIndex)
                 //print(chart.valueForSeries(Int(x), atIndex: dataIndex))
-                print(value)
+                //print(value)
                 if let touchedValue = value {
-                    //floatingPriceLabel.text = String(touchedValue)
+                    /*
+                     We need to figure out what change in percent is.
+                     100-(100/GRAPHPRICE)*PRICE
+                     */
+                    //print(touchedValue)
+                    var changeDouble = (Double(100)-(Double(100)/Double(touchedValue))*(Double(usdPrice))) * (-1)
+                    // ((2500-1000)/1000)*100
+                    //var changeDouble = (((Double(touchedValue)/Double(usdPrice)))*100)
+                    print(changeDouble)
+                    var changePercent = getTwoDecimals(number: String(changeDouble))
+                    graphChangePercent.text = changePercent + "%"
+                    graphLabel.text = String(touchedValue)  + "$"
                 }else{
                     print("Something went wrong")
                 }
@@ -184,10 +1310,12 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     
     func didFinishTouchingChart(_ chart: Chart) {
         // Do something when finished
+        
     }
     
     func didEndTouchingChart(_ chart: Chart) {
         // Do something when ending touching chart
+        
     }
 }
 

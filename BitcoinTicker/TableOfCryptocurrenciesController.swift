@@ -26,6 +26,8 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     
     var wantToOnlyShowFavoriteCurrencies:Bool = false
     
+    var lastUpdated:Date? = nil
+    
     override func viewDidLoad() {
         let start = NSDate(); // <<<<<<<<<< Start time
         super.viewDidLoad()
@@ -38,7 +40,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         
         
         refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh - Last updated: " + getLastUpdateTime())
         refreshControl.addTarget(self, action: #selector(TableOfCryptocurrencies.refreshPull), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
@@ -65,7 +67,28 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         
     }
     
+    func getLastUpdateTime() -> String {
+        if let lastUpdatedDefault = self.defaults.object(forKey: "lastUpdated") {
+            lastUpdated = lastUpdatedDefault as! Date
+        }else{
+            lastUpdated = nil
+            return "N/A"
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "hh:mma"
+        let dateString = dateFormatter.string(from: lastUpdated!)
+        print(dateString)
+        
+        
+        return dateString
+    }
     
+    func setLastUpdateTime() -> Void {
+        var date = Date()
+        print(date)
+        defaults.set(date, forKey: "lastUpdated")
+    }
     
     @objc override func viewDidAppear(_ animated: Bool) {
         print("Did become active")
@@ -86,6 +109,8 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         print("Oppdater things!")
         cryptoController.updatePrice()
         refreshControl.endRefreshing()
+        setLastUpdateTime()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh - Last updated: " + getLastUpdateTime())
     }
     
     
@@ -173,7 +198,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         //let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
-        
+        cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         //var localCurrency = ""
         var localCurrencySymbol = ""
         if let currency = self.defaults.object(forKey: "selectedCurrency") {
@@ -187,6 +212,17 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
             // DEFAULT TO USD!
             localCurrency = "USD"
             localCurrencySymbol = "$"
+        }
+        
+        // Check if user wants abbreviation or coin name (FULL)
+        var wantsCoinAbbreviation:Bool = false
+        
+        if let userChoice = self.defaults.object(forKey: "wantToShowCoinAbbreviation") {
+            wantsCoinAbbreviation = (userChoice as? Bool)!
+        }else{
+            print("No coin preference set - something went wrong")
+            // DEFAULT TO full coin name
+            wantsCoinAbbreviation = false
         }
         
         
@@ -205,8 +241,13 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
             if section == 0 {
                 if let i = cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] }) {
                     print("Index: \(i)")
+                    if (wantsCoinAbbreviation){
+                        nameCoin = cryptos[i].baseAbbriviation
+                    }else{
+                        nameCoin = cryptos[i].baseCurrency
+                    }
                     print(cryptos[i].baseAbbriviation)
-                    nameCoin = cryptos[i].baseCurrency
+                    //nameCoin = cryptos[i].baseCurrency
                     detailCoin = cryptos[i].getThePrice(currency: localCurrency)
                     imageName = cryptos[i].baseAbbriviation
                 }
@@ -221,7 +262,12 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         // If section 1 show all other altcoins
         if !wantToOnlyShowFavoriteCurrencies{
             if section == hasFavs {
-                nameCoin = cryptos[row].baseCurrency
+                if (wantsCoinAbbreviation){
+                    nameCoin = cryptos[row].baseAbbriviation
+                }else{
+                    nameCoin = cryptos[row].baseCurrency
+                }
+                
                 detailCoin = cryptos[row].getThePrice(currency: localCurrency)
                 imageName = cryptos[row].baseAbbriviation
             }

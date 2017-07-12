@@ -35,6 +35,9 @@ class Parser{
                         
                         do{
                             
+                            
+                            
+                            
                             let jsonResult = try JSONSerialization.jsonObject(with: usableData, options: []) as? [String:Any]
                             
                             
