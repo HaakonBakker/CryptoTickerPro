@@ -21,7 +21,7 @@ class CryptoController {
     let context:NSManagedObjectContext
     var currencies:[Cryptocurrency]
     var currencyList:[String:Cryptocurrency]
-    
+    let defaults = UserDefaults.standard
     
     init(tableController: TableOfCryptocurrencies) {
         
@@ -265,7 +265,42 @@ class CryptoController {
         return APICall
     }
     
+    func createChangeAPICall(dict:[String:Cryptocurrency], tsymCurrency:String) -> String {
+        // Header aka. alt før det viktige
+        let header = "https://min-api.cryptocompare.com/data/pricemultifull?"
+        
+        // fsym -> Finne alle from symbols
+        var fsym = "fsyms="
+        
+        for (key, value) in dict {
+            fsym = fsym.appending(key)
+            fsym = fsym.appending(",")
+        }
+        
+        
+        
+        
+        
+        
+        let tsym = "tsyms=" + tsymCurrency
+        
+        let ts = "ts=1452680400"
+        
+        
+        let APICall = header + fsym + "&" + tsym // + "&" + ts
+        print(APICall)
+        return APICall
+    }
+    
     func updatePrice() -> Void {
+        
+        var tsymCurrency = "USD"
+        if let currency = self.defaults.object(forKey: "selectedCurrency") {
+            // selectedCurrencySymbol
+            tsymCurrency = (currency as? String)!
+        }else{
+            print("No currency selected - something went wrong")
+        }
         
         
         let apiCall = createAPICall(dict: currencyList)
@@ -297,6 +332,41 @@ class CryptoController {
             print("SLUTT update pricing")
         })
         
+        let apiChange = createChangeAPICall(dict: currencyList, tsymCurrency: tsymCurrency)
+        
+        parser.networkRequest(APICall: apiChange, completion: { (success) -> Void in
+            //print(success)
+            
+            print("START change updating")
+            
+            let raw = success["RAW"] as! [String:Any?]
+            //print(raw)
+            for (key, value) in raw {
+                //let currency = key
+                let info = value as! [String:Any]
+                //print("Currency: \(currency)")
+                //print("Prices: \(prices)")
+                
+                //print(key)
+                //print(info[tsymCurrency])
+                
+                let data = info[tsymCurrency] as! [String:Any]
+                let change = data["CHANGEPCT24HOUR"] as! Double
+                //print(change)
+                //let test = value[tsymCurrency] as [String:Any?]
+                //print(value[tsymCurrency])
+                //Update change on each crypto
+                self.updateCryptoChange(currency: key, change: change)
+                //print("/////////")
+                // Redraw cells
+                DispatchQueue.main.async{
+                    self.tableOfCryptocurrencies.tableView.reloadData()
+                }
+            }
+            
+            print("SLUTT change updating")
+        })
+        
         
         
     }
@@ -311,6 +381,21 @@ class CryptoController {
         // Update all prices from prices dict.
         //print("Oppdatert!!!")
         elementToUpdate!.prices = prices
+        //print(elementToUpdate)
+        //print(elementToUpdate?.prices)
+        // Return
+    }
+    
+    func updateCryptoChange(currency:String, change:Double) -> Void {
+        // For the given currency, look up in a dict of currencies
+        var elementToUpdate = getCurrency(name:currency)
+        
+        guard let res = elementToUpdate else {
+            return
+        }
+        // Update all prices from prices dict.
+        //print("Oppdatert!!!")
+        elementToUpdate!.changeLast24h = change
         //print(elementToUpdate)
         //print(elementToUpdate?.prices)
         // Return

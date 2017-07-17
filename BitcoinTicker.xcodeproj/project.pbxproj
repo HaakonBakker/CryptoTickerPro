@@ -36,6 +36,12 @@
 		6B7ECDCD1EF1318F00E47892 /* ChartColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7ECDCA1EF1318F00E47892 /* ChartColors.swift */; };
 		6B8544831F0273A30097D6A1 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8544821F0273A30097D6A1 /* AboutController.swift */; };
 		6BA702231F0A3FD700B4E559 /* DetailCryptoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA702221F0A3FD700B4E559 /* DetailCryptoViewController.swift */; };
+		6BEDBE3D1F1CB17F0050608D /* PortfolioLocalCurrencyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEDBE3C1F1CB17F0050608D /* PortfolioLocalCurrencyViewController.swift */; };
+		6BEDBE3F1F1CB1CB0050608D /* LocalCurrencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEDBE3E1F1CB1CB0050608D /* LocalCurrencies.swift */; };
+		6BEE854D1F18CDC000D2E0FE /* PortfoliosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE854C1F18CDC000D2E0FE /* PortfoliosViewController.swift */; };
+		6BEE854F1F1C8C6800D2E0FE /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE854E1F1C8C6800D2E0FE /* Portfolio.swift */; };
+		6BEE85511F1C953800D2E0FE /* PortfolioEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE85501F1C953800D2E0FE /* PortfolioEditViewController.swift */; };
+		6BEE85531F1C959200D2E0FE /* PortfolioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEE85521F1C959200D2E0FE /* PortfolioViewController.swift */; };
 		6BF700241EF934D700B5FD5A /* CryptoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF700231EF934D700B5FD5A /* CryptoController.swift */; };
 		6BF700261EFA444F00B5FD5A /* VersionPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BF700251EFA444F00B5FD5A /* VersionPlist.plist */; };
 		6BF700291EFA447300B5FD5A /* CryptoPlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6BF700281EFA447300B5FD5A /* CryptoPlist.plist */; };
@@ -108,6 +114,12 @@
 		6B7ECDCA1EF1318F00E47892 /* ChartColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChartColors.swift; path = "../../../../../../../../Downloads/SwiftChart-0.5-1.0/Source/ChartColors.swift"; sourceTree = "<group>"; };
 		6B8544821F0273A30097D6A1 /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		6BA702221F0A3FD700B4E559 /* DetailCryptoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCryptoViewController.swift; sourceTree = "<group>"; };
+		6BEDBE3C1F1CB17F0050608D /* PortfolioLocalCurrencyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioLocalCurrencyViewController.swift; sourceTree = "<group>"; };
+		6BEDBE3E1F1CB1CB0050608D /* LocalCurrencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalCurrencies.swift; sourceTree = "<group>"; };
+		6BEE854C1F18CDC000D2E0FE /* PortfoliosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfoliosViewController.swift; sourceTree = "<group>"; };
+		6BEE854E1F1C8C6800D2E0FE /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
+		6BEE85501F1C953800D2E0FE /* PortfolioEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEditViewController.swift; sourceTree = "<group>"; };
+		6BEE85521F1C959200D2E0FE /* PortfolioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioViewController.swift; sourceTree = "<group>"; };
 		6BF700231EF934D700B5FD5A /* CryptoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoController.swift; sourceTree = "<group>"; };
 		6BF700251EFA444F00B5FD5A /* VersionPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = VersionPlist.plist; sourceTree = "<group>"; };
 		6BF700281EFA447300B5FD5A /* CryptoPlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CryptoPlist.plist; sourceTree = "<group>"; };
@@ -190,6 +202,12 @@
 				6B1B7B981EF14DEA005544E7 /* Exchanges.plist */,
 				6B1B7B961EF14BF7005544E7 /* TesterFile.swift */,
 				6B26ADF01EEB041700BAF3E1 /* Main.storyboard */,
+				6BEE854E1F1C8C6800D2E0FE /* Portfolio.swift */,
+				6BEE854C1F18CDC000D2E0FE /* PortfoliosViewController.swift */,
+				6BEE85501F1C953800D2E0FE /* PortfolioEditViewController.swift */,
+				6BEE85521F1C959200D2E0FE /* PortfolioViewController.swift */,
+				6BEDBE3C1F1CB17F0050608D /* PortfolioLocalCurrencyViewController.swift */,
+				6BEDBE3E1F1CB1CB0050608D /* LocalCurrencies.swift */,
 				6BA702221F0A3FD700B4E559 /* DetailCryptoViewController.swift */,
 				6B8544821F0273A30097D6A1 /* AboutController.swift */,
 				6B1F09A51F025A2E004B9A2D /* SettingsController.swift */,
@@ -316,6 +334,7 @@
 				TargetAttributes = {
 					6B26ADE81EEB041600BAF3E1 = {
 						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
 					};
 					6B26ADFF1EEB041700BAF3E1 = {
 						CreatedOnToolsVersion = 9.0;
@@ -390,21 +409,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B1F09A01EFD181D004B9A2D /* LocalCurrencyController.swift in Sources */,
+				6BEE854D1F18CDC000D2E0FE /* PortfoliosViewController.swift in Sources */,
 				6B1F09A41EFD1D1D004B9A2D /* CurrencyLoader.swift in Sources */,
+				6BEDBE3D1F1CB17F0050608D /* PortfolioLocalCurrencyViewController.swift in Sources */,
 				6B1B7B971EF14BF7005544E7 /* TesterFile.swift in Sources */,
 				6B7ECDCD1EF1318F00E47892 /* ChartColors.swift in Sources */,
 				6B7ECDCC1EF1318F00E47892 /* ChartSeries.swift in Sources */,
 				6B26ADEF1EEB041600BAF3E1 /* ViewController.swift in Sources */,
 				6B1F09A61F025A2E004B9A2D /* SettingsController.swift in Sources */,
 				6B26ADED1EEB041600BAF3E1 /* AppDelegate.swift in Sources */,
+				6BEE85511F1C953800D2E0FE /* PortfolioEditViewController.swift in Sources */,
 				6B1B7B9B1EF82BB0005544E7 /* TableOfCryptocurrenciesController.swift in Sources */,
 				6B7ECDCB1EF1318F00E47892 /* Chart.swift in Sources */,
 				6BA702231F0A3FD700B4E559 /* DetailCryptoViewController.swift in Sources */,
+				6BEE854F1F1C8C6800D2E0FE /* Portfolio.swift in Sources */,
 				6BF700241EF934D700B5FD5A /* CryptoController.swift in Sources */,
 				6B26AE241EEB093100BAF3E1 /* Parser.swift in Sources */,
 				6B1F09A21EFD1B8D004B9A2D /* FavoriteCryptocurrencies.swift in Sources */,
+				6BEDBE3F1F1CB1CB0050608D /* LocalCurrencies.swift in Sources */,
 				6B26ADF51EEB041700BAF3E1 /* BitcoinTicker.xcdatamodeld in Sources */,
 				6B26AE221EEB076C00BAF3E1 /* Cryptocurrency.swift in Sources */,
+				6BEE85531F1C959200D2E0FE /* PortfolioViewController.swift in Sources */,
 				6B8544831F0273A30097D6A1 /* AboutController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,7 +531,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -555,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -568,12 +593,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SJ5BPZ2QK;
 				INFOPLIST_FILE = BitcoinTicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bakkertechnologies.CryptoPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bakkertechnologies.cryptotickerpro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -584,12 +612,15 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4SJ5BPZ2QK;
 				INFOPLIST_FILE = BitcoinTicker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.bakkertechnologies.CryptoPro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bakkertechnologies.cryptotickerpro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

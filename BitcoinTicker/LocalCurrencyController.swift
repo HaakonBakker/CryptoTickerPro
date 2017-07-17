@@ -112,7 +112,7 @@ class LocalCurrencyController: UITableViewController{
         
         // The selected currency is the same as the one stored.
         if fiats[indexPath.row] == selectedCurrency {
-            print("Samme velges")
+            print("Samme velges1")
             return
         }
         

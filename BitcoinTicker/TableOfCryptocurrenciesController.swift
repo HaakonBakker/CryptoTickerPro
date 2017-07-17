@@ -9,6 +9,18 @@
 import Foundation
 import UIKit
 
+class CryptocurrencyTableViewCell: UITableViewCell {
+    
+    //@IBOutlet strong var image: UIImageView!
+    @IBOutlet weak var cryptoImage: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var changeLabel: UILabel!
+    
+    var baseAbbreviation:String?
+}
+
+
 class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableViewDelegate{
     
     @IBOutlet var tableView: UITableView!
@@ -53,7 +65,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         // Get favorite coins
         getFavorites()
         
-        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TextCell")
+        //self.tableView.register(CryptocurrencyTableViewCell.self, forCellReuseIdentifier: "TextCell")
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -196,7 +208,8 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        //let cell = CryptocurrencyTableViewCell(style: .value1, reuseIdentifier: textCellIdentifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath) as! CryptocurrencyTableViewCell
         //let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         //var localCurrency = ""
@@ -235,12 +248,15 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         var nameCoin = ""
         var detailCoin = ""
         var imageName = ""
+        var change = ""
         // If section 0 show favorites
         
         if personalFavorites.count != 0 {
             if section == 0 {
                 if let i = cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] }) {
                     print("Index: \(i)")
+                    cell.baseAbbreviation = cryptos[i].baseAbbriviation
+                    change = getTwoDecimals(number: String(describing: cryptos[i].changeLast24h))
                     if (wantsCoinAbbreviation){
                         nameCoin = cryptos[i].baseAbbriviation
                     }else{
@@ -262,6 +278,8 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         // If section 1 show all other altcoins
         if !wantToOnlyShowFavoriteCurrencies{
             if section == hasFavs {
+                cell.baseAbbreviation = cryptos[row].baseAbbriviation
+                change = getTwoDecimals(number: String(describing: cryptos[row].changeLast24h))
                 if (wantsCoinAbbreviation){
                     nameCoin = cryptos[row].baseAbbriviation
                 }else{
@@ -276,64 +294,69 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         
         //print(indexPath)
         //cell.textLabel?.text = data[ip.row].baseCurrency
-        cell.textLabel?.text = nameCoin
+        cell.nameLabel?.text = nameCoin
         
         // DetailLabel
         let pris = detailCoin
         
         // Checking what info is available on pris
         if pris == "Updating..." {
-            cell.detailTextLabel?.text = pris
+            cell.priceLabel?.text = pris
         }else{
-            cell.detailTextLabel?.text = String(describing: pris) + localCurrencySymbol
+            cell.priceLabel?.text = String(describing: pris) + localCurrencySymbol
             
         }
         
+        cell.changeLabel.text = change + "%"
+        
+        setColorOn24hChange(change: change, cell: cell)
+        
         // Add image to cell view
         let image = UIImage(named: imageName)
-        cell.imageView?.image = image
+        cell.cryptoImage?.image = image
+        //cell.imageView?.image = image
         
         
         return cell
     }
     
+    func setColorOn24hChange(change:String, cell:CryptocurrencyTableViewCell) -> Void {
+        var changeInt = Double(change)
+        //print(changeInt)
+        // Set color based on positive or negative
+        if (changeInt! > 0){
+            // Positive change
+            cell.changeLabel.textColor = UIColor(red: 0, green: 0.733, blue: 0.153, alpha: 1)
+            
+        }else{
+            // Negative change
+            cell.changeLabel.textColor = UIColor(red: 0.996, green: 0.125, blue: 0.125, alpha: 1)
+            
+        }
+    }
+    
     // MARK:  UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, didSelectRowAt
         indexPath: IndexPath){
-        
-        let section = indexPath.section
-        let row = indexPath.row
-        
-        // In altcoin section
-        if section == 1 {
-            print(section, cryptos[row].baseCurrency)
-            self.performSegue(withIdentifier: "showCurrencyInfo", sender: cryptos[row])
-        }
-        
-        // In favorite section
-        if section == 0 {
-            print(section, cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] })!)
-            let theSender = cryptos[cryptos.index(where: { $0.baseAbbriviation == personalFavorites[row] })!]
-            self.performSegue(withIdentifier: "showCurrencyInfo", sender: theSender)
-        }
-        
-        
+
+        // No need to programatically create this function since it works through the Storyboard.
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCurrencyInfo"{
             print("Stemmer")
-            var touchedRow = sender as! Cryptocurrency
-            print(touchedRow.baseCurrency)
+            var touchedRow = sender as? CryptocurrencyTableViewCell
+            print(touchedRow?.baseAbbreviation)
+             let theSender = cryptos[cryptos.index(where: { $0.baseAbbriviation == touchedRow?.baseAbbreviation! })!]
             let yourNextViewController = (segue.destination as! DetailCryptoViewController)
             
-            yourNextViewController.coin = touchedRow.baseAbbriviation
+            yourNextViewController.coin = (theSender.baseAbbriviation)
             yourNextViewController.favoriteCurrency = localCurrency
             let backItem = UIBarButtonItem()
             backItem.title = "Cryptos"
             navigationItem.backBarButtonItem = backItem // This will show in the next view controller being pushed
-            yourNextViewController.title = touchedRow.baseCurrency
+            yourNextViewController.title = theSender.baseCurrency
         }
     }
     
@@ -349,6 +372,12 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
             personalFavorites = []
             //userVersion = -1
         }
+    }
+    
+    func getTwoDecimals(number:String) -> String {
+        var intermediate = Double(number)
+        var final = String(format: "%.2f", intermediate!)
+        return final as String
     }
     
 }

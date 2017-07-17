@@ -81,10 +81,9 @@ class FavoriteCryptocurrencies: UITableViewController{
         // DetailLabel
         let base = currencies[row].baseAbbriviation
         cell.detailTextLabel?.text = base
-            
- 
         
-        
+        let image = UIImage(named: currencies[row].baseAbbriviation)
+        cell.imageView?.image = image
         
         
         
