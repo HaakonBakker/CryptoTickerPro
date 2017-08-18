@@ -86,12 +86,12 @@
 		<key>abbreviation</key>
 		<string>ZEC</string>
 	</dict>
-	<key>ANS</key>
+	<key>NEO</key>
 	<dict>
 		<key>name</key>
-		<string>AntShares</string>
+		<string>NEO</string>
 		<key>abbreviation</key>
-		<string>ANS</string>
+		<string>NEO</string>
 	</dict>
 	<key>SC</key>
 	<dict>
@@ -135,6 +135,13 @@
 		<key>abbreviation</key>
 		<string>ICN</string>
 	</dict>
+	<key>BTH</key>
+	<dict>
+		<key>name</key>
+		<string>Bitcoin Cash</string>
+		<key>abbreviation</key>
+		<string>BTH</string>
+	</dict>
 	<key>XLM</key>
 	<dict>
 		<key>name</key>
@@ -142,5 +149,12 @@
 		<key>abbreviation</key>
 		<string>XLM</string>
 	</dict>
+    <key>Qtum</key>
+    <dict>
+        <key>name</key>
+        <string>QTUM</string>
+        <key>abbreviation</key>
+        <string>QTUM</string>
+    </dict>
 </dict>
 </plist>

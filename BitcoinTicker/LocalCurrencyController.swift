@@ -12,8 +12,8 @@ import UIKit
 class LocalCurrencyController: UITableViewController{
     
     
-    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY"]
-    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥"]
+    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY", "AUD", "BRL", "CAD", "HRK", "DKK", "HKD", "INR", "ISK", "PKR", "SGD", "CHF"]
+    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥", "AUD": "$", "BRL": "R$", "CAD": "$", "HRK" : "kn", "DKK" : "kr", "HKD" : "$", "INR" : "₹", "ISK" : "kr", "PKR" : "₨", "SGD" : "$", "CHF" : "CHF"]
     var cryptos:[Cryptocurrency]!
     
     var selectedCurrency:String?
@@ -26,7 +26,7 @@ class LocalCurrencyController: UITableViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         fiats = fiats.sorted()
-        
+        //fiats.insert("BTC", at: 0)
         
         
         // Observer for the view when it becomes active

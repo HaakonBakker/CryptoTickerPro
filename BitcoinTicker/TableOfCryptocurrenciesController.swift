@@ -56,7 +56,12 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         refreshControl.addTarget(self, action: #selector(TableOfCryptocurrencies.refreshPull), for: .valueChanged)
         tableView.refreshControl = refreshControl
         
-        cryptoController = CryptoController(tableController:self)
+        cryptoController = CryptoController.sharedInstance
+        // Do CryptoController setup
+        cryptoController.tableOfCryptocurrencies = self
+        cryptoController.updatePrice()
+        
+        
         cryptos = cryptoController.getCurrencies()
         
         // Get favorite only status

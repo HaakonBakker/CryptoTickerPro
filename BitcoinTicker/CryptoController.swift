@@ -13,7 +13,7 @@ import CoreData
 class CryptoController {
     
     // Trenger denne for å snakke med tableview
-    let tableOfCryptocurrencies: TableOfCryptocurrencies
+    var tableOfCryptocurrencies: TableOfCryptocurrencies?
     
     var devMode:Bool
     
@@ -23,7 +23,9 @@ class CryptoController {
     var currencyList:[String:Cryptocurrency]
     let defaults = UserDefaults.standard
     
-    init(tableController: TableOfCryptocurrencies) {
+    static let sharedInstance = CryptoController()
+    
+    private init() {
         
         devMode = true
         let needsDeletion = true
@@ -35,7 +37,6 @@ class CryptoController {
         context = appDelegate.persistentContainer.viewContext
         currencies = [Cryptocurrency]()
         currencyList = [:]
-        tableOfCryptocurrencies = tableController
         
         
         
@@ -67,14 +68,13 @@ class CryptoController {
         // Load all currencies into memory
         loadCurrencies()
         
-        // Update the price
-        updatePrice()
         
-        
+        /*
         // Redraw cells
         DispatchQueue.main.async{
             self.tableOfCryptocurrencies.tableView.reloadData()
         }
+ */
     }
     
     func count() -> Int {
@@ -87,6 +87,7 @@ class CryptoController {
     
     func getCurrency(name:String) -> Cryptocurrency? {
         if let res = currencyList[name] {
+            //print(res.getCurrencyInformation())
             return res
         }else{
             print("Couldn't find the currency: \(name)")
@@ -214,10 +215,10 @@ class CryptoController {
         for (key, value) in dict {
             let abbreviation = key
             let info = value as! [String:String]
-            let currencyName = info["name"] as! String
+            let currencyName = info["name"]
             //print(currencyName)
             //print("key is - \(key) and value is - \(value)")
-            saveCurrency(abbr: abbreviation, name: currencyName)
+            saveCurrency(abbr: abbreviation, name: currencyName!)
         }
         // Need to update the userDefault that is the local version number.
         let defaults = UserDefaults.standard
@@ -257,8 +258,8 @@ class CryptoController {
         
         
         // tsym -> Add alle tosyms
-        
-        let tsym = "tsyms=USD,EUR,NOK,SEK,GBP,CNY,JPY"
+        let localCur = LocalCurrencies()
+        let tsym = "tsyms=" + localCur.getAPIString()
         
         let APICall = header + fsym + "&" + tsym
         print(APICall)
@@ -325,7 +326,7 @@ class CryptoController {
                 
                 // Redraw cells
                 DispatchQueue.main.async{
-                    self.tableOfCryptocurrencies.tableView.reloadData()
+                    self.tableOfCryptocurrencies?.tableView.reloadData()
                 }
             }
             
@@ -360,7 +361,7 @@ class CryptoController {
                 //print("/////////")
                 // Redraw cells
                 DispatchQueue.main.async{
-                    self.tableOfCryptocurrencies.tableView.reloadData()
+                    self.tableOfCryptocurrencies?.tableView.reloadData()
                 }
             }
             
@@ -401,5 +402,9 @@ class CryptoController {
         // Return
     }
     
+    // MARK: - Accessors
     
+    class func shared() -> CryptoController {
+        return sharedInstance
+    }
 }

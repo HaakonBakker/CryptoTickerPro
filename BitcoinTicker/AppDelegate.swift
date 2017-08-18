@@ -18,6 +18,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
       
+        let defaults = UserDefaults.standard
+        
+        // will delete LaunchView default for testing
+        let willDeleteDefaultForLaunchView = false
+        
+        if willDeleteDefaultForLaunchView{
+            defaults.removeObject(forKey: "LaunchView")
+        }
+        
+        if let launchview = defaults.string(forKey: "LaunchView")
+        {
+            if launchview == "Cryptolist"{
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+                let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil) // this assumes your storyboard is titled "Main.storyboard"
+                let yourVC = mainStoryboard.instantiateViewController(withIdentifier: "tabBarControllerID") as! UITabBarController // inside "YOUR_VC_IDENTIFIER" substitute the Storyboard ID you created in step 2 for the view controller you want to open here. And substitute YourViewController with the name of your view controller, like, for example, ViewController2.
+                appDelegate.window?.rootViewController = yourVC
+                appDelegate.window?.makeKeyAndVisible()
+            }
+            
+        }else{
+            // No key has been set -> basically first time user has opened the application.
+            // Will show onboarding experience.
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.window = UIWindow(frame: UIScreen.main.bounds)
+            let mainStoryboard: UIStoryboard = UIStoryboard(name: "OnboardingV1", bundle: nil) // this assumes your storyboard is titled "Main.storyboard"
+            let yourVC = mainStoryboard.instantiateViewController(withIdentifier: "pageViewControllerID") as! PageViewController // inside "YOUR_VC_IDENTIFIER" substitute the Storyboard ID you created in step 2 for the view controller you want to open here. And substitute YourViewController with the name of your view controller, like, for example, ViewController2.
+            appDelegate.window?.rootViewController = yourVC
+            appDelegate.window?.makeKeyAndVisible()
+        }
+        
+        
+
         return true
     }
 

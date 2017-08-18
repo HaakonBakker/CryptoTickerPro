@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13178.6" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9ez-Kl-bVX">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13156.2"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Page View Controller-->
+        <scene sceneID="YmR-RF-TfE">
+            <objects>
+                <pageViewController storyboardIdentifier="pageViewControllerID" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="9ez-Kl-bVX" customClass="PageViewController" customModule="BitcoinTicker" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Thl-Nx-cqR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-370" y="92"/>
+        </scene>
+        <!--OnboardingVC-->
+        <scene sceneID="pWC-gB-RLD">
+            <objects>
+                <viewController storyboardIdentifier="second" id="Hox-2K-7fm" customClass="OnboardingVC" customModule="BitcoinTicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tQO-ge-8Qj">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="oT9-gZ-gAc">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DCq-nd-97b">
+                                <rect key="frame" x="41" y="431" width="292" height="176"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Choose your favourite cryptocurrencies to be displayed at the top.
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content" base64-UTF8="YES">
+Cg
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Click &quot;Coin&quot;, &quot;Price&quot;, or &quot;Change 24H&quot; to sort.">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="oT9-gZ-gAc" firstAttribute="bottom" secondItem="DS1-3p-IDO" secondAttribute="bottom" id="Q6E-uD-lo9"/>
+                            <constraint firstAttribute="trailing" secondItem="oT9-gZ-gAc" secondAttribute="trailing" id="Qdd-GD-uaL"/>
+                            <constraint firstItem="DCq-nd-97b" firstAttribute="top" secondItem="DS1-3p-IDO" secondAttribute="top" constant="411" id="QrF-77-sGY"/>
+                            <constraint firstItem="oT9-gZ-gAc" firstAttribute="leading" secondItem="tQO-ge-8Qj" secondAttribute="leading" id="UIj-BA-wMb"/>
+                            <constraint firstItem="DS1-3p-IDO" firstAttribute="bottom" secondItem="DCq-nd-97b" secondAttribute="bottom" constant="60" id="Y3c-ZE-1wZ"/>
+                            <constraint firstItem="oT9-gZ-gAc" firstAttribute="top" secondItem="tQO-ge-8Qj" secondAttribute="top" id="dhp-T4-Q7t"/>
+                            <constraint firstItem="DCq-nd-97b" firstAttribute="leading" secondItem="DS1-3p-IDO" secondAttribute="leading" constant="41" id="ov4-Ik-hP2"/>
+                            <constraint firstItem="oT9-gZ-gAc" firstAttribute="centerX" secondItem="DCq-nd-97b" secondAttribute="centerX" id="rxV-8i-yJN"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="DS1-3p-IDO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ha1-lu-oGg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1084" y="91.304347826086968"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="9Pl-Jj-sum">
+            <objects>
+                <viewController storyboardIdentifier="third" id="o1a-gD-0RI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GBR-LX-iVE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="UcH-sf-9VU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aQO-8k-LbP">
+                                <rect key="frame" x="36" y="532" width="302" height="95"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Click on a currency to get detailed overview of the coin.">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UcH-sf-9VU" firstAttribute="bottom" secondItem="ifx-xA-ZeC" secondAttribute="bottom" id="ABz-Fq-svj"/>
+                            <constraint firstItem="ifx-xA-ZeC" firstAttribute="bottom" secondItem="aQO-8k-LbP" secondAttribute="bottom" constant="40" id="HtA-Ax-1Qt"/>
+                            <constraint firstItem="UcH-sf-9VU" firstAttribute="centerX" secondItem="aQO-8k-LbP" secondAttribute="centerX" id="PM8-AH-BVt"/>
+                            <constraint firstAttribute="trailing" secondItem="UcH-sf-9VU" secondAttribute="trailing" id="Uqq-Jr-fLO"/>
+                            <constraint firstItem="aQO-8k-LbP" firstAttribute="leading" secondItem="ifx-xA-ZeC" secondAttribute="leading" constant="36" id="auM-ZM-xXV"/>
+                            <constraint firstItem="UcH-sf-9VU" firstAttribute="top" secondItem="GBR-LX-iVE" secondAttribute="top" id="jnv-gc-IvA"/>
+                            <constraint firstItem="aQO-8k-LbP" firstAttribute="top" secondItem="ifx-xA-ZeC" secondAttribute="top" constant="512" id="l3n-EM-Jfq"/>
+                            <constraint firstItem="UcH-sf-9VU" firstAttribute="leading" secondItem="GBR-LX-iVE" secondAttribute="leading" id="m6e-Dp-d8L"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ifx-xA-ZeC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0SE-cg-Kpf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1712.8" y="91.304347826086968"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="kJ5-NU-uVc">
+            <objects>
+                <viewController storyboardIdentifier="fourth" id="XNw-Tf-Wnt" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cKz-4A-lC9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="nR7-dY-9jm">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31G-fv-gkm">
+                                <rect key="frame" x="41" y="540" width="292" height="71"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Add your portfolio and see your current holdings!">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="31G-fv-gkm" firstAttribute="top" secondItem="ga8-m8-Gfq" secondAttribute="top" constant="520" id="Dq3-7j-8pH"/>
+                            <constraint firstItem="ga8-m8-Gfq" firstAttribute="bottom" secondItem="31G-fv-gkm" secondAttribute="bottom" constant="56" id="RlW-0Y-I4K"/>
+                            <constraint firstItem="31G-fv-gkm" firstAttribute="leading" secondItem="ga8-m8-Gfq" secondAttribute="leading" constant="41" id="azc-aB-N9r"/>
+                            <constraint firstItem="nR7-dY-9jm" firstAttribute="centerX" secondItem="31G-fv-gkm" secondAttribute="centerX" id="dYu-2B-vCk"/>
+                            <constraint firstAttribute="trailing" secondItem="nR7-dY-9jm" secondAttribute="trailing" id="esE-am-TGa"/>
+                            <constraint firstItem="nR7-dY-9jm" firstAttribute="leading" secondItem="cKz-4A-lC9" secondAttribute="leading" id="hRV-xO-Eb5"/>
+                            <constraint firstItem="nR7-dY-9jm" firstAttribute="bottom" secondItem="ga8-m8-Gfq" secondAttribute="bottom" id="uN9-LM-ezM"/>
+                            <constraint firstItem="nR7-dY-9jm" firstAttribute="top" secondItem="cKz-4A-lC9" secondAttribute="top" id="yW7-7Z-nTo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ga8-m8-Gfq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="75V-H9-CJy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2381.5999999999999" y="89.505247376311857"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="5x8-js-hDG">
+            <objects>
+                <viewController storyboardIdentifier="fifth" id="PA8-Zi-Ijx" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fpu-17-Hnk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="XjM-Vo-hVY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uXp-gS-83P">
+                                <rect key="frame" x="41" y="402" width="292" height="71"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Tweak your preferences in Settings (bottom right).">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XjM-Vo-hVY" firstAttribute="top" secondItem="fpu-17-Hnk" secondAttribute="top" id="Ad8-s2-DlO"/>
+                            <constraint firstAttribute="trailing" secondItem="XjM-Vo-hVY" secondAttribute="trailing" id="BOg-Wm-fNz"/>
+                            <constraint firstItem="XjM-Vo-hVY" firstAttribute="leading" secondItem="fpu-17-Hnk" secondAttribute="leading" id="I31-1Q-kKZ"/>
+                            <constraint firstItem="XjM-Vo-hVY" firstAttribute="centerX" secondItem="uXp-gS-83P" secondAttribute="centerX" id="Quu-0q-5tJ"/>
+                            <constraint firstItem="uXp-gS-83P" firstAttribute="leading" secondItem="afC-Ky-yrJ" secondAttribute="leading" constant="41" id="V6i-e6-g2M"/>
+                            <constraint firstItem="uXp-gS-83P" firstAttribute="top" secondItem="afC-Ky-yrJ" secondAttribute="top" constant="382" id="VkT-MJ-Oyf"/>
+                            <constraint firstItem="XjM-Vo-hVY" firstAttribute="bottom" secondItem="afC-Ky-yrJ" secondAttribute="bottom" id="YKl-0W-bNh"/>
+                            <constraint firstItem="afC-Ky-yrJ" firstAttribute="bottom" secondItem="uXp-gS-83P" secondAttribute="bottom" constant="194" id="bra-Tq-dEA"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="afC-Ky-yrJ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CGf-GB-ede" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3077.5999999999999" y="90.404797601199405"/>
+        </scene>
+        <!--OnboardingVC-->
+        <scene sceneID="C72-cz-a4x">
+            <objects>
+                <viewController storyboardIdentifier="sixth" id="IYr-jH-kb0" customClass="OnboardingVC" customModule="BitcoinTicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GvO-dE-JTc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="KO5-9u-TPy">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZKM-fm-2cH">
+                                <rect key="frame" x="0.0" y="567" width="375" height="54"/>
+                                <color key="backgroundColor" red="0.14117647058823529" green="0.34509803921568627" blue="0.6588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="LGA-yx-yjg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <state key="normal" title="Get started">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="getStartedButtonAction:" destination="IYr-jH-kb0" eventType="touchUpInside" id="b8Q-lB-skv"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTk-ff-A9o">
+                                <rect key="frame" x="41" y="477" width="292" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="FOk-on-g0G"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="That was the intro!">
+                                        <attributes>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="22" name=".SFNSText"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="KO5-9u-TPy" firstAttribute="leading" secondItem="ZKM-fm-2cH" secondAttribute="leading" id="4BU-6g-lzw"/>
+                            <constraint firstItem="HTk-ff-A9o" firstAttribute="leading" secondItem="J0h-7a-N5i" secondAttribute="leading" constant="41" id="6eh-eB-AW6"/>
+                            <constraint firstItem="J0h-7a-N5i" firstAttribute="bottom" secondItem="ZKM-fm-2cH" secondAttribute="bottom" constant="46" id="9N2-4i-SHU"/>
+                            <constraint firstItem="ZKM-fm-2cH" firstAttribute="top" secondItem="HTk-ff-A9o" secondAttribute="bottom" constant="45" id="QXu-dz-P8k"/>
+                            <constraint firstItem="KO5-9u-TPy" firstAttribute="top" secondItem="GvO-dE-JTc" secondAttribute="top" id="SkG-1T-2TP"/>
+                            <constraint firstAttribute="trailing" secondItem="KO5-9u-TPy" secondAttribute="trailing" id="XB5-hy-XKm"/>
+                            <constraint firstItem="HTk-ff-A9o" firstAttribute="top" secondItem="J0h-7a-N5i" secondAttribute="top" constant="457" id="fva-Gh-qHQ"/>
+                            <constraint firstItem="KO5-9u-TPy" firstAttribute="trailing" secondItem="ZKM-fm-2cH" secondAttribute="trailing" id="qxG-Fv-9qA"/>
+                            <constraint firstItem="KO5-9u-TPy" firstAttribute="bottom" secondItem="J0h-7a-N5i" secondAttribute="bottom" id="rS8-59-pGa"/>
+                            <constraint firstItem="HTk-ff-A9o" firstAttribute="centerX" secondItem="ZKM-fm-2cH" secondAttribute="centerX" id="ufd-Ov-XBg"/>
+                            <constraint firstItem="KO5-9u-TPy" firstAttribute="leading" secondItem="GvO-dE-JTc" secondAttribute="leading" id="yED-XI-Y8i"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="J0h-7a-N5i"/>
+                    </view>
+                    <connections>
+                        <outlet property="getStartedButton" destination="ZKM-fm-2cH" id="saQ-l5-ABO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a41-aT-xup" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3720.8000000000002" y="88.605697151424295"/>
+        </scene>
+        <!--OnboardingVC-->
+        <scene sceneID="KJL-ms-l3n">
+            <objects>
+                <viewController storyboardIdentifier="first" id="IaR-Hm-p45" customClass="OnboardingVC" customModule="BitcoinTicker" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="KAO-tS-f8Z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlurrediPhone" translatesAutoresizingMaskIntoConstraints="NO" id="Mjg-OU-h5T">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Crypto Ticker Pro" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JmT-Lo-LTV">
+                                <rect key="frame" x="16" y="522" width="343" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="wp4-Al-qy9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swipe to begin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIX-i7-Qg1">
+                                <rect key="frame" x="16" y="574" width="343" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="42" id="bzB-N3-lG6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIconForAboutScreen" translatesAutoresizingMaskIntoConstraints="NO" id="ZhT-h5-pY8">
+                                <rect key="frame" x="112" y="155" width="150" height="150"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mjg-OU-h5T" firstAttribute="top" secondItem="KAO-tS-f8Z" secondAttribute="top" id="5nt-rP-a4k"/>
+                            <constraint firstItem="ZhT-h5-pY8" firstAttribute="centerX" secondItem="JmT-Lo-LTV" secondAttribute="centerX" id="DiB-Zp-0hC"/>
+                            <constraint firstItem="z29-uE-ey9" firstAttribute="bottom" secondItem="HIX-i7-Qg1" secondAttribute="bottom" constant="51" id="HM9-s3-J1s"/>
+                            <constraint firstItem="ZhT-h5-pY8" firstAttribute="top" secondItem="z29-uE-ey9" secondAttribute="top" constant="135" id="KFa-HI-EMI"/>
+                            <constraint firstItem="Mjg-OU-h5T" firstAttribute="bottom" secondItem="z29-uE-ey9" secondAttribute="bottom" id="Kiz-kE-cV1"/>
+                            <constraint firstItem="Mjg-OU-h5T" firstAttribute="leading" secondItem="KAO-tS-f8Z" secondAttribute="leading" id="LIv-en-D3B"/>
+                            <constraint firstItem="Mjg-OU-h5T" firstAttribute="centerX" secondItem="ZhT-h5-pY8" secondAttribute="centerX" id="YLC-hn-obC"/>
+                            <constraint firstItem="JmT-Lo-LTV" firstAttribute="trailing" secondItem="HIX-i7-Qg1" secondAttribute="trailing" id="h10-ai-xze"/>
+                            <constraint firstItem="HIX-i7-Qg1" firstAttribute="top" secondItem="JmT-Lo-LTV" secondAttribute="bottom" constant="8" symbolic="YES" id="lYL-Sp-Mdk"/>
+                            <constraint firstItem="JmT-Lo-LTV" firstAttribute="leading" secondItem="KAO-tS-f8Z" secondAttribute="leadingMargin" id="ux6-ai-3vB"/>
+                            <constraint firstAttribute="trailing" secondItem="Mjg-OU-h5T" secondAttribute="trailing" id="yyV-d0-4h9"/>
+                            <constraint firstItem="JmT-Lo-LTV" firstAttribute="leading" secondItem="HIX-i7-Qg1" secondAttribute="leading" id="zw1-cB-dPT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="z29-uE-ey9"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rhR-7j-aCn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="428" y="90.404797601199405"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AppIconForAboutScreen" width="150" height="150"/>
+        <image name="BlurrediPhone" width="414" height="736"/>
+    </resources>
+</document>

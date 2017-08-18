@@ -54,6 +54,14 @@ class Cryptocurrency{
         updatePrice()
     }
     
+    func getCurrencyInformation(){
+        print(baseCurrency)
+        print(baseAbbriviation)
+        print(changeLast24h)
+        print(prices)
+        print(target)
+        print(lastPrice)
+    }
     
     func getTarget() -> Double {
         return target;
@@ -75,6 +83,15 @@ class Cryptocurrency{
         }
         let rundetPris = String(format: "%.2f", pris!)
         return rundetPris
+    }
+    
+    func getDoublePrice(currency:String) -> Double {
+        // Hent pris fra currency
+        if let pris = prices[currency]{
+            return pris
+        }else{
+            return 0.0
+        }
     }
     
     
