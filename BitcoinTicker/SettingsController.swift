@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MessageUI
+import SafariServices
 
 class SettingsController: UITableViewController, MFMailComposeViewControllerDelegate{
     
@@ -163,9 +164,19 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
             shareApplication()
         }
         
+        //Open BT Website
+        if indexPath.section == 1 && indexPath.row == 1 {
+            openBTWebsite()
+        }
+        
         if indexPath.section == 2 && indexPath.row == 1 {
             // Contact the developer
             openDeveloperTwitter()
+        }
+        
+        // Open app in App Store
+        if indexPath.section == 2 && indexPath.row == 2 {
+            openAppInAppStore()
         }
         
         // Open mail and contact the developer
@@ -175,8 +186,22 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
         }
     }
     
+    func openAppInAppStore() -> Void {
+        UIApplication.shared.open(URL(string: "https://itunes.apple.com/app/crypto-ticker-pro/id1252973638?ls=1&mt=8")!, options: [:], completionHandler: nil)
+    }
+    
     func openDeveloperTwitter() -> Void {
         UIApplication.shared.open(URL(string: "https://twitter.com/haakon_bakker")!, options: [:], completionHandler: nil)
+    }
+    
+    func openBTWebsite() -> Void {
+            openURL(aURL: "https://www.bakkertechnologies.com")
+    }
+    
+    func openURL(aURL: String){
+        let url = URL(string: aURL)!
+        let svc = SFSafariViewController(url: url)
+        self.present(svc, animated: true, completion: nil)
     }
     
     func contactDeveloper(){
@@ -184,7 +209,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
-            mail.setSubject("Crypto Pro - Contact")
+            mail.setSubject("Crypto Ticker Pro - Contact")
             mail.setToRecipients(["haakon@bakkertechnologies.com"])
             mail.setMessageBody("", isHTML: true)
             
@@ -201,7 +226,7 @@ class SettingsController: UITableViewController, MFMailComposeViewControllerDele
     
     func shareApplication(){
         // text to share
-        let text = "Hey! I'm using Cryptocurrency Pro, and you should too! Download the app here: LINK"
+        let text = "Hey! I'm using Crypto Ticker Pro, and you should too! Download the app here: https://itunes.apple.com/app/crypto-ticker-pro/id1252973638?ls=1&mt=8"
         
         // set up activity view controller
         let textToShare = [ text ]

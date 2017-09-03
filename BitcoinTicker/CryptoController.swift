@@ -120,7 +120,10 @@ class CryptoController {
                     }
                     currencies.append(currency)
                     currencyList[currency.baseAbbriviation] = currency
+                    
+                   
                 }
+                
             }
         }catch{
             // Do some error handling here.
@@ -352,7 +355,15 @@ class CryptoController {
                 //print(info[tsymCurrency])
                 
                 let data = info[tsymCurrency] as! [String:Any]
-                let change = data["CHANGEPCT24HOUR"] as! Double
+                var change = 0.0
+                if let theChange = data["CHANGEPCT24HOUR"] as? Double{
+                    change = theChange
+                }else{
+                    change = 0.0
+                }
+                
+                
+                //let change = data["CHANGEPCT24HOUR"] as! Double
                 //print(change)
                 //let test = value[tsymCurrency] as [String:Any?]
                 //print(value[tsymCurrency])

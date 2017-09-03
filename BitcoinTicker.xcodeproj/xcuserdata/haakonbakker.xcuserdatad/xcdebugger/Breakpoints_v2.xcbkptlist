@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BitcoinTicker/Portfolio/PortfolioEditViewController.swift"
-            timestampString = "524569857.898453"
+            timestampString = "525536540.259071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
             endingLineNumber = "140"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "PortfolioEditViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

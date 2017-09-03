@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GAS</key>
+	<dict>
+		<key>name</key>
+		<string>Gas</string>
+		<key>abbreviation</key>
+		<string>GAS</string>
+	</dict>
+	<key>BNB</key>
+	<dict>
+		<key>name</key>
+		<string>Binance Coin</string>
+		<key>abbreviation</key>
+		<string>BNB</string>
+	</dict>
+	<key>BCH</key>
+	<dict>
+		<key>name</key>
+		<string>Bitcoin Cash</string>
+		<key>abbreviation</key>
+		<string>BCH</string>
+	</dict>
+	<key>LKK</key>
+	<dict>
+		<key>name</key>
+		<string>Lykke</string>
+		<key>abbreviation</key>
+		<string>LKK</string>
+	</dict>
+	<key>VERI</key>
+	<dict>
+		<key>name</key>
+		<string>Veritaseum</string>
+		<key>abbreviation</key>
+		<string>VERI</string>
+	</dict>
+	<key>PPT</key>
+	<dict>
+		<key>name</key>
+		<string>Populous</string>
+		<key>abbreviation</key>
+		<string>PPT</string>
+	</dict>
+</dict>
+</plist>

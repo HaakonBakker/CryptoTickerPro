@@ -224,26 +224,48 @@ class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
     {
         let delete = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
-            //let alertView = UIAlertController(title: "Delete Action", message: "", preferredStyle: UIAlertControllerStyle.alert)
-            //alertView.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
-            //UIApplication.shared.keyWindow?.rootViewController?.present(alertView, animated: true, completion: nil)
             
-            // Delete the Portfolio
-            self.portfolioController.deleteAsset(asset: self.arrayOfAssets[indexPath.row])
-            // Save the Core Data context
-            let appDelegate:AppDelegate
-            let context:NSManagedObjectContext
-            appDelegate = UIApplication.shared.delegate as! AppDelegate
-            context = appDelegate.persistentContainer.viewContext
-            do {
-                try context.save()
-                self.reloadData()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            
+            // Verify with the user that he/she wants to delete
+            // Create the alert controller
+            let alertController = UIAlertController(title: "Are you sure?", message: "Are you sure you want to delete the asset?", preferredStyle: .alert)
+            
+            // Create the actions
+            let okAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                NSLog("Delete")
+                
+                // Delete the Portfolio
+                self.portfolioController.deleteAsset(asset: self.arrayOfAssets[indexPath.row])
+                // Save the Core Data context
+                let appDelegate:AppDelegate
+                let context:NSManagedObjectContext
+                appDelegate = UIApplication.shared.delegate as! AppDelegate
+                context = appDelegate.persistentContainer.viewContext
+                do {
+                    try context.save()
+                    self.reloadData()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+                
             }
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+                UIAlertAction in
+                NSLog("Cancel Pressed")
+                return
+            }
+            
+            // Add the actions
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            
+            // Present the controller
+            self.present(alertController, animated: true, completion: nil)
+            
         })
         delete.backgroundColor = UIColor.red
         
@@ -256,7 +278,8 @@ class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITa
         })
         more.backgroundColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)
         
-        return [delete, more]
+        //return [delete, more]
+        return [delete]
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

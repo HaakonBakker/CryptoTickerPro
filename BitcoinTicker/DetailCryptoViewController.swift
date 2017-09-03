@@ -41,12 +41,22 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     @IBOutlet weak var chartConversionLabel: UILabel!
     @IBOutlet weak var chartConversionPriceLabel: UILabel!
     
+    // Graph change labels
     
+    @IBOutlet weak var graphChangeLabel: UILabel!
+    @IBOutlet weak var graphChangePCTLabel: UILabel!
+    @IBOutlet weak var graphTopLabel: UILabel!
+    @IBOutlet weak var graphBottomLabel: UILabel!
+    
+    let formatter = NumberFormatter()
     
     var labels:[String:Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Set the formatter to decimal.
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        
         // Do any additional setup after loading the view.
         //self.navigationController?.navigationBar.backItem. = coin
         
@@ -82,6 +92,9 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         getUpdatedPrices()
         // Need to update the labels.
         
+        // GET USD Price changes
+        updateUSDPriceLabels()
+        
     }
     
     
@@ -109,10 +122,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             //var raw = success["Data"] as! [String:Any]
             //print(success)
             //print(raw)
-            print(type(of: success["Data"]))
+            var first = 0.0
+            var last = 0.0
+            var top = 0.0
+            var bottom = 0.0
+            var pointCounter = 0
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
@@ -176,9 +193,27 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
                 }else{
                     print("Something is not right1.")
                 }
@@ -189,7 +224,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -202,6 +237,15 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
@@ -228,11 +272,13 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         parser.networkRequest(APICall: url, completion: { (success) -> Void in
             self.chart.removeAllSeries()
             var raw = success["Data"]
-            //var conversion = raw[self.coin] as! [String:Any]
-            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
-            //var raw = success["Data"] as! [String:Any]
-            //print(success)
-            //print(raw)
+            
+            var first = 0.0
+            var last = 0.0
+            var top = 0.0
+            var bottom = 0.0
+            var pointCounter = 0
+            
             print(type(of: success["Data"]))
             
             var test = raw as! NSArray
@@ -300,9 +346,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -313,7 +378,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -326,6 +391,15 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
@@ -333,19 +407,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
-    
     func updateChart1Week() -> Void {
         // Remove everything at first.
         
-        
-        
-        
-        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
-        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
-        //let series = ChartSeries(data)
-        // Create a new series specifying x and y values
-        
-        
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
         // Need to get a json object
         let parser = Parser()
@@ -373,7 +442,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             // lastDateString
             var lastDateString:String = ""
             
+            
+            
             for point in test{
+                
                 //print(type(of: point))
                 var dataPoint = point as! Dictionary<String, Any>
                 //print(dataPoint["time"])
@@ -417,9 +489,27 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
                 }else{
                     print("Something is not right1.")
                 }
@@ -428,7 +518,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -440,6 +530,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
@@ -447,20 +545,16 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
-    
-    
     func updateChart1Month() -> Void {
         // Remove everything at first.
         
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
-        
-        
-        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
-        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
-        //let series = ChartSeries(data)
-        // Create a new series specifying x and y values
-        
-        
+    
         
         // Need to get a json object
         let parser = Parser()
@@ -540,9 +634,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -553,7 +666,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -566,6 +679,15 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                
             }
             
         })
@@ -573,18 +695,15 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
-    
     func updateChart3Months() -> Void {
         // Remove everything at first.
         
         
-        
-        
-        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
-        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
-        //let series = ChartSeries(data)
-        // Create a new series specifying x and y values
-        
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
         
         // Need to get a json object
@@ -669,9 +788,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -682,7 +820,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -695,6 +833,15 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
@@ -705,7 +852,11 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     func updateChart6Months() -> Void {
         // Remove everything at first.
         
-        
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
         
         //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
@@ -803,9 +954,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -816,7 +986,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -829,6 +999,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
@@ -836,19 +1014,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
-    
     func updateChart12Months() -> Void {
         // Remove everything at first.
         
-        
-        
-        
-        //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
-        //let data: Array<Float> = [0.0,  -2.70548,  -2.63699,  3.09075,  -3.05268, 0.0, 4.44349, 1.0, 0.0, -1.30397, 0.0, 0.0, 1.64384, -3.17637, 4.92295, -1.89212, -3.44178, -4.09326, 0.0, 2.06336, -2.5, 2.74829, -4.8532, 1.4726, -2.32021, 0.0, 0.0, -4.375, 4.10663, -0.821326, -1.77233, 1.73801]
-        //let series = ChartSeries(data)
-        // Create a new series specifying x and y values
-        
-        
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
         // Need to get a json object
         let parser = Parser()
@@ -856,15 +1029,11 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         parser.networkRequest(APICall: url, completion: { (success) -> Void in
             self.chart.removeAllSeries()
             var raw = success["Data"]
-            //var conversion = raw[self.coin] as! [String:Any]
-            //self.labels = conversion[self.favoriteCurrency] as! [String:Any]
-            //var raw = success["Data"] as! [String:Any]
-            //print(success)
-            //print(raw)
-            print(type(of: success["Data"]))
+            
+            
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
@@ -952,9 +1121,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -965,7 +1153,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -978,6 +1166,16 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                
             }
             
         })
@@ -985,11 +1183,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
-    
     func updateChartAll() -> Void {
         // Remove everything at first.
         
-        
+        var first = 0.0
+        var last = 0.0
+        var top = 0.0
+        var bottom = 0.0
+        var pointCounter = 0
         
         
         //let data = [(x: Float(0), y: Float(0)), (x: Float(0.5), y: Float(3.1))]
@@ -1030,11 +1231,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             for point in test{
                 //print(type(of: point))
                 var dataPoint = point as! Dictionary<String, Any>
-                //print(dataPoint["time"])
-                
-                //let date = Date(timeIntervalSince1970: timeStamp)
-                //print(date)
-                //dates.append(date)
+
                 
                 if let t = dataPoint["time"] {
                     let timeStamp = dataPoint["time"] as! Double
@@ -1050,14 +1247,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MMM-yy"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         //dateFormatter.dateFormat = "dd"
                         //print("date is \(dateFormatter.string(from: date))")
                         //let d = dateFormatter.string(from: date)
                         
                         let newDate = m
-                        print(newDate)
+                        
                         
                         if (datesAsString.count == 0 || datesAsString.last != m) {
                             //datesAsString.append(Float(i))
@@ -1084,9 +1281,28 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 if let t = dataPoint["close"]{
                     let k = t as! Double
-                    self.usdPrice = k
+                    
                     dataPoints.append(((x:Float(counter), y: Float(k))))
-                    print(t)
+                    
+                    // Get the other datapoints
+                    if pointCounter == 0{
+                        first = k
+                        top = k
+                        bottom = k
+                    }
+                    last = k
+                    
+                    // Top
+                    if k > top {
+                        top = k
+                    }
+                    
+                    // Bottom
+                    if k < bottom {
+                        bottom = k
+                    }
+                    pointCounter = pointCounter + 1
+                    
                 }else{
                     print("Something is not right1.")
                 }
@@ -1097,7 +1313,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             }
             
             DispatchQueue.main.async() {
-                self.chartConversionPriceLabel.text = String(describing: self.usdPrice) + "$"
+                
                 let series = ChartSeries([Float(0)])
                 //series.data = []
                 series.data = dataPoints
@@ -1110,14 +1326,21 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 self.chart.add(series)
+                
+                
+                // Update the change labels
+                
+                self.graphChangeLabel.text = self.getTwoDecimals(number: String(describing: (last-first))) + "$"
+                let percentChange = (last - first)/first*100
+                self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
+                self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
+                self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
             }
             
         })
         
         
     }
-    
-    
     
     func getChartRequestURL(typeOfRequest:String, aggregate: Int, limit: Int) -> String {
         // Type can be: Minute, Hour, Day
@@ -1156,6 +1379,34 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
     }
     
+    func updateUSDPriceLabels(){
+        // Get the URL to update
+        let usdPriceRequestURL = getUSDRequestURL()
+        // Access the data
+        let parser = Parser()
+        
+        parser.networkRequest(APICall: usdPriceRequestURL) { (success) -> Void in
+            //let raw = success["RAW"] as! [String:Any]
+            //let conversion = raw[self.coin] as! [String:Any]
+            //print(conversion)
+            let theUSDPrice = success["USD"] as! Double
+            print("THIS IS THE PRICE OF USD " + String(describing: theUSDPrice))
+            DispatchQueue.main.async() {
+                self.usdPrice = theUSDPrice
+                self.chartConversionPriceLabel.text = self.getTwoDecimals(number: String(describing: self.usdPrice)) + "$"
+            }
+            
+            
+        }
+        // Update the labels on async
+        
+    }
+    
+    
+    func getUSDRequestURL() -> String {
+        return "https://min-api.cryptocompare.com/data/price?fsym=" + coin + "&tsyms=USD"
+    }
+    
     func getRequestURL() -> String {
         print("https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + coin + "&tsyms=" + favoriteCurrency)
         return "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=" + coin + "&tsyms=" + favoriteCurrency
@@ -1185,7 +1436,14 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             
             print("CHANGE 24H: " + self.getTwoDecimals(number: String(describing: labels["CHANGE24HOUR"]!)) + self.localCurrencySymbol)
             self.changeLast24hLabel.text = self.getTwoDecimals(number: String(describing: labels["CHANGE24HOUR"]!)) + self.localCurrencySymbol
-            self.changeLast24HourPercent.text = self.getTwoDecimals(number: String(describing: labels["CHANGEPCT24HOUR"]!)) + "%"
+            
+            if let changepct = labels["CHANGEPCT24HOUR"] {
+                self.changeLast24HourPercent.text = self.getTwoDecimals(number: String(describing: changepct)) + "%"
+            }else{
+                self.changeLast24HourPercent.text = "-"
+            }
+            
+            
             self.setColorOn24hChange(change: String(describing: labels["CHANGE24HOUR"]!))
             self.marketcapLabel.text = self.getTwoDecimals(number: String(describing: labels["MKTCAP"]!)) + self.localCurrencySymbol
             self.numberOfCoinsLabel.text = self.getZeroDecimals(number: String(describing: labels["SUPPLY"]!))
@@ -1203,7 +1461,17 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     
     func getTwoDecimals(number:String) -> String {
         var intermediate = Double(number)
-        var final = String(format: "%.2f", intermediate!)
+        var final = ""
+        if let theIntermediate = intermediate {
+            final = String(format: "%.2f", intermediate!)
+        }
+        
+        if let myInteger = Double(final) {
+            let myNumber = NSNumber(value:myInteger)
+            var theFinal = formatter.string(from: myNumber)
+            print("RETURNERER DENNE : \(theFinal)")
+            return theFinal!
+        }
         return final as String
     }
     
@@ -1217,6 +1485,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         var changeInt = Double(change)
         print(changeInt)
         // Set color based on positive or negative
+        guard let theChange = changeInt else {
+            return
+        }
+        
         if (changeInt! > 0){
             // Positive change
             changeLast24hLabel.textColor = UIColor(red: 0, green: 0.733, blue: 0.153, alpha: 1)
@@ -1278,7 +1550,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     }
     
     
-    // Chart delegate
+    // MARK: Chart delegate
     func didTouchChart(_ chart: Chart, indexes: Array<Int?>, x: Float, left: CGFloat) {
         // Do something on touch
         for (serieIndex, dataIndex) in indexes.enumerated() {
@@ -1290,16 +1562,13 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 if let touchedValue = value {
                     /*
                      We need to figure out what change in percent is.
-                     100-(100/GRAPHPRICE)*PRICE
+                     To calculate percentage decrease: First: work out the difference (decrease) between the two numbers you are comparing. Then: divide the decrease by the original number and multiply the answer by 100. If your answer is a negative number then this is a percentage increase.
                      */
                     //print(touchedValue)
-                    var changeDouble = (Double(100)-(Double(100)/Double(touchedValue))*(Double(usdPrice))) * (-1)
-                    // ((2500-1000)/1000)*100
-                    //var changeDouble = (((Double(touchedValue)/Double(usdPrice)))*100)
-                    print(changeDouble)
-                    var changePercent = getTwoDecimals(number: String(changeDouble))
-                    graphChangePercent.text = changePercent + "%"
-                    graphLabel.text = String(touchedValue)  + "$"
+                    //var letChangeBe = (usdPrice-Double(touchedValue))/usdPrice*100
+                    var letChangeBe = (usdPrice-Double(touchedValue))/Double(touchedValue)*100
+                    graphChangePercent.text = formatter.string(from: letChangeBe as NSNumber)! + "%"
+                    graphLabel.text = formatter.string(from: touchedValue as NSNumber)! + "$"
                 }else{
                     print("Something went wrong")
                 }

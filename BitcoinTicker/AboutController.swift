@@ -20,7 +20,7 @@ class AboutController: UIViewController{
         openURL(aURL: "https://www.bakkertechnologies.com")
     }
     @IBAction func openHaakonBakker(_ sender: Any) {
-        openURL(aURL: "https://bakkertechnologies.com/om/")
+        openURL(aURL: "https://bakkertechnologies.com/about/")
     }
     @IBAction func openTerms(_ sender: Any) {
         //openURL(aURL: "https://bakkertechnologies.com/terms")

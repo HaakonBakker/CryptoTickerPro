@@ -33,8 +33,13 @@ class AddAsset: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.amountLabel.inputAccessoryView = addDoneButtonOverKeyboard()
         if let theAsset = asset{
             self.amountLabel.text = String(describing: theAsset.amount)
+            
         }
         
+        // If the amount label is 0.0 then it should be nothing in order to speed up the time it takes to edit the asset.
+        if self.amountLabel.text == "0.0"{
+            self.amountLabel.text = ""
+        }
         
         self.navigationController?.navigationBar.tintColor = UIColor.white;
         print("AddAssetView has been loaded")
@@ -49,7 +54,7 @@ class AddAsset: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.delegate = self
         tableView.dataSource = self
         
-       
+        self.amountLabel.becomeFirstResponder()
     }
 
     
@@ -175,7 +180,12 @@ class AddAsset: UIViewController, UITableViewDataSource, UITableViewDelegate {
         context = appDelegate.persistentContainer.viewContext
         
         if let amountText = amountLabel.text{
+            if amountText == ""{
+                asset?.amount = 0.0
+            }else{
                 asset?.amount = amountText.toDoubleValue
+            }
+            
         }
         
         

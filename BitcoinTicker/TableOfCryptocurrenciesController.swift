@@ -35,12 +35,21 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
     
     var personalFavorites:[String]!
     let defaults = UserDefaults.standard
+    // Buttons
+    @IBOutlet weak var coinButton: UIBarButtonItem!
+    @IBOutlet weak var priceButton: UIBarButtonItem!
+    @IBOutlet weak var change24HButton: UIBarButtonItem!
     
     var wantToOnlyShowFavoriteCurrencies:Bool = false
     
     var lastUpdated:Date? = nil
+    let formatter = NumberFormatter()
     
     override func viewDidLoad() {
+        // Set the formatter to decimal.
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        checkNetworkReachability()
+        
         let start = NSDate(); // <<<<<<<<<< Start time
         super.viewDidLoad()
         
@@ -81,7 +90,9 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         let timeInterval: Double = end.timeIntervalSince(start as Date); // <<<<< Difference in seconds (double)
         print("Time to load viewDidLoad: \(timeInterval) seconds")
         
-        
+        // Sort the tableview while loading
+        isTop = true
+        sortTableViewCoin(isSortedOnTop: isTop)
     }
     
     func getLastUpdateTime() -> String {
@@ -126,6 +137,7 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         print("Oppdater things!")
         cryptoController.updatePrice()
         refreshControl.endRefreshing()
+        checkNetworkReachability()
         setLastUpdateTime()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh - Last updated: " + getLastUpdateTime())
     }
@@ -302,17 +314,22 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         cell.nameLabel?.text = nameCoin
         
         // DetailLabel
-        let pris = detailCoin
+        var pris = detailCoin
         
         // Checking what info is available on pris
         if pris == "Updating..." {
             cell.priceLabel?.text = pris
         }else{
-            cell.priceLabel?.text = String(describing: pris) + localCurrencySymbol
-            
+            pris = getTwoDecimals(number: pris)
+            if let thePrice = Double(pris){
+                cell.priceLabel?.text = formatter.string(from: thePrice as NSNumber)!  + localCurrencySymbol
+            }
+        }
+        change = getTwoDecimals(number: change)
+        if let thechange = Double(change){
+            cell.changeLabel.text = formatter.string(from: thechange as NSNumber)! + "%"
         }
         
-        cell.changeLabel.text = change + "%"
         
         setColorOn24hChange(change: change, cell: cell)
         
@@ -383,6 +400,74 @@ class TableOfCryptocurrencies: UIViewController, UITableViewDataSource, UITableV
         var intermediate = Double(number)
         var final = String(format: "%.2f", intermediate!)
         return final as String
+    }
+    
+    // MARK: Button actions
+    var lastButtonPressed:UIBarButtonItem!
+    var isTop:Bool!
+    @IBAction func change24HButtonAction(_ sender: Any) {
+        sortTableViewChange(isSortedOnTop: isTop)
+    }
+    @IBAction func coinButtonAction(_ sender: Any) {
+        sortTableViewCoin(isSortedOnTop: isTop)
+    }
+    @IBAction func priceButtonAction(_ sender: Any) {
+        sortTableViewPrice(isSortedOnTop: isTop)
+    }
+    
+    func sortTableViewCoin(isSortedOnTop:Bool){
+        if isSortedOnTop{
+            cryptos.sort { $0.baseCurrency < $1.baseCurrency }
+            //personalFavorites.sort {$0 < $1}
+            /*
+             PRINT ALL CURRENCIES IN ALPHABETICAL ORDER TO ADD THEM TO APP STORE TEXT IF UPDATED AND ADDED MORE CURRENCIES.
+            for currency in cryptos{
+                // Printing all currencies for App Store text
+                print(currency.baseCurrency + " (" + currency.baseAbbriviation + ")" + ",", terminator: " ")
+            }
+             */
+            isTop = false
+        }else{
+            cryptos.sort { $0.baseCurrency > $1.baseCurrency }
+            //personalFavorites.sort {$0 > $1}
+            isTop = true
+        }
+        redrawView()
+    }
+    
+    func sortTableViewPrice(isSortedOnTop:Bool){
+        if !isSortedOnTop{
+            cryptos.sort { Double($0.getThePrice(currency: localCurrency))! < Double($1.getThePrice(currency: localCurrency))! }
+            isTop = true
+        }else{
+            cryptos.sort { Double($0.getThePrice(currency: localCurrency))! > Double($1.getThePrice(currency: localCurrency))! }
+            isTop = false
+        }
+        redrawView()
+    }
+    
+    func sortTableViewChange(isSortedOnTop:Bool){
+        if !isSortedOnTop{
+            cryptos.sort { $0.changeLast24h < $1.changeLast24h }
+            isTop = true
+        }else{
+            cryptos.sort { $0.changeLast24h > $1.changeLast24h }
+            isTop = false
+        }
+        redrawView()
+    }
+    
+    // MARK: Check for internet connection
+    
+    func checkNetworkReachability(){
+        if Reachability.isConnectedToNetwork(){
+            print("Internet Connection Available!")
+        }else{
+            print("Internet Connection not Available!")
+            let alert = UIAlertController(title: "No internet connection", message: "Something went wrong when connecting to the Internet. Please check your connection.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
 }

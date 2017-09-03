@@ -63,6 +63,8 @@ class CurrencyLoader {
                     }
                     currencies.append(currency)
                     currencyList[currency.baseAbbriviation] = currency
+                    
+                    
                 }
             }
         }catch{

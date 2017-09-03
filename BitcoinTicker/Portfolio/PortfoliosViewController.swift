@@ -18,7 +18,7 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
     var portfolioController:PortfolioController!
     let defaults = UserDefaults.standard
     
-
+    let formatter = NumberFormatter()
     
     @IBOutlet weak var currentValueLabel: UILabel!
     @IBOutlet weak var costLabel: UILabel!
@@ -26,7 +26,9 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var profitLabel: UILabel!
     
     override func viewDidLoad() {
-        
+        // Set the formatter to decimal.
+        formatter.numberStyle = NumberFormatter.Style.decimal
+        initialLoadOfLabels()
         tableView.delegate = self
         tableView.dataSource = self
         print("Portfoliosview has been loaded")
@@ -36,7 +38,32 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
         getPortfolioValues()
     }
     
+    func initialLoadOfLabels() -> Void {
+        var localCurrencySymbol = ""
+        if let currencySymbol = self.defaults.object(forKey: "selectedCurrencySymbol") {
+            localCurrencySymbol = currencySymbol as! String
+        }else{
+            print("No currency selected - something went wrong")
+            localCurrencySymbol = "$"
+        }
+        
+        var cost = "0"
+        
+        // Updating (cost, profit and profit%) if nothing happens
+        self.costLabel.text = cost + localCurrencySymbol
+        self.profitLabel.text = "0" + localCurrencySymbol
+        self.profitPercentLabel.text = "0%"
+    }
+    
     func getPortfolioValues(){
+        
+        if portfolioController.ports.count == 0{
+            initialLoadOfLabels()
+            self.costLabel.text = "-"
+            self.currentValueLabel.text = "-"
+            return
+        }
+        
         var localCurrencySymbol = ""
         if let currencySymbol = self.defaults.object(forKey: "selectedCurrencySymbol") {
             localCurrencySymbol = currencySymbol as! String
@@ -54,7 +81,7 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
             cost = String(format: "%.2f", success)
             
             DispatchQueue.main.async() {
-                self.costLabel.text = cost + localCurrencySymbol
+                self.costLabel.text = self.getTwoDecimals(number: String(describing: cost)) + localCurrencySymbol
             }
             
             
@@ -80,23 +107,20 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
                     
                 }
                 
-                self.profitLabel.text = String(format: "%.2f", profit) + localCurrencySymbol
-                self.profitPercentLabel.text = String(format: "%.2f", percentProfit) + "%"
+                self.profitLabel.text = self.getTwoDecimals(number: String(describing: profit)) + localCurrencySymbol
+                self.profitPercentLabel.text = self.getTwoDecimals(number: String(describing: percentProfit)) + "%"
             }
             
             
         })
         
-        // Updating (cost, profit and profit%) if nothing happens
-        self.costLabel.text = cost + localCurrencySymbol
-        self.profitLabel.text = "0" + localCurrencySymbol
-        self.profitPercentLabel.text = "0%"
+        
         
         
         // Calculate profit and profit %
         
         // Convert Doubles to String
-        let currentVal = String(format: "%.2f", currentValueDouble) + localCurrencySymbol
+        let currentVal = self.getTwoDecimals(number: String(describing: currentValueDouble)) + localCurrencySymbol
         
         
         // Update labels
@@ -131,6 +155,7 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func reloadData() -> Void {
+        //allPortfolios = portfolioController.fetchPortfolios()
         portfolioController.updateStatus()
         updateLabels()
         self.tableView.reloadData()
@@ -195,10 +220,10 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
         var portCalc = PortfolioCalculations(port: portfolioController.ports[row])
         var localCur = LocalCurrencies()
         if let costCur = port.costCurrency{
-            cell.detailTextLabel?.text = portCalc.getCurrentValueWithTwoDecimal() + getLocalCurrencySymbol()
+            cell.detailTextLabel?.text = self.getTwoDecimals(number: String(describing: portCalc.getCurrentValueWithTwoDecimal())) + getLocalCurrencySymbol()
         }else{
             // Have to default to USD
-            cell.detailTextLabel?.text = portCalc.getCurrentValueWithTwoDecimal() + "$"
+            cell.detailTextLabel?.text = self.getTwoDecimals(number: String(describing: portCalc.getCurrentValueWithTwoDecimal())) + "$"
         }
         
         
@@ -230,39 +255,112 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
             //alertView.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             //UIApplication.shared.keyWindow?.rootViewController?.present(alertView, animated: true, completion: nil)
             
-            // Delete the Portfolio
-            self.portfolioController.deletePortfolio(port: self.portfolioController.ports[indexPath.row])
-            // Save the Core Data context
-            let appDelegate:AppDelegate
-            let context:NSManagedObjectContext
-            appDelegate = UIApplication.shared.delegate as! AppDelegate
-            context = appDelegate.persistentContainer.viewContext
-            do {
-                try context.save()
-                self.reloadData()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            
+            
+            
+            // Verify with the user that he/she wants to delete
+            // Create the alert controller
+            let alertController = UIAlertController(title: "Are you sure?", message: "Are you sure you want to delete the portfolio?", preferredStyle: .alert)
+            
+            // Create the actions
+            let okAction = UIAlertAction(title: "Delete", style: UIAlertActionStyle.default) {
+                UIAlertAction in
+                NSLog("Delete")
+                
+                // Delete the Portfolio
+                self.portfolioController.deletePortfolio(port: self.portfolioController.ports[indexPath.row])
+                // Save the Core Data context
+                let appDelegate:AppDelegate
+                let context:NSManagedObjectContext
+                appDelegate = UIApplication.shared.delegate as! AppDelegate
+                context = appDelegate.persistentContainer.viewContext
+                do {
+                    try context.save()
+                    self.reloadData()
+                } catch {
+                    // Replace this implementation with code to handle the error appropriately.
+                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    let nserror = error as NSError
+                    fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                }
+                
+                
+                
             }
+            let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
+                UIAlertAction in
+                NSLog("Cancel Pressed")
+                return
+            }
+            
+            // Add the actions
+            alertController.addAction(okAction)
+            alertController.addAction(cancelAction)
+            
+            // Present the controller
+            self.present(alertController, animated: true, completion: nil)
+
         })
         delete.backgroundColor = UIColor.red
         
         
         let more = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Edit" , handler: { (action:UITableViewRowAction!, indexPath:IndexPath!) -> Void in
+            
+            self.performSegue(withIdentifier: "editPortfolio", sender: indexPath)
+            /*
             let alertView = UIAlertController(title: "Edit Action", message: "", preferredStyle: UIAlertControllerStyle.alert)
             alertView.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
             UIApplication.shared.keyWindow?.rootViewController?.present(alertView, animated: true, completion: nil)
+             */
         })
         more.backgroundColor = UIColor(red:0.20, green:0.60, blue:0.86, alpha:1.0)
         
-        return [delete, more]
+        return [delete]
+        // return [delete, more]
     }
     
     
+    func getTwoDecimals(number:String) -> String {
+        var intermediate = Double(number)
+        var final = ""
+        if let theIntermediate = intermediate {
+            final = String(format: "%.2f", intermediate!)
+        }
+        
+        if let myInteger = Double(final) {
+            let myNumber = NSNumber(value:myInteger)
+            var theFinal = formatter.string(from: myNumber)
+            //print("RETURNERER DENNE : \(theFinal)")
+            return theFinal!
+        }
+        return final as String
+    }
+    
+    // MARK: Information Button
+    
+    @IBAction func infoButtonAction(_ sender: Any) {
+        let alertController = UIAlertController(title: "How it works", message: "Add your portfolios to keep track of your holdings. Press Add to get started.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        let okAction = UIAlertAction(title: "Done", style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            
+        }
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "editPortfolio"{
+            print("StemmertilEditPortfolio")
+            let editViewController = (segue.destination as! PortfolioEditViewController)
+            //editViewController.portfolio = portfolio
+            //editViewController.portfolioViewController = self
+            
+        }
+        
         if segue.identifier == "editPortfolioSegue"{
             print("Stemmer")
             let editViewController = (segue.destination as! PortfolioEditViewController)

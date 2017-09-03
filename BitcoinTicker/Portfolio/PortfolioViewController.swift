@@ -24,8 +24,11 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
     var portfolioCalculations:PortfolioCalculations!
     
     let defaults = UserDefaults.standard
+    let formatter = NumberFormatter()
     
     override func viewDidLoad() {
+        // Set the formatter to decimal.
+        formatter.numberStyle = NumberFormatter.Style.decimal
         
         if let port = portfolio {
             portfolioCalculations = PortfolioCalculations(port: port)
@@ -54,12 +57,12 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
         }
         
         // Need to get the costCurrencySymbol
-        var localCurrencies = LocalCurrencies()
-        var costSymbol = localCurrencies.getSymbol(currency: port.costCurrency!)
+        let localCurrencies = LocalCurrencies()
+        let costSymbol = localCurrencies.getSymbol(currency: port.costCurrency!)
         
         
-        var curValue = String(describing: portfolioCalculations.getCurrentValueWithTwoDecimal())
-        var cost = String(format: "%.2f", port.cost)
+        let curValue = self.getTwoDecimals(number: String(describing: portfolioCalculations.getCurrentValueWithTwoDecimal()))
+        let cost = self.getTwoDecimals(number: String(describing: port.cost))
         
         print("\(curValue) <- Cur val ---)")
         
@@ -108,8 +111,8 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
                     
                 }
                 
-                self.profitLabel.text = String(describing: profit) + localCurrencySymbol
-                self.profitPercentageLabel.text = String(format: "%.2f", percentProfit) + "%"
+                self.profitLabel.text = self.getTwoDecimals(number: String(describing: profit)) + localCurrencySymbol
+                self.profitPercentageLabel.text = self.getTwoDecimals(number: String(describing: percentProfit)) + "%"
             }
 
         })
@@ -185,7 +188,7 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
         
         var amount = myArr[row].amount
         
-        cell.detailTextLabel?.text = String(describing: amount)
+        cell.detailTextLabel?.text = formatter.string(from: amount as NSNumber)
         print(amount)
         cell.textLabel?.text = cur
         
@@ -214,5 +217,21 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.deselectRow(at: indexPath, animated: true)
         // No need to programatically create this function since it works through the Storyboard.
         
+    }
+    
+    func getTwoDecimals(number:String) -> String {
+        var intermediate = Double(number)
+        var final = ""
+        if let theIntermediate = intermediate {
+            final = String(format: "%.2f", intermediate!)
+        }
+        
+        if let myInteger = Double(final) {
+            let myNumber = NSNumber(value:myInteger)
+            var theFinal = formatter.string(from: myNumber)
+            print("RETURNERER DENNE : \(theFinal)")
+            return theFinal!
+        }
+        return final as String
     }
 }
