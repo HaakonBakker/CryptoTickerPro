@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13209.6" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17B1003" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Crypto" representedClassName="Crypto" syncable="YES" codeGenerationType="class">
         <attribute name="abbreviation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="change24h" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="mrkcap" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <fetchIndex name="byPropertyIndex">
@@ -20,7 +22,7 @@
         <relationship name="elementRelationship" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="El" inverseName="relationship" inverseEntity="El" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Crypto" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Crypto" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="El" positionX="-83" positionY="144" width="128" height="90"/>
         <element name="Port" positionX="468" positionY="135" width="128" height="103"/>
     </elements>

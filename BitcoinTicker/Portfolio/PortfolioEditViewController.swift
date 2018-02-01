@@ -13,11 +13,18 @@ import CoreData
 
 class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    let defaults = UserDefaults.standard
+    
     @IBOutlet weak var currencyButton: UIButton!
     @IBOutlet weak var costCurrencyLabel: UITextField!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var nameOfPortfolioLabel: UITextField!
 
+    @IBOutlet var nameStaticLabel: UILabel!
+    @IBOutlet var costStaticLabel: UILabel!
+    @IBOutlet var costCurrencyStaticLabel: UILabel!
+    
+    
     var portfolio:Port!
     let formatter = NumberFormatter()
     var textCellIdentifier = "textCell"
@@ -55,6 +62,52 @@ class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITa
         // If no name has been set then show the keyboard right away
         if portfolio.name == ""{
             nameOfPortfolioLabel.becomeFirstResponder()
+        }
+        
+        setTheme()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated) // No need for semicolon
+        setTheme()
+    }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            //            self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            //            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.navigationController?.navigationBar.isTranslucent = false
+            
+            tableView.backgroundColor = .black
+            self.tableView.separatorColor = #colorLiteral(red: 0.2510845065, green: 0.2560918033, blue: 0.2651863098, alpha: 1)
+            view.backgroundColor = .black
+            
+            tableView.backgroundColor = .black
+            
+            costCurrencyLabel.textColor = .white
+//            tableView.textColor = .white
+            nameOfPortfolioLabel.textColor = .white
+            
+            nameStaticLabel.textColor = .white
+            costStaticLabel.textColor = .white
+            costCurrencyStaticLabel.textColor = .white
+        }else{
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3411764706, green: 0.5098039216, blue: 0.7333333333, alpha: 1)
+            
+            tableView.backgroundColor = .white
+            self.tableView.separatorColor = #colorLiteral(red: 0.8243665099, green: 0.8215891719, blue: 0.8374734521, alpha: 1)
+            view.backgroundColor = #colorLiteral(red: 0.9593197703, green: 0.9626016021, blue: 0.9657023549, alpha: 1)
+            
+            currencyButton.titleLabel?.textColor = #colorLiteral(red: 0.3411764706, green: 0.5098039216, blue: 0.7333333333, alpha: 1)
+            tableView.backgroundColor = .white
+            costCurrencyLabel.textColor = .black
+//            tableView.textColor = .black
+            nameOfPortfolioLabel.textColor = .black
+            
+            nameStaticLabel.textColor = .black
+            costStaticLabel.textColor = .black
+            costCurrencyStaticLabel.textColor = .black
         }
     }
     
@@ -177,6 +230,25 @@ class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITa
         return rowCount
     }
     
+
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int)
+    {
+        let header = view as! UITableViewHeaderFooterView
+//        header.textLabel?.font = UIFont(name: "Futura", size: 38)!
+        
+        if defaults.bool(forKey: "blackTheme" ){
+            header.textLabel?.textColor = UIColor.white
+            header.backgroundColor = .darkGray
+        }else{
+            header.textLabel?.textColor = UIColor.black
+            header.backgroundColor = UIColor.white
+        }
+        
+        
+        
+        
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath)
@@ -194,14 +266,35 @@ class PortfolioEditViewController: UIViewController, UITableViewDataSource, UITa
         var amount = arrayOfAssets[row].amount
 
         cell.detailTextLabel?.text = String(describing: amount)
-        print(amount)
+        
         cell.textLabel?.text = cur
         
         
         
         // Add image
-        let image = UIImage(named: cur)
-        cell.imageView?.image = image
+        if let image = UIImage(named: cur){
+            cell.imageView?.image = image
+        }
+        
+        
+        if defaults.bool(forKey: "blackTheme" ){
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+            
+        }else{
+            cell.textLabel?.textColor = .black
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
+        
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }

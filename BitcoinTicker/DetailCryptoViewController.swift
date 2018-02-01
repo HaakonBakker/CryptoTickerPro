@@ -41,6 +41,8 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     @IBOutlet weak var chartConversionLabel: UILabel!
     @IBOutlet weak var chartConversionPriceLabel: UILabel!
     
+    
+    
     // Graph change labels
     
     @IBOutlet weak var graphChangeLabel: UILabel!
@@ -48,12 +50,33 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
     @IBOutlet weak var graphTopLabel: UILabel!
     @IBOutlet weak var graphBottomLabel: UILabel!
     
+    // Static Labels
+    @IBOutlet var change24HStaticLabel: UILabel!
+    @IBOutlet var change24HPCTStaticLabel: UILabel!
+    @IBOutlet var high24HStaticLabel: UILabel!
+    @IBOutlet var low24HStaticLabel: UILabel!
+    @IBOutlet var mrkcapStaticLabel: UILabel!
+    @IBOutlet var numberOfCoinsStaticLabel: UILabel!
+    @IBOutlet var graphStaticChangeLabel: UILabel!
+    @IBOutlet var graphStaticChangePCTLabel: UILabel!
+    @IBOutlet var graphTopStaticLabel: UILabel!
+    @IBOutlet var graphBottomStaticLabel: UILabel!
+    @IBOutlet var graphTouchingStaticLabel: UILabel!
+    @IBOutlet var graphTouchChangePCTStaticLabel: UILabel!
+    
+    
+    
     let formatter = NumberFormatter()
     
     var labels:[String:Any] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 11.0, *) {
+//            navigationController?.navigationBar.prefersLargeTitles = false
+        } else {
+            // Fallback on earlier versions
+        }
         // Set the formatter to decimal.
         formatter.numberStyle = NumberFormatter.Style.decimal
         
@@ -73,8 +96,18 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         
         
         // Add image to Crypto Logo
-        cryptoLogoImageView?.image = UIImage(named: coin)
-        
+//        cryptoLogoImageView?.image = UIImage(named: coin)
+        if let image = UIImage(named: coin){
+            cryptoLogoImageView?.image = image
+        }else{
+            if defaults.bool(forKey: "blackTheme" ){
+                cryptoLogoImageView?.image = UIImage(named: "DCLW.png")
+                print("Will use this image")
+            }else{
+                cryptoLogoImageView?.image = UIImage(named: "DCL.png")
+                
+            }
+        }
         
         // Need to get the symbol for favorite coin
         
@@ -95,6 +128,121 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
         // GET USD Price changes
         updateUSDPriceLabels()
         
+        
+    
+        
+        setTheme()
+        
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated) // No need for semicolon
+        setTheme()
+    }
+    
+    func setChartTheme(chart:Chart){
+        if defaults.bool(forKey: "blackTheme" ){
+            chart.axesColor = .lightGray
+            chart.gridColor = .darkGray
+            chart.labelColor = .white
+        }else{
+            chart.labelColor = .black
+            
+        }
+    }
+    
+    func setTheme(){
+        setChartTheme(chart: chart)
+        if defaults.bool(forKey: "blackTheme" ){
+            // Is black theme - we need to change all the labels to black
+            view.backgroundColor = .black
+            conversionLabel.textColor = .white
+            // All labels needs to be white
+            conversionLabel.textColor = .white
+            
+            // Change this color -> Based on it's value
+            changeLast24hLabel.textColor = .white
+            changeLast24HourPercent.textColor = .white
+            
+            
+            marketcapLabel.textColor = .white
+            numberOfCoinsLabel.textColor = .white
+            conversionPriceLabel.textColor = .white
+            
+//            cryptoLogoImageView.textColor = .white
+            graphLabel.textColor = .white
+            graphChangePercent.textColor = .white
+            volume24HCoinLabel.textColor = .lightGray
+            volume24HLocalLabel.textColor = .lightGray
+            high24HLabel.textColor = .white
+            low24HLabel.textColor = .white
+            volume24HCoin.textColor = .white
+            volume24HLocal.textColor = .white
+//            segmentedControl.textColor = .white
+            chartConversionLabel.textColor = .white
+            chartConversionPriceLabel.textColor = .white
+            graphChangeLabel.textColor = .white
+            graphChangePCTLabel.textColor = .white
+            graphTopLabel.textColor = .white
+            graphBottomLabel.textColor = .white
+            
+            change24HStaticLabel.textColor = .white
+            change24HPCTStaticLabel.textColor = .white
+            high24HStaticLabel.textColor = .white
+            low24HStaticLabel.textColor = .white
+            mrkcapStaticLabel.textColor = .lightGray
+            numberOfCoinsStaticLabel.textColor = .lightGray
+            graphStaticChangeLabel.textColor = .white
+            graphStaticChangePCTLabel.textColor = .white
+            graphTopStaticLabel.textColor = .white
+            graphBottomStaticLabel.textColor = .white
+            graphTouchingStaticLabel.textColor = .white
+            graphTouchChangePCTStaticLabel.textColor = .white
+            
+            
+        }else{
+            // Is white theme - we need to set all the labels to black
+            view.backgroundColor = .white
+            conversionLabel.textColor = .black
+            changeLast24hLabel.textColor = .black
+            marketcapLabel.textColor = .black
+            numberOfCoinsLabel.textColor = .black
+            conversionPriceLabel.textColor = .black
+            changeLast24HourPercent.textColor = .black
+//            cryptoLogoImageView.textColor = .black
+            graphLabel.textColor = .black
+            graphChangePercent.textColor = .black
+            volume24HCoinLabel.textColor = .darkGray
+            volume24HLocalLabel.textColor = .darkGray
+            high24HLabel.textColor = .black
+            low24HLabel.textColor = .black
+            volume24HCoin.textColor = .black
+            volume24HLocal.textColor = .black
+//            segmentedControl.textColor = .black
+            chartConversionLabel.textColor = .black
+            chartConversionPriceLabel.textColor = .black
+            graphChangeLabel.textColor = .black
+            graphChangePCTLabel.textColor = .black
+            graphTopLabel.textColor = .black
+            graphBottomLabel.textColor = .black
+            
+            change24HStaticLabel.textColor = .black
+            change24HPCTStaticLabel.textColor = .black
+            high24HStaticLabel.textColor = .black
+            low24HStaticLabel.textColor = .black
+            mrkcapStaticLabel.textColor = .darkGray
+            numberOfCoinsStaticLabel.textColor = .darkGray
+            graphStaticChangeLabel.textColor = .black
+            graphStaticChangePCTLabel.textColor = .black
+            graphTopStaticLabel.textColor = .black
+            graphBottomStaticLabel.textColor = .black
+            graphTouchingStaticLabel.textColor = .black
+            graphTouchChangePCTStaticLabel.textColor = .black
+            
+            
+            
+        }
     }
     
     
@@ -135,7 +283,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             var dates:[Date] = []
             var datesAsString:[String] = []
             var dataPoints:[(x:(Float), y:(Float))] = []
-            print(type(of: test[1]))
+            
             var counter:Float = 0
             
             // lastDateString
@@ -246,6 +394,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -400,6 +549,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -430,13 +580,13 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             print(type(of: success["Data"]))
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
             var datesAsString:[String] = []
             var dataPoints:[(x:(Float), y:(Float))] = []
-            print(type(of: test[1]))
+            
             var counter:Double = 0
             
             // lastDateString
@@ -468,10 +618,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MM"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         dateFormatter.dateFormat = "dd"
-                        print("date is \(dateFormatter.string(from: date))")
+                        
                         let d = dateFormatter.string(from: date)
                         
                         let newDate = m + "/" + d
@@ -523,7 +673,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 //series.data = []
                 series.data = dataPoints
                 
-                print(dataPoints.count)
+                
                 self.chart.xLabels = [0,1,2,3,4,5,6,7]
                 self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
                     return datesAsString[labelIndex]
@@ -538,6 +688,9 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                
+                self.setChartTheme(chart: self.chart)
+                
             }
             
         })
@@ -567,16 +720,16 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             //var raw = success["Data"] as! [String:Any]
             //print(success)
             //print(raw)
-            print(type(of: success["Data"]))
+            
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
             var datesAsString:[String] = []
             var dataPoints:[(x:(Float), y:(Float))] = []
-            print(type(of: test[1]))
+            
             var counter:Float = 0
             
             // lastDateString
@@ -607,10 +760,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MM"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         dateFormatter.dateFormat = "dd"
-                        print("date is \(dateFormatter.string(from: date))")
+                        
                         let d = dateFormatter.string(from: date)
                         
                         let newDate = m + "/" + d
@@ -661,8 +814,6 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 counter = counter + 0.025
-                print("Counter: " + String(describing: counter))
-                print("Count of datesAsString: " + String(describing: datesAsString.count))
             }
             
             DispatchQueue.main.async() {
@@ -671,7 +822,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 //series.data = []
                 series.data = dataPoints
                 
-                print(dataPoints.count)
+                
                 self.chart.xLabels = [0,1,2,3]
                 self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
                     print(labelIndex)
@@ -687,7 +838,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
-                
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -720,7 +871,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             print(type(of: success["Data"]))
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
@@ -757,10 +908,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MM"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         dateFormatter.dateFormat = "dd"
-                        print("date is \(dateFormatter.string(from: date))")
+                        
                         let d = dateFormatter.string(from: date)
                         
                         let newDate = m + "/" + d
@@ -815,8 +966,6 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 counter = counter + 0.02
-                print("Counter: " + String(describing: counter))
-                print("Count of datesAsString: " + String(describing: datesAsString.count))
             }
             
             DispatchQueue.main.async() {
@@ -842,6 +991,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -877,10 +1027,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             //var raw = success["Data"] as! [String:Any]
             //print(success)
             //print(raw)
-            print(type(of: success["Data"]))
+            
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
@@ -917,10 +1067,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MMM"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         dateFormatter.dateFormat = "dd"
-                        print("date is \(dateFormatter.string(from: date))")
+                        
                         let d = dateFormatter.string(from: date)
                         
                         let newDate = m + "/" + d
@@ -981,8 +1131,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 counter = counter + 0.033333
-                print("Counter: " + String(describing: counter))
-                print("Count of datesAsString: " + String(describing: datesAsString.count))
+
             }
             
             DispatchQueue.main.async() {
@@ -994,7 +1143,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 print(dataPoints.count)
                 self.chart.xLabels = [0,1,2,3,4,5]
                 self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
-                    print(labelIndex)
+                    
                     return datesAsString[labelIndex]
                 }
                 
@@ -1007,6 +1156,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -1039,7 +1189,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             var dates:[Date] = []
             var datesAsString:[String] = []
             var dataPoints:[(x:(Float), y:(Float))] = []
-            print(type(of: test[1]))
+            
             var counter:Float = 0
             
             // lastDateString
@@ -1070,26 +1220,26 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                     if let date = dateFormatter.date(from: dateString) {
                         
                         dateFormatter.dateFormat = "MMM"
-                        print("Month is \(dateFormatter.string(from: date))")
+                        
                         let m = dateFormatter.string(from: date)
                         dateFormatter.dateFormat = "dd"
-                        print("date is \(dateFormatter.string(from: date))")
+                        
                         let d = dateFormatter.string(from: date)
                         
                         let newDate = m + "/" + d
-                        print(newDate)
+                        
                         
                         if (datesAsString.count == 0 || datesAsString.last != m) {
                             //datesAsString.append(Float(i))
                             
                             if (datesAsString.count == 0){
-                                print("NEW DATESTRING ADDED!!!!!")
+                                
                                 datesAsString.append(m)
                                 labelCounter = 0
                             }
                             
                             if (labelCounter == 90){
-                                print("NEW DATESTRING ADDED!!!!!")
+                                
                                 datesAsString.append(m)
                                 labelCounter = 0
                             }else{
@@ -1148,8 +1298,6 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 counter = counter + 0.01111111
-                print("Counter: " + String(describing: counter))
-                print("Count of datesAsString: " + String(describing: datesAsString.count))
             }
             
             DispatchQueue.main.async() {
@@ -1158,10 +1306,10 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 //series.data = []
                 series.data = dataPoints
                 
-                print(dataPoints.count)
+                
                 self.chart.xLabels = [0,1,2,3]
                 self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
-                    print(labelIndex)
+                    
                     return datesAsString[labelIndex]
                 }
                 
@@ -1175,7 +1323,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
-                
+                self.setChartTheme(chart: self.chart)
             }
             
         })
@@ -1214,13 +1362,13 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
             print(type(of: success["Data"]))
             
             var test = raw as! NSArray
-            print(test[1])
+            
             //self.updateLabels(labels: self.labels)
             
             var dates:[Date] = []
             var datesAsString:[String] = []
             var dataPoints:[(x:(Float), y:(Float))] = []
-            print(type(of: test[1]))
+            
             var counter:Float = 0
             
             // lastDateString
@@ -1260,13 +1408,13 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                             //datesAsString.append(Float(i))
                             
                             if (datesAsString.count == 0){
-                                print("NEW DATESTRING ADDED!!!!!")
+                                
                                 datesAsString.append(m)
                                 labelCounter = 0
                             }
                             
                             if (labelCounter == 25){
-                                print("NEW DATESTRING ADDED!!!!!")
+                                
                                 datesAsString.append(m)
                                 labelCounter = 0
                             }else{
@@ -1308,8 +1456,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 }
                 
                 counter = counter + 0.04
-                print("Counter: " + String(describing: counter))
-                print("Count of datesAsString: " + String(describing: datesAsString.count))
+
             }
             
             DispatchQueue.main.async() {
@@ -1318,7 +1465,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 //series.data = []
                 series.data = dataPoints
                 
-                print(dataPoints.count)
+                
                 self.chart.xLabels = [0,1,2,3]
                 self.chart.xLabelsFormatter = { (labelIndex: Int, labelValue: Float) -> String in
                     print(labelIndex)
@@ -1335,6 +1482,7 @@ class DetailCryptoViewController: UIViewController, ChartDelegate {
                 self.graphChangePCTLabel.text = self.getTwoDecimals(number: String(describing: percentChange)) + "%"
                 self.graphTopLabel.text = self.getTwoDecimals(number: String(describing: top)) + "$"
                 self.graphBottomLabel.text = self.getTwoDecimals(number: String(describing: bottom)) + "$"
+                self.setChartTheme(chart: self.chart)
             }
             
         })

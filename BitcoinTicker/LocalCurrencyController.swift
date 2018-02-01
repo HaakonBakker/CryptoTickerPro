@@ -12,8 +12,8 @@ import UIKit
 class LocalCurrencyController: UITableViewController{
     
     
-    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY", "AUD", "BRL", "CAD", "HRK", "DKK", "HKD", "INR", "ISK", "PKR", "SGD", "CHF"]
-    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥", "AUD": "$", "BRL": "R$", "CAD": "$", "HRK" : "kn", "DKK" : "kr", "HKD" : "$", "INR" : "₹", "ISK" : "kr", "PKR" : "₨", "SGD" : "$", "CHF" : "CHF"]
+    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY", "AUD", "BRL", "CAD", "HRK", "DKK", "HKD", "INR", "ISK", "PKR", "SGD", "CHF", "IDR"]
+    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥", "AUD": "$", "BRL": "R$", "CAD": "$", "HRK" : "kn", "DKK" : "kr", "HKD" : "$", "INR" : "₹", "ISK" : "kr", "PKR" : "₨", "SGD" : "$", "CHF" : "CHF", "IDR" : "Rp"]
     var cryptos:[Cryptocurrency]!
     
     var selectedCurrency:String?
@@ -43,7 +43,27 @@ class LocalCurrencyController: UITableViewController{
         
         // Need to fix indexPath to be saved as userdefault
         loadFavorite()
+        
+        setTheme()
+        
     }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+//            Black theme
+            self.tableView.backgroundColor = UIColor.black
+            
+            self.tableView.separatorColor = #colorLiteral(red: 0.2510845065, green: 0.2560918033, blue: 0.2651863098, alpha: 1)
+        }else{
+//            White theme
+            self.tableView.backgroundColor = UIColor.white
+            
+            
+            self.tableView.separatorColor = UIColor(white: 0.97, alpha: 1)
+        }
+    }
+    
+    
     
     func loadFavorite(){
         // Default to USD
@@ -95,7 +115,26 @@ class LocalCurrencyController: UITableViewController{
             cell.accessoryType = UITableViewCellAccessoryType.none
         }
         
-        
+        if defaults.bool(forKey: "blackTheme" ){
+            //            Black theme
+            cell.backgroundColor = UIColor.black
+            cell.textLabel?.textColor = UIColor.white
+            cell.detailTextLabel?.textColor = UIColor.gray
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }else{
+            //            White theme
+            cell.backgroundColor = UIColor.white
+            cell.textLabel?.textColor = UIColor.black
+            cell.detailTextLabel?.textColor = UIColor.gray
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
         
         // DetailLabel
         //let pris = cryptos[row].getThePrice(currency: "USD")

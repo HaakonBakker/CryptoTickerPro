@@ -28,9 +28,12 @@ class Cryptocurrency{
     var targetCurrency:String // Target currency
     var exchange:String // Exchange checked
     var changeLast24h:Double
+    var mrkCap:Double
     var volume:Double
     
-    var prices:[String:Double]
+    
+    
+    var prices:[String:Any]
     
     var blockchainURL: String
     
@@ -41,6 +44,7 @@ class Cryptocurrency{
         buyPrice = 0
         sellPrice = 0
         changeLast24h = 0
+        mrkCap = 0
         base = 0
         target = 0
         volume = 0
@@ -72,23 +76,67 @@ class Cryptocurrency{
         return prices
     }
     
+    func getmrkcap() -> Double{
+        return mrkCap
+    }
+    
     func getThePrice(currency:String) -> String {
         // Hent pris fra currency
         var pris = prices[currency]
         // Convert to String
         
+  
         // Return
         guard let res = pris else {
+            // No current price info (get previous)
+            var pris = target
+            var rundetPris = String(format: "%.2f", pris)
+            return rundetPris
+            
+            // Will not be called, we're now using the last gotten price info value.
             return "Updating..."
         }
-        let rundetPris = String(format: "%.2f", pris!)
+        
+//        print("->" + currency)
+//        print(res["PRICE"])
+//        testingPriceJSON(currency: currency)
+        
+        
+        
+        
+        let rundetPris = String(format: "%.2f", res as! Double)
         return rundetPris
+    }
+    
+    func getTheDoublePrice(currency:String) -> Double{
+        var pris = prices[currency]
+        // Convert to String
+        
+        
+        // Return
+        guard let res = pris else {
+            return 0
+        }
+        
+        if let res:Double = pris as! Double{
+            return res
+        }
+        
+        return 0
+        
+    }
+    
+    func testingPriceJSON(currency:String){
+        // Print the price
+//        print("***********")
+//        print(prices)
+//        print("***********END")
     }
     
     func getDoublePrice(currency:String) -> Double {
         // Hent pris fra currency
         if let pris = prices[currency]{
-            return pris
+            return pris as! Double
         }else{
             return 0.0
         }

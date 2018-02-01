@@ -25,6 +25,12 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var profitPercentLabel: UILabel!
     @IBOutlet weak var profitLabel: UILabel!
     
+    @IBOutlet var currentValueStaticLabel: UILabel!
+    @IBOutlet var costStaticLabel: UILabel!
+    @IBOutlet var changeStaticLabel: UILabel!
+    @IBOutlet var changePCTStaticLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         // Set the formatter to decimal.
         formatter.numberStyle = NumberFormatter.Style.decimal
@@ -36,7 +42,55 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
         checkPortfolio()
         updateLabels()
         getPortfolioValues()
+        setTheme()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated) // No need for semicolon
+        setTheme()
+    }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//            self.navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+//            self.navigationController?.navigationBar.tintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.navigationController?.navigationBar.isTranslucent = false
+            
+            tableView.backgroundColor = .black
+            self.tableView.separatorColor = #colorLiteral(red: 0.2510845065, green: 0.2560918033, blue: 0.2651863098, alpha: 1)
+            
+            currentValueLabel.textColor = .white
+            costLabel.textColor = .white
+            profitPercentLabel.textColor = .white
+            profitLabel.textColor = .white
+            
+            currentValueStaticLabel.textColor = .white
+            costStaticLabel.textColor = .white
+            changeStaticLabel.textColor = .white
+            changePCTStaticLabel.textColor = .white
+            view.backgroundColor = .black
+        }else{
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3411764706, green: 0.5098039216, blue: 0.7333333333, alpha: 1)
+            
+            tableView.backgroundColor = .white
+            self.tableView.separatorColor = #colorLiteral(red: 0.8243665099, green: 0.8215891719, blue: 0.8374734521, alpha: 1)
+            view.backgroundColor = #colorLiteral(red: 0.9593197703, green: 0.9626016021, blue: 0.9657023549, alpha: 1)
+            
+            currentValueLabel.textColor = .black
+            costLabel.textColor = .black
+            profitPercentLabel.textColor = .black
+            profitLabel.textColor = .black
+            
+            currentValueStaticLabel.textColor = .black
+            costStaticLabel.textColor = .black
+            changeStaticLabel.textColor = .black
+            changePCTStaticLabel.textColor = .black
+            
+            
+        }
+    }
+    
     
     func initialLoadOfLabels() -> Void {
         var localCurrencySymbol = ""
@@ -88,7 +142,8 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
             var profit = currentValueDouble - success
             
             // Calculate the percentage profit
-            var percentProfit = (currentValueDouble - success)/currentValueDouble*100
+            //611,397984887 = ((11297-1588)/1588)*100
+            var percentProfit = (currentValueDouble - Double(cost)!)/Double(cost)! * 100
             
             // Update the UI in the main queue
             DispatchQueue.main.async{
@@ -226,13 +281,30 @@ class PortfoliosViewController: UIViewController, UITableViewDataSource, UITable
             cell.detailTextLabel?.text = self.getTwoDecimals(number: String(describing: portCalc.getCurrentValueWithTwoDecimal())) + "$"
         }
         
+        if defaults.bool(forKey: "blackTheme" ){
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+            
+        }else{
+            cell.textLabel?.textColor = .black
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
         
+        cell.backgroundColor = UIColor.clear
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
         let headerName = "Portfolios"
-        return headerName
+        return nil
     }
     
     // MARK:  UITableViewDelegate Methods

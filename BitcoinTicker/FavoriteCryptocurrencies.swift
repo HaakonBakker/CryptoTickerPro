@@ -48,7 +48,24 @@ class FavoriteCryptocurrencies: UITableViewController{
         }
  
         
+        
+        setTheme()
         self.tableView.reloadData()
+    }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+            //            Black theme
+            self.tableView.backgroundColor = UIColor.black
+            
+            self.tableView.separatorColor = #colorLiteral(red: 0.2510845065, green: 0.2560918033, blue: 0.2651863098, alpha: 1)
+        }else{
+            //            White theme
+            self.tableView.backgroundColor = UIColor.white
+            
+            
+            self.tableView.separatorColor = UIColor(white: 0.97, alpha: 1)
+        }
     }
     
     
@@ -66,7 +83,26 @@ class FavoriteCryptocurrencies: UITableViewController{
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         //let cell = tableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
-        
+        if defaults.bool(forKey: "blackTheme" ){
+            //            Black theme
+            cell.backgroundColor = UIColor.black
+            cell.textLabel?.textColor = UIColor.white
+            cell.detailTextLabel?.textColor = UIColor.gray
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }else{
+            //            White theme
+            cell.backgroundColor = UIColor.white
+            cell.textLabel?.textColor = UIColor.black
+            cell.detailTextLabel?.textColor = UIColor.gray
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
         
         let row = indexPath.row
         

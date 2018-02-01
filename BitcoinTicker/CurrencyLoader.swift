@@ -52,7 +52,7 @@ class CurrencyLoader {
                 for result in results as! [NSManagedObject]{
                     let currency = Cryptocurrency()
                     if let name = result.value(forKey: "name") as? String {
-                        print(name)
+//                        print(name)
                         currency.baseCurrency = name
                     }
                     if let abbr = result.value(forKey: "abbreviation") as? String {
@@ -61,6 +61,8 @@ class CurrencyLoader {
                     if let price = result.value(forKey: "price") as? Double {
                         currency.target = price
                     }
+                    
+                    
                     currencies.append(currency)
                     currencyList[currency.baseAbbriviation] = currency
                     

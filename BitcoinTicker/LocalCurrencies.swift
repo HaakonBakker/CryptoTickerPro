@@ -9,8 +9,8 @@
 import Foundation
 
 class LocalCurrencies{
-    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY", "AUD", "BRL", "CAD", "HRK", "DKK", "HKD", "INR", "ISK", "PKR", "SGD", "CHF"]
-    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥", "AUD": "$", "BRL": "R$", "CAD": "$", "HRK" : "kn", "DKK" : "kr", "HKD" : "$", "INR" : "₹", "ISK" : "kr", "PKR" : "₨", "SGD" : "$", "CHF" : "CHF"]
+    var fiats = ["USD", "NOK", "SEK", "EUR", "GBP", "CNY", "JPY", "AUD", "BRL", "CAD", "HRK", "DKK", "HKD", "INR", "ISK", "PKR", "SGD", "CHF", "IDR"]
+    var symbols:[String:String] = ["USD" : "$", "NOK" : "kr", "SEK" : "kr", "EUR" : "€", "GBP" : "£", "CNY" : "¥", "JPY" : "¥", "AUD": "$", "BRL": "R$", "CAD": "$", "HRK" : "kn", "DKK" : "kr", "HKD" : "$", "INR" : "₹", "ISK" : "kr", "PKR" : "₨", "SGD" : "$", "CHF" : "CHF", "IDR" : "Rp"]
     init() {
         
     }

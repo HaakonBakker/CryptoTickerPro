@@ -11,6 +11,17 @@ import UIKit
 import SafariServices
 
 class AboutController: UIViewController{
+    let defaults = UserDefaults.standard
+    
+    
+    // Labels
+    @IBOutlet var appNameLabel: UILabel!
+    
+    @IBOutlet var versionStaticLabel: UILabel!
+    @IBOutlet var developedStaticLabel: UILabel!
+    @IBOutlet var websiteStaticLabel: UILabel!
+    @IBOutlet var priceInfoFromStaticLabel: UILabel!
+    @IBOutlet var apiStaticLabel: UILabel!
     
     @IBOutlet var versionLabel: UILabel!
     
@@ -30,6 +41,38 @@ class AboutController: UIViewController{
         if let aVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             versionLabel.text = version()
         }
+        setTheme()
+    }
+    
+    func setTheme(){
+        
+        if defaults.bool(forKey: "blackTheme" ){
+            view.backgroundColor = .black
+            appNameLabel.textColor = .white
+            
+            versionStaticLabel.textColor = .white
+            developedStaticLabel.textColor = .white
+            websiteStaticLabel.textColor = .white
+            priceInfoFromStaticLabel.textColor = .white
+            apiStaticLabel.textColor = .white
+            
+            versionLabel.textColor = .white
+        }else{
+            view.backgroundColor = .white
+            appNameLabel.textColor = .black
+            
+            versionStaticLabel.textColor = .black
+            developedStaticLabel.textColor = .black
+            websiteStaticLabel.textColor = .black
+            priceInfoFromStaticLabel.textColor = .black
+            apiStaticLabel.textColor = .black
+            
+            versionLabel.textColor = .black
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setTheme()
     }
     
     func version() -> String {

@@ -2,41 +2,27 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>BTC</key>
-	<dict>
-		<key>name</key>
-		<string>Bitcoin</string>
-		<key>abbreviation</key>
-		<string>BTC</string>
-	</dict>
-	<key>ETH</key>
-	<dict>
-		<key>name</key>
-		<string>Ethereum</string>
-		<key>abbreviation</key>
-		<string>ETH</string>
-	</dict>
-	<key>LTC</key>
-	<dict>
-		<key>name</key>
-		<string>Litecoin</string>
-		<key>abbreviation</key>
-		<string>LTC</string>
-	</dict>
-	<key>XRP</key>
-	<dict>
-		<key>name</key>
-		<string>Ripple</string>
-		<key>abbreviation</key>
-		<string>XRP</string>
-	</dict>
-	<key>ETC</key>
-	<dict>
-		<key>name</key>
-		<string>Ethereum Classic</string>
-		<key>abbreviation</key>
-		<string>ETC</string>
-	</dict>
+    <key>BTC</key>
+    <dict>
+        <key>name</key>
+        <string>Bitcoin</string>
+        <key>abbreviation</key>
+        <string>BTC</string>
+    </dict>
+    <key>XRP</key>
+    <dict>
+        <key>name</key>
+        <string>Ripple</string>
+        <key> abbreviation </key>
+        <string>XRP</string>
+    </dict>
+    <key>ETH</key>
+    <dict>
+        <key>name</key>
+        <string>Ethereum</string>
+        <key>abbreviation</key>
+        <string>ETH</string>
+    </dict>
     <key>BCH</key>
     <dict>
         <key>name</key>
@@ -44,334 +30,1379 @@
         <key>abbreviation</key>
         <string>BCH</string>
     </dict>
-	<key>XEM</key>
-	<dict>
-		<key>name</key>
-		<string>NEM</string>
-		<key>abbreviation</key>
-		<string>XEM</string>
-	</dict>
-	<key>DASH</key>
-	<dict>
-		<key>name</key>
-		<string>Dash</string>
-		<key>abbreviation</key>
-		<string>DASH</string>
-	</dict>
-	<key>IOT</key>
-	<dict>
-		<key>name</key>
-		<string>IOTA</string>
-		<key>abbreviation</key>
-		<string>IOT</string>
-	</dict>
-	<key>BTS</key>
-	<dict>
-		<key>name</key>
-		<string>BitShares</string>
-		<key>abbreviation</key>
-		<string>BTS</string>
-	</dict>
-	<key>XMR</key>
-	<dict>
-		<key>name</key>
-		<string>Monero</string>
-		<key>abbreviation</key>
-		<string>XMR</string>
-	</dict>
-	<key>STRAT</key>
-	<dict>
-		<key>name</key>
-		<string>Stratis</string>
-		<key>abbreviation</key>
-		<string>STRAT</string>
-	</dict>
-	<key>ZEC</key>
-	<dict>
-		<key>name</key>
-		<string>Zcash</string>
-		<key>abbreviation</key>
-		<string>ZEC</string>
-	</dict>
-	<key>NEO</key>
-	<dict>
-		<key>name</key>
-		<string>NEO</string>
-		<key>abbreviation</key>
-		<string>NEO</string>
-	</dict>
-	<key>SC</key>
-	<dict>
-		<key>name</key>
-		<string>Siacoin</string>
-		<key>abbreviation</key>
-		<string>SC</string>
-	</dict>
-	<key>WAVES</key>
-	<dict>
-		<key>name</key>
-		<string>Waves</string>
-		<key>abbreviation</key>
-		<string>WAVES</string>
-	</dict>
-	<key>GNT</key>
-	<dict>
-		<key>name</key>
-		<string>Golem</string>
-		<key>abbreviation</key>
-		<string>GNT</string>
-	</dict>
-	<key>BCN</key>
-	<dict>
-		<key>name</key>
-		<string>Bytecoin</string>
-		<key>abbreviation</key>
-		<string>BCN</string>
-	</dict>
-	<key>STEEM</key>
-	<dict>
-		<key>name</key>
-		<string>Steem</string>
-		<key>abbreviation</key>
-		<string>STEEM</string>
-	</dict>
-	<key>ICN</key>
-	<dict>
-		<key>name</key>
-		<string>Iconomi</string>
-		<key>abbreviation</key>
-		<string>ICN</string>
-	</dict>
-	<key>XLM</key>
-	<dict>
-		<key>name</key>
-		<string>Stellar Lumens</string>
-		<key>abbreviation</key>
-		<string>XLM</string>
-	</dict>
-	<key>QTUM</key>
-	<dict>
-		<key>name</key>
-		<string>QTUM</string>
-		<key>abbreviation</key>
-		<string>QTUM</string>
-	</dict>
-	<key>OMG</key>
-	<dict>
-		<key>name</key>
-		<string>OmiseGo</string>
-		<key>abbreviation</key>
-		<string>OMG</string>
-	</dict>
-	<key>BCCOIN</key>
-	<dict>
-		<key>name</key>
-		<string>BitConnect Coin</string>
-		<key>abbreviation</key>
-		<string>BCCOIN</string>
-	</dict>
-	<key>EOS</key>
-	<dict>
-		<key>name</key>
-		<string>EOS</string>
-		<key>abbreviation</key>
-		<string>EOS</string>
-	</dict>
-	<key>PAY</key>
-	<dict>
-		<key>name</key>
-		<string>TenX</string>
-		<key>abbreviation</key>
-		<string>PAY</string>
-	</dict>
-	<key>USDT</key>
-	<dict>
-		<key>name</key>
-		<string>Tether</string>
-		<key>abbreviation</key>
-		<string>USDT</string>
-	</dict>
-	<key>LSK</key>
-	<dict>
-		<key>name</key>
-		<string>Lisk</string>
-		<key>abbreviation</key>
-		<string>LSK</string>
-	</dict>
-	<key>REP</key>
-	<dict>
-		<key>name</key>
-		<string>Augur</string>
-		<key>abbreviation</key>
-		<string>REP</string>
-	</dict>
-	<key>GBYTE</key>
-	<dict>
-		<key>name</key>
-		<string>Byteball</string>
-		<key>abbreviation</key>
-		<string>GBYTE</string>
-	</dict>
-	<key>SNT</key>
-	<dict>
-		<key>name</key>
-		<string>Status</string>
-		<key>abbreviation</key>
-		<string>SNT</string>
-	</dict>
-	<key>BAT</key>
-	<dict>
-		<key>name</key>
-		<string>Basic Attention Token</string>
-		<key>abbreviation</key>
-		<string>BAT</string>
-	</dict>
-	<key>GNO</key>
-	<dict>
-		<key>name</key>
-		<string>Gnosis</string>
-		<key>abbreviation</key>
-		<string>GNO</string>
-	</dict>
-	<key>BTM</key>
-	<dict>
-		<key>name</key>
-		<string>Bitmark</string>
-		<key>abbreviation</key>
-		<string>BTM</string>
-	</dict>
-	<key>DOGE</key>
-	<dict>
-		<key>name</key>
-		<string>Dogecoin</string>
-		<key>abbreviation</key>
-		<string>DOGE</string>
-	</dict>
-	<key>MAID</key>
-	<dict>
-		<key>name</key>
-		<string>MaidSafeCoin</string>
-		<key>abbreviation</key>
-		<string>MAID</string>
-	</dict>
-	<key>DGD</key>
-	<dict>
-		<key>name</key>
-		<string>DigixDAO</string>
-		<key>abbreviation</key>
-		<string>DGD</string>
-	</dict>
-	<key>FCT</key>
-	<dict>
-		<key>name</key>
-		<string>Factoids</string>
-		<key>abbreviation</key>
-		<string>FCT</string>
-	</dict>
-	<key>MCAP</key>
-	<dict>
-		<key>name</key>
-		<string>MCAP</string>
-		<key>abbreviation</key>
-		<string>MCAP</string>
-	</dict>
-	<key>ARK</key>
-	<dict>
-		<key>name</key>
-		<string>Ark</string>
-		<key>abbreviation</key>
-		<string>ARK</string>
-	</dict>
-	<key>MTL</key>
-	<dict>
-		<key>name</key>
-		<string>Metal</string>
-		<key>abbreviation</key>
-		<string>MTL</string>
-	</dict>
-	<key>DCR</key>
-	<dict>
-		<key>name</key>
-		<string>Decred</string>
-		<key>abbreviation</key>
-		<string>DCR</string>
-	</dict>
-	<key>GAME</key>
-	<dict>
-		<key>name</key>
-		<string>GameCredits</string>
-		<key>abbreviation</key>
-		<string>GAME</string>
-	</dict>
-	<key>ARDR</key>
-	<dict>
-		<key>name</key>
-		<string>Ardor</string>
-		<key>abbreviation</key>
-		<string>ARDR</string>
-	</dict>
-	<key>KMD</key>
-	<dict>
-		<key>name</key>
-		<string>Komodo</string>
-		<key>abbreviation</key>
-		<string>KMD</string>
-	</dict>
-	<key>DGB</key>
-	<dict>
-		<key>name</key>
-		<string>DigiByte</string>
-		<key>abbreviation</key>
-		<string>DGB</string>
-	</dict>
-	<key>MGO</key>
-	<dict>
-		<key>name</key>
-		<string>MobileGo</string>
-		<key>abbreviation</key>
-		<string>MGO</string>
-	</dict>
-	<key>NXT</key>
-	<dict>
-		<key>name</key>
-		<string>Nxt</string>
-		<key>abbreviation</key>
-		<string>NXT</string>
-	</dict>
-	<key>BNT</key>
-	<dict>
-		<key>name</key>
-		<string>Bancor</string>
-		<key>abbreviation</key>
-		<string>BNT</string>
-	</dict>
-	<key>PIVX</key>
-	<dict>
-		<key>name</key>
-		<string>PIVX</string>
-		<key>abbreviation</key>
-		<string>PIVX</string>
-	</dict>
-	<key>STORJ</key>
-	<dict>
-		<key>name</key>
-		<string>Storj</string>
-		<key>abbreviation</key>
-		<string>STORJ</string>
-	</dict>
-	<key>FUN</key>
-	<dict>
-		<key>name</key>
-		<string>FunFair</string>
-		<key>abbreviation</key>
-		<string>FUN</string>
-	</dict>
-	<key>SNGLS</key>
-	<dict>
-		<key>name</key>
-		<string>SingularDTV</string>
-		<key>abbreviation</key>
-		<string>SNGLS</string>
-	</dict>
+    <key>ADA</key>
+    <dict>
+        <key>name</key>
+        <string>Cardano</string>
+        <key> abbreviation </key>
+        <string>ADA</string>
+    </dict>
+    <key>XLM</key>
+    <dict>
+        <key>name</key>
+        <string>Stellar</string>
+        <key> abbreviation </key>
+        <string>XLM</string>
+    </dict>
+    <key>LTC</key>
+    <dict>
+        <key>name</key>
+        <string>Litecoin</string>
+        <key> abbreviation </key>
+        <string>LTC</string>
+    </dict>
+    <key>IOT</key>
+    <dict>
+        <key>name</key>
+        <string>IOTA</string>
+        <key> abbreviation </key>
+        <string>IOT</string>
+    </dict>
+    <key>XEM</key>
+    <dict>
+        <key>name</key>
+        <string>NEM</string>
+        <key> abbreviation </key>
+        <string>XEM</string>
+    </dict>
+    <key>DASH</key>
+    <dict>
+        <key>name</key>
+        <string>DigitalCash</string>
+        <key> abbreviation </key>
+        <string>DASH</string>
+    </dict>
+    <key>NEO</key>
+    <dict>
+        <key>name</key>
+        <string>NEO</string>
+        <key> abbreviation </key>
+        <string>NEO</string>
+    </dict>
+    <key>XMR</key>
+    <dict>
+        <key>name</key>
+        <string>Monero</string>
+        <key> abbreviation </key>
+        <string>XMR</string>
+    </dict>
+    <key>BCCOIN</key>
+    <dict>
+        <key>name</key>
+        <string>BitConnect Coin</string>
+        <key> abbreviation </key>
+        <string>BCCOIN</string>
+    </dict>
+    <key>ETC</key>
+    <dict>
+        <key>name</key>
+        <string>Ethereum Classic</string>
+        <key> abbreviation </key>
+        <string>ETC</string>
+    </dict>
+    <key>OMG</key>
+    <dict>
+        <key>name</key>
+        <string>OmiseGo</string>
+        <key> abbreviation </key>
+        <string>OMG</string>
+    </dict>
+    <key>LSK</key>
+    <dict>
+        <key>name</key>
+        <string>Lisk</string>
+        <key> abbreviation </key>
+        <string>LSK</string>
+    </dict>
+    <key>GNO</key>
+    <dict>
+        <key>name</key>
+        <string>Gnosis</string>
+        <key> abbreviation </key>
+        <string>GNO</string>
+    </dict>
+    <key>ARDR</key>
+    <dict>
+        <key>name</key>
+        <string>Ardor</string>
+        <key> abbreviation </key>
+        <string>ARDR</string>
+    </dict>
+    <key>PPT</key>
+    <dict>
+        <key>name</key>
+        <string>Populous</string>
+        <key> abbreviation </key>
+        <string>PPT</string>
+    </dict>
+    <key>BTS</key>
+    <dict>
+        <key>name</key>
+        <string>Bitshares</string>
+        <key> abbreviation </key>
+        <string>BTS</string>
+    </dict>
+    <key>FRST</key>
+    <dict>
+        <key>name</key>
+        <string>FirstCoin</string>
+        <key> abbreviation </key>
+        <string>FRST</string>
+    </dict>
+    <key>BNB</key>
+    <dict>
+        <key>name</key>
+        <string>Binance Coin</string>
+        <key> abbreviation </key>
+        <string>BNB</string>
+    </dict>
+    <key>ZEC</key>
+    <dict>
+        <key>name</key>
+        <string>ZCash</string>
+        <key> abbreviation </key>
+        <string>ZEC</string>
+    </dict>
+    <key>STRAT</key>
+    <dict>
+        <key>name</key>
+        <string>Stratis</string>
+        <key> abbreviation </key>
+        <string>STRAT</string>
+    </dict>
+    <key>USDT</key>
+    <dict>
+        <key>name</key>
+        <string>Tether</string>
+        <key> abbreviation </key>
+        <string>USDT</string>
+    </dict>
+    <key>WAVES</key>
+    <dict>
+        <key>name</key>
+        <string>Waves</string>
+        <key> abbreviation </key>
+        <string>WAVES</string>
+    </dict>
+    <key>CVC</key>
+    <dict>
+        <key>name</key>
+        <string>Civic</string>
+        <key> abbreviation </key>
+        <string>CVC</string>
+    </dict>
+    <key>ROOTS</key>
+    <dict>
+        <key>name</key>
+        <string>RootProject</string>
+        <key> abbreviation </key>
+        <string>ROOTS</string>
+    </dict>
+    <key>BCN</key>
+    <dict>
+        <key>name</key>
+        <string>ByteCoin</string>
+        <key> abbreviation </key>
+        <string>BCN</string>
+    </dict>
+    <key>GNT</key>
+    <dict>
+        <key>name</key>
+        <string>Golem Network Token</string>
+        <key> abbreviation </key>
+        <string>GNT</string>
+    </dict>
+    <key>MKR</key>
+    <dict>
+        <key>name</key>
+        <string>Maker</string>
+        <key> abbreviation </key>
+        <string>MKR</string>
+    </dict>
+    <key>DOGE</key>
+    <dict>
+        <key>name</key>
+        <string>Dogecoin</string>
+        <key> abbreviation </key>
+        <string>DOGE</string>
+    </dict>
+    <key>FUN</key>
+    <dict>
+        <key>name</key>
+        <string>FunFair</string>
+        <key> abbreviation </key>
+        <string>FUN</string>
+    </dict>
+    <key>SC</key>
+    <dict>
+        <key>name</key>
+        <string>Siacoin</string>
+        <key> abbreviation </key>
+        <string>SC</string>
+    </dict>
+    <key>STORJ</key>
+    <dict>
+        <key>name</key>
+        <string>Storj</string>
+        <key> abbreviation </key>
+        <string>STORJ</string>
+    </dict>
+    <key>ZRX</key>
+    <dict>
+        <key>name</key>
+        <string>0x</string>
+        <key> abbreviation </key>
+        <string>ZRX</string>
+    </dict>
+    <key>REP</key>
+    <dict>
+        <key>name</key>
+        <string>Augur</string>
+        <key> abbreviation </key>
+        <string>REP</string>
+    </dict>
+    <key>PAY</key>
+    <dict>
+        <key>name</key>
+        <string>TenX</string>
+        <key> abbreviation </key>
+        <string>PAY</string>
+    </dict>
+    <key>BAT</key>
+    <dict>
+        <key>name</key>
+        <string>Basic Attention Token</string>
+        <key> abbreviation </key>
+        <string>BAT</string>
+    </dict>
+    <key>DGB</key>
+    <dict>
+        <key>name</key>
+        <string>DigiByte</string>
+        <key> abbreviation </key>
+        <string>DGB</string>
+    </dict>
+    <key>ARK</key>
+    <dict>
+        <key>name</key>
+        <string>ARK</string>
+        <key> abbreviation </key>
+        <string>ARK</string>
+    </dict>
+    <key>STEEM</key>
+    <dict>
+        <key>name</key>
+        <string>Steem</string>
+        <key> abbreviation </key>
+        <string>STEEM</string>
+    </dict>
+    <key>SMART</key>
+    <dict>
+        <key>name</key>
+        <string>SmartCash</string>
+        <key> abbreviation </key>
+        <string>SMART</string>
+    </dict>
+    <key>REE</key>
+    <dict>
+        <key>name</key>
+        <string>ReeCoin</string>
+        <key> abbreviation </key>
+        <string>REE</string>
+    </dict>
+    <key>DCR</key>
+    <dict>
+        <key>name</key>
+        <string>Decred</string>
+        <key> abbreviation </key>
+        <string>DCR</string>
+    </dict>
+    <key>MTL</key>
+    <dict>
+        <key>name</key>
+        <string>Metal</string>
+        <key> abbreviation </key>
+        <string>MTL</string>
+    </dict>
+    <key>NXT</key>
+    <dict>
+        <key>name</key>
+        <string>Nxt</string>
+        <key> abbreviation </key>
+        <string>NXT</string>
+    </dict>
+    <key>DRACO</key>
+    <dict>
+        <key>name</key>
+        <string>DT Token</string>
+        <key> abbreviation </key>
+        <string>DRACO</string>
+    </dict>
+    <key>FCT</key>
+    <dict>
+        <key>name</key>
+        <string>Factoids</string>
+        <key> abbreviation </key>
+        <string>FCT</string>
+    </dict>
+    <key>GBYTE</key>
+    <dict>
+        <key>name</key>
+        <string>Byteball</string>
+        <key> abbreviation </key>
+        <string>GBYTE</string>
+    </dict>
+    <key>MONA</key>
+    <dict>
+        <key>name</key>
+        <string>MonaCoin</string>
+        <key> abbreviation </key>
+        <string>MONA</string>
+    </dict>
+    <key>PLU</key>
+    <dict>
+        <key>name</key>
+        <string>Pluton</string>
+        <key> abbreviation </key>
+        <string>PLU</string>
+    </dict>
+    <key>XBY</key>
+    <dict>
+        <key>name</key>
+        <string>XtraBYtes</string>
+        <key> abbreviation </key>
+        <string>XBY</string>
+    </dict>
+    <key>MAID</key>
+    <dict>
+        <key>name</key>
+        <string>MaidSafe Coin</string>
+        <key> abbreviation </key>
+        <string>MAID</string>
+    </dict>
+    <key>MCO</key>
+    <dict>
+        <key>name</key>
+        <string>Monaco</string>
+        <key> abbreviation </key>
+        <string>MCO</string>
+    </dict>
+    <key>PIVX</key>
+    <dict>
+        <key>name</key>
+        <string>Private Instant Verified Transaction</string>
+        <key> abbreviation </key>
+        <string>PIVX</string>
+    </dict>
+    <key>BTCD</key>
+    <dict>
+        <key>name</key>
+        <string>BitcoinDark</string>
+        <key> abbreviation </key>
+        <string>BTCD</string>
+    </dict>
+    <key>RDD</key>
+    <dict>
+        <key>name</key>
+        <string>ReddCoin</string>
+        <key> abbreviation </key>
+        <string>RDD</string>
+    </dict>
+    <key>PLR</key>
+    <dict>
+        <key>name</key>
+        <string>Pillar</string>
+        <key> abbreviation </key>
+        <string>PLR</string>
+    </dict>
+    <key>BNT</key>
+    <dict>
+        <key>name</key>
+        <string>Bancor Network Token</string>
+        <key> abbreviation </key>
+        <string>BNT</string>
+    </dict>
+    <key>XZC</key>
+    <dict>
+        <key>name</key>
+        <string>ZCoin</string>
+        <key> abbreviation </key>
+        <string>XZC</string>
+    </dict>
+    <key>BTX</key>
+    <dict>
+        <key>name</key>
+        <string>Bitcore</string>
+        <key> abbreviation </key>
+        <string>BTX</string>
+    </dict>
+    <key>SYS</key>
+    <dict>
+        <key>name</key>
+        <string>SysCoin</string>
+        <key> abbreviation </key>
+        <string>SYS</string>
+    </dict>
+    <key>AE</key>
+    <dict>
+        <key>name</key>
+        <string>Aeternity</string>
+        <key> abbreviation </key>
+        <string>AE</string>
+    </dict>
+    <key>RVT</key>
+    <dict>
+        <key>name</key>
+        <string>Rivetz</string>
+        <key> abbreviation </key>
+        <string>RVT</string>
+    </dict>
+    <key>GAY</key>
+    <dict>
+        <key>name</key>
+        <string>GayCoin</string>
+        <key> abbreviation </key>
+        <string>GAY</string>
+    </dict>
+    <key>EDG</key>
+    <dict>
+        <key>name</key>
+        <string>Edgeless</string>
+        <key> abbreviation </key>
+        <string>EDG</string>
+    </dict>
+    <key>DGD</key>
+    <dict>
+        <key>name</key>
+        <string>Digix DAO</string>
+        <key> abbreviation </key>
+        <string>DGD</string>
+    </dict>
+    <key>CLUB</key>
+    <dict>
+        <key>name</key>
+        <string>ClubCoin</string>
+        <key> abbreviation </key>
+        <string>CLUB</string>
+    </dict>
+    <key>GAME</key>
+    <dict>
+        <key>name</key>
+        <string>Gamecredits</string>
+        <key> abbreviation </key>
+        <string>GAME</string>
+    </dict>
+    <key>TNT</key>
+    <dict>
+        <key>name</key>
+        <string>Tierion</string>
+        <key> abbreviation </key>
+        <string>TNT</string>
+    </dict>
+    <key>ICN</key>
+    <dict>
+        <key>name</key>
+        <string>Iconomi</string>
+        <key> abbreviation </key>
+        <string>ICN</string>
+    </dict>
+    <key>SNGLS</key>
+    <dict>
+        <key>name</key>
+        <string>SingularDTV</string>
+        <key> abbreviation </key>
+        <string>SNGLS</string>
+    </dict>
+    <key>EQ</key>
+    <dict>
+        <key>name</key>
+        <string>EQUI</string>
+        <key> abbreviation </key>
+        <string>EQ</string>
+    </dict>
+    <key>SKY</key>
+    <dict>
+        <key>name</key>
+        <string>Skycoin</string>
+        <key> abbreviation </key>
+        <string>SKY</string>
+    </dict>
+    <key>WC</key>
+    <dict>
+        <key>name</key>
+        <string>WhiteCoin</string>
+        <key> abbreviation </key>
+        <string>WC</string>
+    </dict>
+    <key>UBQ</key>
+    <dict>
+        <key>name</key>
+        <string>Ubiq</string>
+        <key> abbreviation </key>
+        <string>UBQ</string>
+    </dict>
+    <key>CPC</key>
+    <dict>
+        <key>name</key>
+        <string>CapriCoin</string>
+        <key> abbreviation </key>
+        <string>CPC</string>
+    </dict>
+    <key>BAY</key>
+    <dict>
+        <key>name</key>
+        <string>BitBay</string>
+        <key> abbreviation </key>
+        <string>BAY</string>
+    </dict>
+    <key>BLOCK</key>
+    <dict>
+        <key>name</key>
+        <string>BlockNet</string>
+        <key> abbreviation </key>
+        <string>BLOCK</string>
+    </dict>
+    <key>TRIG</key>
+    <dict>
+        <key>name</key>
+        <string>Trigger</string>
+        <key> abbreviation </key>
+        <string>TRIG</string>
+    </dict>
+    <key>NAV</key>
+    <dict>
+        <key>name</key>
+        <string>NavCoin</string>
+        <key> abbreviation </key>
+        <string>NAV</string>
+    </dict>
+    <key>CLAM</key>
+    <dict>
+        <key>name</key>
+        <string>CLAMS</string>
+        <key> abbreviation </key>
+        <string>CLAM</string>
+    </dict>
+    <key>ANT</key>
+    <dict>
+        <key>name</key>
+        <string>Aragon</string>
+        <key> abbreviation </key>
+        <string>ANT</string>
+    </dict>
+    <key>EMC2</key>
+    <dict>
+        <key>name</key>
+        <string>Einsteinium</string>
+        <key> abbreviation </key>
+        <string>EMC2</string>
+    </dict>
+    <key>U</key>
+    <dict>
+        <key>name</key>
+        <string>Ucoin</string>
+        <key> abbreviation </key>
+        <string>U</string>
+    </dict>
+    <key>PART</key>
+    <dict>
+        <key>name</key>
+        <string>Particl</string>
+        <key> abbreviation </key>
+        <string>PART</string>
+    </dict>
+    <key>NXS</key>
+    <dict>
+        <key>name</key>
+        <string>Nexus</string>
+        <key> abbreviation </key>
+        <string>NXS</string>
+    </dict>
+    <key>ADX</key>
+    <dict>
+        <key>name</key>
+        <string>AdEx</string>
+        <key> abbreviation </key>
+        <string>ADX</string>
+    </dict>
+    <key>DNT</key>
+    <dict>
+        <key>name</key>
+        <string>district0x</string>
+        <key> abbreviation </key>
+        <string>DNT</string>
+    </dict>
+    <key>ATM</key>
+    <dict>
+        <key>name</key>
+        <string>Autumncoin</string>
+        <key> abbreviation </key>
+        <string>ATM</string>
+    </dict>
+    <key>SNM</key>
+    <dict>
+        <key>name</key>
+        <string>SONM</string>
+        <key> abbreviation </key>
+        <string>SNM</string>
+    </dict>
+    <key>CLOAK</key>
+    <dict>
+        <key>name</key>
+        <string>CloakCoin</string>
+        <key> abbreviation </key>
+        <string>CLOAK</string>
+    </dict>
+    <key>CDT</key>
+    <dict>
+        <key>name</key>
+        <string>CoinDash</string>
+        <key> abbreviation </key>
+        <string>CDT</string>
+    </dict>
+    <key>QRL</key>
+    <dict>
+        <key>name</key>
+        <string>Quantum Resistant Ledger</string>
+        <key> abbreviation </key>
+        <string>QRL</string>
+    </dict>
+    <key>ZEN</key>
+    <dict>
+        <key>name</key>
+        <string>ZenCash</string>
+        <key> abbreviation </key>
+        <string>ZEN</string>
+    </dict>
+    <key>PPC</key>
+    <dict>
+        <key>name</key>
+        <string>PeerCoin</string>
+        <key> abbreviation </key>
+        <string>PPC</string>
+    </dict>
+    <key>ONION</key>
+    <dict>
+        <key>name</key>
+        <string>DeepOnion</string>
+        <key> abbreviation </key>
+        <string>ONION</string>
+    </dict>
+    <key>THC</key>
+    <dict>
+        <key>name</key>
+        <string>The Hempcoin</string>
+        <key> abbreviation </key>
+        <string>THC</string>
+    </dict>
+    <key>PAC</key>
+    <dict>
+        <key>name</key>
+        <string>PacCoin</string>
+        <key> abbreviation </key>
+        <string>PAC</string>
+    </dict>
+    
+    <key>AGRS</key>
+    <dict>
+        <key>name</key>
+        <string>Agoras Token</string>
+        <key> abbreviation </key>
+        <string>AGRS</string>
+    </dict>
+    <key>GUP</key>
+    <dict>
+        <key>name</key>
+        <string>Guppy</string>
+        <key> abbreviation </key>
+        <string>GUP</string>
+    </dict>
+    <key>VOX</key>
+    <dict>
+        <key>name</key>
+        <string>Voxels</string>
+        <key> abbreviation </key>
+        <string>VOX</string>
+    </dict>
+    <key>MGO</key>
+    <dict>
+        <key>name</key>
+        <string>MobileGo</string>
+        <key> abbreviation </key>
+        <string>MGO</string>
+    </dict>
+    <key>GRS</key>
+    <dict>
+        <key>name</key>
+        <string>Groestlcoin</string>
+        <key> abbreviation </key>
+        <string>GRS</string>
+    </dict>
+    <key>AEON</key>
+    <dict>
+        <key>name</key>
+        <string>AeonCoin</string>
+        <key> abbreviation </key>
+        <string>AEON</string>
+    </dict>
+    <key>1ST</key>
+    <dict>
+        <key>name</key>
+        <string>FirstBlood</string>
+        <key> abbreviation </key>
+        <string>1ST</string>
+    </dict>
+    <key>MLN</key>
+    <dict>
+        <key>name</key>
+        <string>Melon</string>
+        <key> abbreviation </key>
+        <string>MLN</string>
+    </dict>
+    <key>VIA</key>
+    <dict>
+        <key>name</key>
+        <string>ViaCoin</string>
+        <key> abbreviation </key>
+        <string>VIA</string>
+    </dict>
+    <key>XSPEC</key>
+    <dict>
+        <key>name</key>
+        <string>Spectre</string>
+        <key> abbreviation </key>
+        <string>XSPEC</string>
+    </dict>
+    <key>OAX</key>
+    <dict>
+        <key>name</key>
+        <string>OpenANX</string>
+        <key> abbreviation </key>
+        <string>OAX</string>
+    </dict>
+    <key>WEX</key>
+    <dict>
+        <key>name</key>
+        <string>Wexcoin</string>
+        <key> abbreviation </key>
+        <string>WEX</string>
+    </dict>
+    <key>NLG</key>
+    <dict>
+        <key>name</key>
+        <string>Gulden</string>
+        <key> abbreviation </key>
+        <string>NLG</string>
+    </dict>
+    <key>XCP</key>
+    <dict>
+        <key>name</key>
+        <string>CounterParty</string>
+        <key> abbreviation </key>
+        <string>XCP</string>
+    </dict>
+    <key>SAFEX</key>
+    <dict>
+        <key>name</key>
+        <string>SafeExchangeCoin</string>
+        <key> abbreviation </key>
+        <string>SAFEX</string>
+    </dict>
+    <key>BURST</key>
+    <dict>
+        <key>name</key>
+        <string>BurstCoin</string>
+        <key> abbreviation </key>
+        <string>BURST</string>
+    </dict>
+    <key>QAU</key>
+    <dict>
+        <key>name</key>
+        <string>Quantum</string>
+        <key> abbreviation </key>
+        <string>QAU</string>
+    </dict>
+    <key>SHIFT</key>
+    <dict>
+        <key>name</key>
+        <string>Shift</string>
+        <key> abbreviation </key>
+        <string>SHIFT</string>
+    </dict>
+    <key>VIB</key>
+    <dict>
+        <key>name</key>
+        <string>Viberate</string>
+        <key> abbreviation </key>
+        <string>VIB</string>
+    </dict>
+    <key>HMQ</key>
+    <dict>
+        <key>name</key>
+        <string>Humaniq</string>
+        <key> abbreviation </key>
+        <string>HMQ</string>
+    </dict>
+    <key>HEAT</key>
+    <dict>
+        <key>name</key>
+        <string>Heat Ledger</string>
+        <key> abbreviation </key>
+        <string>HEAT</string>
+    </dict>
+    <key>TKN</key>
+    <dict>
+        <key>name</key>
+        <string>TokenCard</string>
+        <key> abbreviation </key>
+        <string>TKN</string>
+    </dict>
+    <key>DMD</key>
+    <dict>
+        <key>name</key>
+        <string>Diamond</string>
+        <key> abbreviation </key>
+        <string>DMD</string>
+    </dict>
+    <key>ION</key>
+    <dict>
+        <key>name</key>
+        <string>Ionomy</string>
+        <key> abbreviation </key>
+        <string>ION</string>
+    </dict>
+    <key>PASC</key>
+    <dict>
+        <key>name</key>
+        <string>Pascal Coin</string>
+        <key> abbreviation </key>
+        <string>PASC</string>
+    </dict>
+    <key>NMR</key>
+    <dict>
+        <key>name</key>
+        <string>Numerai</string>
+        <key> abbreviation </key>
+        <string>NMR</string>
+    </dict>
+    <key>MER</key>
+    <dict>
+        <key>name</key>
+        <string>Mercury</string>
+        <key> abbreviation </key>
+        <string>MER</string>
+    </dict>
+    <key>STAR</key>
+    <dict>
+        <key>name</key>
+        <string>Starbase</string>
+        <key> abbreviation </key>
+        <string>STAR</string>
+    </dict>
+    <key>POT</key>
+    <dict>
+        <key>name</key>
+        <string>PotCoin</string>
+        <key> abbreviation </key>
+        <string>POT</string>
+    </dict>
+    <key>TRST</key>
+    <dict>
+        <key>name</key>
+        <string>TrustCoin</string>
+        <key> abbreviation </key>
+        <string>TRST</string>
+    </dict>
+    <key>SIB</key>
+    <dict>
+        <key>name</key>
+        <string>SibCoin</string>
+        <key> abbreviation </key>
+        <string>SIB</string>
+    </dict>
+    <key>TIX</key>
+    <dict>
+        <key>name</key>
+        <string>Blocktix</string>
+        <key> abbreviation </key>
+        <string>TIX</string>
+    </dict>
+    <key>XHI</key>
+    <dict>
+        <key>name</key>
+        <string>HiCoin</string>
+        <key> abbreviation </key>
+        <string>XHI</string>
+    </dict>
+    <key>MSP</key>
+    <dict>
+        <key>name</key>
+        <string>Mothership</string>
+        <key> abbreviation </key>
+        <string>MSP</string>
+    </dict>
+    <key>FTC</key>
+    <dict>
+        <key>name</key>
+        <string>FeatherCoin</string>
+        <key> abbreviation </key>
+        <string>FTC</string>
+    </dict>
+    <key>AMP</key>
+    <dict>
+        <key>name</key>
+        <string>Synereo</string>
+        <key> abbreviation </key>
+        <string>AMP</string>
+    </dict>
+    <key>IXT</key>
+    <dict>
+        <key>name</key>
+        <string>iXledger</string>
+        <key> abbreviation </key>
+        <string>IXT</string>
+    </dict>
+    <key>NMC</key>
+    <dict>
+        <key>name</key>
+        <string>NameCoin</string>
+        <key> abbreviation </key>
+        <string>NMC</string>
+    </dict>
+    <key>LUN</key>
+    <dict>
+        <key>name</key>
+        <string>Lunyr</string>
+        <key> abbreviation </key>
+        <string>LUN</string>
+    </dict>
+    <key>MOON</key>
+    <dict>
+        <key>name</key>
+        <string>MoonCoin</string>
+        <key> abbreviation </key>
+        <string>MOON</string>
+    </dict>
+    <key>BLK</key>
+    <dict>
+        <key>name</key>
+        <string>BlackCoin</string>
+        <key> abbreviation </key>
+        <string>BLK</string>
+    </dict>
+    <key>NLC2</key>
+    <dict>
+        <key>name</key>
+        <string>NoLimitCoin</string>
+        <key> abbreviation </key>
+        <string>NLC2</string>
+    </dict>
+    <key>DNA</key>
+    <dict>
+        <key>name</key>
+        <string>Encrypgen</string>
+        <key> abbreviation </key>
+        <string>DNA</string>
+    </dict>
+    <key>XEL</key>
+    <dict>
+        <key>name</key>
+        <string>Elastic</string>
+        <key> abbreviation </key>
+        <string>XEL</string>
+    </dict>
+    <key>MCAP</key>
+    <dict>
+        <key>name</key>
+        <string>MCAP</string>
+        <key> abbreviation </key>
+        <string>MCAP</string>
+    </dict>
+    <key>MYST</key>
+    <dict>
+        <key>name</key>
+        <string>Mysterium</string>
+        <key> abbreviation </key>
+        <string>MYST</string>
+    </dict>
+    <key>PEPECASH</key>
+    <dict>
+        <key>name</key>
+        <string>Pepe Cash</string>
+        <key> abbreviation </key>
+        <string>PEPECASH</string>
+    </dict>
+    <key>PTOY</key>
+    <dict>
+        <key>name</key>
+        <string>Patientory</string>
+        <key> abbreviation </key>
+        <string>PTOY</string>
+    </dict>
+    <key>FAIR</key>
+    <dict>
+        <key>name</key>
+        <string>FairCoin</string>
+        <key> abbreviation </key>
+        <string>FAIR</string>
+    </dict>
+    <key>STX</key>
+    <dict>
+        <key>name</key>
+        <string>Stox</string>
+        <key> abbreviation </key>
+        <string>STX</string>
+    </dict>
+    <key>SAR</key>
+    <dict>
+        <key>name</key>
+        <string>SARCoin</string>
+        <key> abbreviation </key>
+        <string>SAR</string>
+    </dict>
+    <key>LMC</key>
+    <dict>
+        <key>name</key>
+        <string>LomoCoin</string>
+        <key> abbreviation </key>
+        <string>LMC</string>
+    </dict>
+    <key>IOC</key>
+    <dict>
+        <key>name</key>
+        <string>IOCoin</string>
+        <key> abbreviation </key>
+        <string>IOC</string>
+    </dict>
+    <key>DYN</key>
+    <dict>
+        <key>name</key>
+        <string>Dynamic</string>
+        <key> abbreviation </key>
+        <string>DYN</string>
+    </dict>
+    <key>LKK</key>
+    <dict>
+        <key>name</key>
+        <string>Lykke</string>
+        <key> abbreviation </key>
+        <string>LKK</string>
+    </dict>
+    <key>HTML5</key>
+    <dict>
+        <key>name</key>
+        <string>HTML Coin</string>
+        <key> abbreviation </key>
+        <string>HTML5</string>
+    </dict>
+    <key>XWC</key>
+    <dict>
+        <key>name</key>
+        <string>WhiteCoin</string>
+        <key> abbreviation </key>
+        <string>XWC</string>
+    </dict>
+    <key>CRW</key>
+    <dict>
+        <key>name</key>
+        <string>Crown Coin</string>
+        <key> abbreviation </key>
+        <string>CRW</string>
+    </dict>
+    <key>GEO</key>
+    <dict>
+        <key>name</key>
+        <string>GeoCoin</string>
+        <key> abbreviation </key>
+        <string>GEO</string>
+    </dict>
+    <key>FYN</key>
+    <dict>
+        <key>name</key>
+        <string>FundYourselfNow</string>
+        <key> abbreviation </key>
+        <string>FYN</string>
+    </dict>
+    <key>ZOI</key>
+    <dict>
+        <key>name</key>
+        <string>Zoin</string>
+        <key> abbreviation </key>
+        <string>ZOI</string>
+    </dict>
+    <key>GRC</key>
+    <dict>
+        <key>name</key>
+        <string>GridCoin</string>
+        <key> abbreviation </key>
+        <string>GRC</string>
+    </dict>
+    <key>TAAS</key>
+    <dict>
+        <key>name</key>
+        <string>Token as a Service</string>
+        <key> abbreviation </key>
+        <string>TAAS</string>
+    </dict>
+    <key>LGD</key>
+    <dict>
+        <key>name</key>
+        <string>Legends Cryptocurrency</string>
+        <key> abbreviation </key>
+        <string>LGD</string>
+    </dict>
+    <key>HVN</key>
+    <dict>
+        <key>name</key>
+        <string>Hive</string>
+        <key> abbreviation </key>
+        <string>HVN</string>
+    </dict>
+    <key>PHR</key>
+    <dict>
+        <key>name</key>
+        <string>Phreak</string>
+        <key> abbreviation </key>
+        <string>PHR</string>
+    </dict>
+    <key>BCAP</key>
+    <dict>
+        <key>name</key>
+        <string>Blockchain Capital</string>
+        <key> abbreviation </key>
+        <string>BCAP</string>
+    </dict>
+    <key>OK</key>
+    <dict>
+        <key>name</key>
+        <string>OKCash</string>
+        <key> abbreviation </key>
+        <string>OK</string>
+    </dict>
+    <key>PPY</key>
+    <dict>
+        <key>name</key>
+        <string>Peerplays</string>
+        <key> abbreviation </key>
+        <string>PPY</string>
+    </dict>
+    <key>AVT</key>
+    <dict>
+        <key>name</key>
+        <string>AventCoin</string>
+        <key> abbreviation </key>
+        <string>AVT</string>
+    </dict>
+    <key>NEOS</key>
+    <dict>
+        <key>name</key>
+        <string>NeosCoin</string>
+        <key> abbreviation </key>
+        <string>NEOS</string>
+    </dict>
+    <key>GUNS</key>
+    <dict>
+        <key>name</key>
+        <string>GeoFunders</string>
+        <key> abbreviation </key>
+        <string>GUNS</string>
+    </dict>
+    <key>SBD</key>
+    <dict>
+        <key>name</key>
+        <string>Steem Backed Dollars</string>
+        <key> abbreviation </key>
+        <string>SBD</string>
+    </dict>
+    <key>EXP</key>
+    <dict>
+        <key>name</key>
+        <string>Expanse</string>
+        <key> abbreviation </key>
+        <string>EXP</string>
+    </dict>
+    <key>MEGA</key>
+    <dict>
+        <key>name</key>
+        <string>MegaFlash</string>
+        <key> abbreviation </key>
+        <string>MEGA</string>
+    </dict>
+    <key>RADS</key>
+    <dict>
+        <key>name</key>
+        <string>Radium</string>
+        <key> abbreviation </key>
+        <string>RADS</string>
+    </dict>
+    <key>MUE</key>
+    <dict>
+        <key>name</key>
+        <string>MonetaryUnit</string>
+        <key> abbreviation </key>
+        <string>MUE</string>
+    </dict>
+    <key>IND</key>
+    <dict>
+        <key>name</key>
+        <string>Indorse</string>
+        <key> abbreviation </key>
+        <string>IND</string>
+    </dict>
+    <key>SJCX</key>
+    <dict>
+        <key>name</key>
+        <string>StorjCoin</string>
+        <key> abbreviation </key>
+        <string>SJCX</string>
+    </dict>
+    <key>NXC</key>
+    <dict>
+        <key>name</key>
+        <string>Nexium</string>
+        <key> abbreviation </key>
+        <string>NXC</string>
+    </dict>
+    <key>GOLOS</key>
+    <dict>
+        <key>name</key>
+        <string>Golos</string>
+        <key> abbreviation </key>
+        <string>GOLOS</string>
+    </dict>
+    <key>UNITY</key>
+    <dict>
+        <key>name</key>
+        <string>SuperNET</string>
+        <key> abbreviation </key>
+        <string>UNITY</string>
+    </dict>
+    <key>INCNT</key>
+    <dict>
+        <key>name</key>
+        <string>Incent</string>
+        <key> abbreviation </key>
+        <string>INCNT</string>
+    </dict>
+    <key>POSW</key>
+    <dict>
+        <key>name</key>
+        <string>PoSWallet</string>
+        <key> abbreviation </key>
+        <string>POSW</string>
+    </dict>
+    <key>SWT</key>
+    <dict>
+        <key>name</key>
+        <string>Swarm City Token</string>
+        <key> abbreviation </key>
+        <string>SWT</string>
+    </dict>
+    <key>GCR</key>
+    <dict>
+        <key>name</key>
+        <string>Global Currency Reserve</string>
+        <key> abbreviation </key>
+        <string>GCR</string>
+    </dict>
+    <key>CSNO</key>
+    <dict>
+        <key>name</key>
+        <string>BitDice</string>
+        <key> abbreviation </key>
+        <string>CSNO</string>
+    </dict>
+    <key>BITB</key>
+    <dict>
+        <key>name</key>
+        <string>BitBean</string>
+        <key> abbreviation </key>
+        <string>BITB</string>
+    </dict>
+    <key>OBITS</key>
+    <dict>
+        <key>name</key>
+        <string>Obits Coin</string>
+        <key> abbreviation </key>
+        <string>OBITS</string>
+    </dict>
+    <key>RBY</key>
+    <dict>
+        <key>name</key>
+        <string>RubyCoin</string>
+        <key> abbreviation </key>
+        <string>RBY</string>
+    </dict>
+    <key>DTB</key>
+    <dict>
+        <key>name</key>
+        <string>Databits</string>
+        <key> abbreviation </key>
+        <string>DTB</string>
+    </dict>
+    <key>VRC</key>
+    <dict>
+        <key>name</key>
+        <string>VeriCoin</string>
+        <key> abbreviation </key>
+        <string>VRC</string>
+    </dict>
+    <key>NDC</key>
+    <dict>
+        <key>name</key>
+        <string>NeverDie</string>
+        <key> abbreviation </key>
+        <string>NDC</string>
+    </dict>
+    <key>KICK</key>
+    <dict>
+        <key>name</key>
+        <string>KickCoin</string>
+        <key> abbreviation </key>
+        <string>KICK</string>
+    </dict>
+    <key>BFX</key>
+    <dict>
+        <key>name</key>
+        <string>BitFinex Tokens</string>
+        <key> abbreviation </key>
+        <string>BFX</string>
+    </dict>
+    <key>XMY</key>
+    <dict>
+        <key>name</key>
+        <string>MyriadCoin</string>
+        <key> abbreviation </key>
+        <string>XMY</string>
+    </dict>
+    <key>SLR</key>
+    <dict>
+        <key>name</key>
+        <string>SolarCoin</string>
+        <key> abbreviation </key>
+        <string>SLR</string>
+    </dict>
+    <key>WTT</key>
+    <dict>
+        <key>name</key>
+        <string>Giga Watt</string>
+        <key> abbreviation </key>
+        <string>WTT</string>
+    </dict>
+    <key>PLBT</key>
+    <dict>
+        <key>name</key>
+        <string>Polybius</string>
+        <key> abbreviation </key>
+        <string>PLBT</string>
+    </dict>
+    <key>FLDC</key>
+    <dict>
+        <key>name</key>
+        <string>Folding Coin</string>
+        <key> abbreviation </key>
+        <string>FLDC</string>
+    </dict>
+
 </dict>
 </plist>

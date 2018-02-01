@@ -27,6 +27,19 @@ class PortfolioLocalCurrencyViewController: UIViewController, UITableViewDataSou
         tableView.delegate = self
         tableView.dataSource = self
         print("PortfolioLocalCurrencyViewController has been loaded")
+        setTheme()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setTheme()
+    }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+            tableView.backgroundColor = .black
+        }else{
+            tableView.backgroundColor = .white
+        }
     }
     
     
@@ -101,6 +114,25 @@ class PortfolioLocalCurrencyViewController: UIViewController, UITableViewDataSou
         } else {
             cell.accessoryType = UITableViewCellAccessoryType.none
         }
+        
+        if defaults.bool(forKey: "blackTheme" ){
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+            
+        }else{
+            cell.textLabel?.textColor = .black
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
+        
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }

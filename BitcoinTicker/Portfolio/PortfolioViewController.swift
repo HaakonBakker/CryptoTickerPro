@@ -20,6 +20,12 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var profitPercentageLabel: UILabel!
     @IBOutlet weak var currentValueLabel: UILabel!
     
+    @IBOutlet var currentValueStaticLabel: UILabel!
+    @IBOutlet var costStaticLabel: UILabel!
+    @IBOutlet var changeStaticLabel: UILabel!
+    @IBOutlet var changePCTStaticLabel: UILabel!
+    
+    
     var portfolioController:PortfolioController!
     var portfolioCalculations:PortfolioCalculations!
     
@@ -44,6 +50,50 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
         portfolioController = PortfolioController.shared()
         // Testing portfoliocontroller
         //let pCon = PortfolioController()
+        setTheme()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated) // No need for semicolon
+        setTheme()
+    }
+    
+    func setTheme(){
+        if defaults.bool(forKey: "blackTheme" ){
+            
+            tableView.backgroundColor = .black
+            self.tableView.separatorColor = #colorLiteral(red: 0.2510845065, green: 0.2560918033, blue: 0.2651863098, alpha: 1)
+            view.backgroundColor = .black
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+            self.navigationController?.navigationBar.isTranslucent = false
+            
+            // Labels
+            
+            costLabel.textColor = .white
+            profitLabel.textColor = .white
+            profitPercentageLabel.textColor = .white
+            currentValueLabel.textColor = .white
+            currentValueStaticLabel.textColor = .white
+            costStaticLabel.textColor = .white
+            changeStaticLabel.textColor = .white
+            changePCTStaticLabel.textColor = .white
+        }else{
+            
+            self.navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0.3411764706, green: 0.5098039216, blue: 0.7333333333, alpha: 1)
+            view.backgroundColor = #colorLiteral(red: 0.9593197703, green: 0.9626016021, blue: 0.9657023549, alpha: 1)
+            tableView.backgroundColor = .white
+            self.tableView.separatorColor = #colorLiteral(red: 0.8243665099, green: 0.8215891719, blue: 0.8374734521, alpha: 1)
+            
+            // Labels
+            costLabel.textColor = .black
+            profitLabel.textColor = .black
+            profitPercentageLabel.textColor = .black
+            currentValueLabel.textColor = .black
+            currentValueStaticLabel.textColor = .black
+            costStaticLabel.textColor = .black
+            changeStaticLabel.textColor = .black
+            changePCTStaticLabel.textColor = .black
+        }
     }
     
     func updateLabels(port:Port){
@@ -78,21 +128,22 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
             print(success)
             // We have the currency rate
             var rate = success
-            var rateDouble = Double(success)
+            let rateDouble = Double(success)
             
             // Need the cost
-            var portfolioCost = port.cost
+            let portfolioCost = port.cost
             
             // Find the cost in the local Value
-            var costInLocalValue = portfolioCost * rateDouble
+            let costInLocalValue = portfolioCost * rateDouble
             
             
-            var currentValueDouble = Double(self.portfolioCalculations.getCurrentValueWithTwoDecimal())!
+            let currentValueDouble = Double(self.portfolioCalculations.getCurrentValueWithTwoDecimal())!
             // Calculate the profit
-            var profit = currentValueDouble - costInLocalValue
+            let profit = currentValueDouble - costInLocalValue
             
             // Calculate the percentage profit
-            var percentProfit = (currentValueDouble - costInLocalValue)/currentValueDouble*100
+            //  (currentValueDouble - Double(cost)!)/Double(cost)! * 100
+            let percentProfit = (currentValueDouble - costInLocalValue)/costInLocalValue*100
             
             // Update the UI in the main queue
             DispatchQueue.main.async{
@@ -191,25 +242,46 @@ class PortfolioViewController: UIViewController, UITableViewDataSource, UITableV
         cell.detailTextLabel?.text = formatter.string(from: amount as NSNumber)
         print(amount)
         cell.textLabel?.text = cur
-        
-        
+
         
         // Add image
-        let image = UIImage(named: cur)
-        cell.imageView?.image = image
+        if let image = UIImage(named: cur){
+            cell.imageView?.image = image
+        }
+        
+        if defaults.bool(forKey: "blackTheme" ){
+            cell.textLabel?.textColor = .white
+            cell.detailTextLabel?.textColor = .white
+            
+            // Change the selected color of the cell when selected
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.2696416974, green: 0.2744067311, blue: 0.27892676, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }else{
+            cell.textLabel?.textColor = .black
+            
+            let backgroundView = UIView()
+            backgroundView.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+            cell.selectedBackgroundView = backgroundView
+        }
+        
+        cell.backgroundColor = UIColor.clear
         
         return cell
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
-        var headerName = ""
-        
-        if section == 0 {
-            headerName = "Assets"
-        }
-        
-        return headerName
-    }
+    
+    
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?{
+//        var headerName = ""
+//
+//        if section == 0 {
+//            headerName = "Assets"
+//        }
+//
+//        return headerName
+//    }
     
     // MARK:  UITableViewDelegate Methods
     func tableView(_ tableView: UITableView, didSelectRowAt
